@@ -3,8 +3,9 @@
     <!-- <Menu /> -->
     <MenuMega></MenuMega>
     <Carousel />
-    <div class="tags flex mt-5">
+    <div class="tags flex mt-3">
       <div class="table-tag">
+        <h2 class="py-3">Tag music maybe you need</h2>
         <div class="grid-container">
           <Tag
             classes="item"
@@ -17,7 +18,10 @@
           <Paginate></Paginate>
         </div>
       </div>
-      <div class="list-tag"></div>
+      <div class="list-tag">
+        <h2 class="py-3">Free Tags</h2>
+        <ListTag></ListTag>
+      </div>
     </div>
   </div>
 </template>
@@ -29,6 +33,7 @@ import Carousel from "~/components/General/Carousel.vue";
 import Tag from "~/components/General/Tag.vue";
 import Paginate from "~/components/General/Paginate.vue";
 import MenuMega from "~/components/Utils/MenuMega.vue";
+import ListTag from '~/components/Utils/ListTag.vue'; 
 
 const items = [
   {
