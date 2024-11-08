@@ -1,5 +1,5 @@
 <template>
-  <div class="app">
+  <div class="app px-2">
     <!-- <Menu /> -->
     <MenuMega></MenuMega>
     <Carousel />
@@ -121,6 +121,7 @@ const items = [
 }
 
 .table-tag {
+  padding-right: 20px;
   width: 70%;
 }
 .grid-container {

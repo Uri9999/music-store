@@ -84,13 +84,6 @@ const products = [
     name: "Influence",
     price: 20,
   },
-  {
-    id: 1,
-    image:
-      "https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg",
-    name: "Influence",
-    price: 20,
-  },
 ];
 const selectedId = ref(null);
 </script>
