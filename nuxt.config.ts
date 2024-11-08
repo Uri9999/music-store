@@ -3,8 +3,11 @@ import Aura from "@primevue/themes/aura";
 export default defineNuxtConfig({
   ssr: true,
   compatibilityDate: "2024-04-03",
-  devtools: { enabled: true },
+  devtools: { enabled: false },
   css: [
+    // '~/assets/css/reset.css',
+    // '~/assets/css/base.css',
+    // 'primeicons/primeicons.css'
   ],
   modules: ["@primevue/nuxt-module"],
   primevue: {
@@ -28,4 +31,7 @@ export default defineNuxtConfig({
   build: {
     transpile: ["primevue"],
   },
+  // build: {
+  //   extractCSS: true
+  // }
 });
