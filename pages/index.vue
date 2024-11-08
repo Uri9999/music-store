@@ -2,6 +2,10 @@
   <div class="app">
     <Menu/>
     <Carousel/>
+    <div class="tags flex items-center">
+      <div>ok</div>
+      <div>ok</div>
+    </div>
   </div>
 </template>
 

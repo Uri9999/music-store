@@ -2,6 +2,8 @@
 export default defineNuxtConfig({
   ssr: true,
   css: [
+    '~/assets/css/reset.css',
+    '~/assets/css/base.css',
     "primevue/resources/themes/aura-light-green/theme.css",
     "primevue/resources/primevue.min.css",
     // 'primevue/resources/themes/aura-light-noir/theme.css',
