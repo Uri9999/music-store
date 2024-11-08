@@ -2,7 +2,8 @@
   <div class="app px-2">
     <!-- <Menu /> -->
     <MenuMega></MenuMega>
-    <Carousel />
+    <Galleria></Galleria>
+    <!-- <Carousel /> -->
     <div class="tags flex mt-3">
       <div class="table-tag">
         <h2 class="py-3">Tag music maybe you need</h2>
@@ -34,6 +35,7 @@ import Tag from "~/components/General/Tag.vue";
 import Paginate from "~/components/General/Paginate.vue";
 import MenuMega from "~/components/Utils/MenuMega.vue";
 import ListTag from '~/components/Utils/ListTag.vue'; 
+import Galleria from "~/components/General/Galleria.vue";
 
 const items = [
   {
