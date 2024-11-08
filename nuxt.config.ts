@@ -1,37 +1,20 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import Aura from "@primevue/themes/aura";
 export default defineNuxtConfig({
   ssr: true,
-  compatibilityDate: "2024-04-03",
-  devtools: { enabled: false },
   css: [
-    // '~/assets/css/reset.css',
-    // '~/assets/css/base.css',
-    // 'primeicons/primeicons.css'
+    "primevue/resources/themes/aura-light-green/theme.css",
+    "primevue/resources/primevue.min.css",
+    // 'primevue/resources/themes/aura-light-noir/theme.css',
+    "primeicons/primeicons.css",
+    "primeflex/primeflex.min.css",
   ],
-  modules: ["@primevue/nuxt-module"],
+  compatibilityDate: "2024-04-03",
+  devtools: { enabled: true },
+  modules: ["nuxt-primevue"],
   primevue: {
-    // components: {
-    //   include: ["Menu"],
-    //   exclude: ['Galleria', 'Carousel']
-    // },
-    options: {
-      // ripple: false,
-      // inputVariant: "filled",
-      theme: {
-        preset: Aura,
-        options: {
-          prefix: "p",
-          darkModeSelector: "system",
-          cssLayer: false,
-        },
-      },
+    components: {
+      include: "*",
     },
   },
-  build: {
-    transpile: ["primevue"],
-  },
-  // build: {
-  //   extractCSS: true
-  // }
+  plugins: ['~/plugins/primevue-plugin.ts'],
 });

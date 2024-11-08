@@ -18,15 +18,11 @@
         </div>
       </template>
 
-      <!-- Custom nút điều hướng bên phải -->
-      <template #nexticon :class="'custom-next'">
-        <!-- <button class="custom-next">sssss
-          <i class="pi pi-chevron-right"></i>
-        </button> -->
+      <template #nexticon>
       </template>
 
-      <!-- Custom nút điều hướng bên trái -->
-      <template #previcon> </template>
+      <template #previcon>
+      </template>
     </Carousel>
   </div>
 </template>
@@ -34,7 +30,6 @@
 // slotProps.item.src  // .data.src
 // https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg?t=st=1731052626~exp=1731056226~hmac=264f6e22575c906d9b661c29470eea03564e65e6d0c4ce4143d615c0fd303831&w=1380
 import { ref } from "vue";
-import Carousel from "primevue/carousel";
 
 onMounted(() => {
   const nextButton = document.querySelector('.p-button-next');
