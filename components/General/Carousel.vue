@@ -93,7 +93,7 @@ const getSeverity = (status) => {
 const products = ref([
   {
     image:
-      "https://fullscore.cdn1.cafe24.com/banner/370dbfb8-d233-47f2-aff9-c4be777f87e8.jpg",
+      "https://primefaces.org/cdn/primevue/images/product/chakra-bracelet.jpg",
     alt: "Image 1",
     name: "Product Name",
     inventoryStatus: "INSTOCK",
@@ -101,7 +101,7 @@ const products = ref([
   },
   {
     image:
-      "https://fullscore.cdn1.cafe24.com/banner/370dbfb8-d233-47f2-aff9-c4be777f87e8.jpg",
+      "https://primefaces.org/cdn/primevue/images/product/chakra-bracelet.jpg",
     alt: "Image 2",
     name: "Product Name",
     inventoryStatus: "LOWSTOCK",
@@ -109,7 +109,7 @@ const products = ref([
   },
   {
     image:
-      "https://fullscore.cdn1.cafe24.com/banner/370dbfb8-d233-47f2-aff9-c4be777f87e8.jpg",
+      "https://primefaces.org/cdn/primevue/images/product/chakra-bracelet.jpg",
     alt: "Image 3",
     name: "Product Name",
     inventoryStatus: "OUTOFSTOCK",
@@ -117,7 +117,7 @@ const products = ref([
   },
   {
     image:
-      "https://fullscore.cdn1.cafe24.com/banner/370dbfb8-d233-47f2-aff9-c4be777f87e8.jpg",
+      "https://primefaces.org/cdn/primevue/images/product/chakra-bracelet.jpg",
     alt: "Image 3",
     name: "Product Name",
     inventoryStatus: "OUTOFSTOCK",
@@ -125,7 +125,7 @@ const products = ref([
   },
   {
     image:
-      "https://fullscore.cdn1.cafe24.com/banner/370dbfb8-d233-47f2-aff9-c4be777f87e8.jpg",
+      "https://primefaces.org/cdn/primevue/images/product/chakra-bracelet.jpg",
     alt: "Image 3",
     name: "Product Name",
     inventoryStatus: "OUTOFSTOCK",
@@ -133,7 +133,7 @@ const products = ref([
   },
   {
     image:
-      "https://fullscore.cdn1.cafe24.com/banner/370dbfb8-d233-47f2-aff9-c4be777f87e8.jpg",
+      "https://primefaces.org/cdn/primevue/images/product/chakra-bracelet.jpg",
     alt: "Image 3",
     name: "Product Name",
     inventoryStatus: "OUTOFSTOCK",

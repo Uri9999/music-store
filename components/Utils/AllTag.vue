@@ -120,7 +120,7 @@
               class="p-4 border-1 surface-border surface-card border-round flex flex-column"
             >
               <div
-                class="surface-50 flex justify-content-center border-round p-3"
+                class="surface-50 flex justify-content-center border-round"
               >
                 <div class="relative mx-auto">
                   <img
@@ -199,7 +199,7 @@ const sortOptions = ref([
 const products = ref([
   {
     image:
-      "https://fullscore.cdn1.cafe24.com/banner/370dbfb8-d233-47f2-aff9-c4be777f87e8.jpg",
+      "https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg",
     alt: "Image 1",
     name: "Product Name",
     inventoryStatus: "INSTOCK",
@@ -207,15 +207,71 @@ const products = ref([
   },
   {
     image:
-      "https://fullscore.cdn1.cafe24.com/banner/370dbfb8-d233-47f2-aff9-c4be777f87e8.jpg",
+      "https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg",
     alt: "Image 2",
+    name: "Product Name",
+    inventoryStatus: "INSTOCK",
+    price: 20,
+  },
+  {
+    image:
+      "https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg",
+    alt: "Image 3",
+    name: "Product Name",
+    inventoryStatus: "INSTOCK",
+    price: 20,
+  },
+  {
+    image:
+      "https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg",
+    alt: "Image 3",
+    name: "Product Name",
+    inventoryStatus: "OUTOFSTOCK",
+    price: 20,
+  },
+  {
+    image:
+      "https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg",
+    alt: "Image 3",
+    name: "Product Name",
+    inventoryStatus: "INSTOCK",
+    price: 20,
+  },
+  {
+    image:
+      "https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg",
+    alt: "Image 3",
+    name: "Product Name",
+    inventoryStatus: "OUTOFSTOCK",
+    price: 20,
+  },
+  {
+    image:
+      "https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg",
+    alt: "Image 3",
     name: "Product Name",
     inventoryStatus: "LOWSTOCK",
     price: 20,
   },
   {
     image:
-      "https://fullscore.cdn1.cafe24.com/banner/370dbfb8-d233-47f2-aff9-c4be777f87e8.jpg",
+      "https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg",
+    alt: "Image 3",
+    name: "Product Name",
+    inventoryStatus: "LOWSTOCK",
+    price: 20,
+  },
+  {
+    image:
+      "https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg",
+    alt: "Image 3",
+    name: "Product Name",
+    inventoryStatus: "INSTOCK",
+    price: 20,
+  },
+  {
+    image:
+      "https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg",
     alt: "Image 3",
     name: "Product Name",
     inventoryStatus: "OUTOFSTOCK",
@@ -223,78 +279,22 @@ const products = ref([
   },
   {
     image:
-      "https://fullscore.cdn1.cafe24.com/banner/370dbfb8-d233-47f2-aff9-c4be777f87e8.jpg",
+      "https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg",
     alt: "Image 3",
     name: "Product Name",
-    inventoryStatus: "OUTOFSTOCK",
+    inventoryStatus: "INSTOCK",
     price: 20,
   },
   {
     image:
-      "https://fullscore.cdn1.cafe24.com/banner/370dbfb8-d233-47f2-aff9-c4be777f87e8.jpg",
+      "https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg",
     alt: "Image 3",
     name: "Product Name",
-    inventoryStatus: "OUTOFSTOCK",
-    price: 20,
-  },
-  {
-    image:
-      "https://fullscore.cdn1.cafe24.com/banner/370dbfb8-d233-47f2-aff9-c4be777f87e8.jpg",
-    alt: "Image 3",
-    name: "Product Name",
-    inventoryStatus: "OUTOFSTOCK",
-    price: 20,
-  },
-  {
-    image:
-      "https://fullscore.cdn1.cafe24.com/banner/370dbfb8-d233-47f2-aff9-c4be777f87e8.jpg",
-    alt: "Image 3",
-    name: "Product Name",
-    inventoryStatus: "OUTOFSTOCK",
-    price: 20,
-  },
-  {
-    image:
-      "https://fullscore.cdn1.cafe24.com/banner/370dbfb8-d233-47f2-aff9-c4be777f87e8.jpg",
-    alt: "Image 3",
-    name: "Product Name",
-    inventoryStatus: "OUTOFSTOCK",
-    price: 20,
-  },
-  {
-    image:
-      "https://fullscore.cdn1.cafe24.com/banner/370dbfb8-d233-47f2-aff9-c4be777f87e8.jpg",
-    alt: "Image 3",
-    name: "Product Name",
-    inventoryStatus: "OUTOFSTOCK",
-    price: 20,
-  },
-  {
-    image:
-      "https://fullscore.cdn1.cafe24.com/banner/370dbfb8-d233-47f2-aff9-c4be777f87e8.jpg",
-    alt: "Image 3",
-    name: "Product Name",
-    inventoryStatus: "OUTOFSTOCK",
-    price: 20,
-  },
-  {
-    image:
-      "https://fullscore.cdn1.cafe24.com/banner/370dbfb8-d233-47f2-aff9-c4be777f87e8.jpg",
-    alt: "Image 3",
-    name: "Product Name",
-    inventoryStatus: "OUTOFSTOCK",
-    price: 20,
-  },
-  {
-    image:
-      "https://fullscore.cdn1.cafe24.com/banner/370dbfb8-d233-47f2-aff9-c4be777f87e8.jpg",
-    alt: "Image 3",
-    name: "Product Name",
-    inventoryStatus: "OUTOFSTOCK",
+    inventoryStatus: "INSTOCK",
     price: 20,
   },
 ]);
-const layout = ref("grid");
+const layout = ref("list"); // grid
 
 const getSeverity = (product) => {
   switch (product.inventoryStatus) {
