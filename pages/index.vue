@@ -29,6 +29,10 @@
 
     <div class="container">
       <h2>Danh sách bài tag</h2>
+      <AllTag></AllTag>
+      <div class="card">
+          <Paginate></Paginate>
+        </div>
     </div>
 
     <div class="container mb-5">
@@ -50,6 +54,7 @@ import MenuMega from "~/components/Utils/MenuMega.vue";
 import ListTag from "~/components/Utils/ListTag.vue";
 import Galleria from "~/components/General/Galleria.vue";
 import Footer from "~/components/Utils/Footer.vue";
+import AllTag from "~/components/Utils/AllTag.vue";
 
 const items = [
   {
