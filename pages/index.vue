@@ -160,9 +160,9 @@ const items = [
 
 .item {
   padding: 10px;
-  background-color: #f0f0f0;
+  border: 1px solid #e2e8f0;
   text-align: center;
-  border-radius: 8px;
+  border-radius: 5px;
 }
 .list-tag {
   width: 30%;
