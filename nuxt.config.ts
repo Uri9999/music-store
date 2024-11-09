@@ -1,9 +1,17 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  app: {
+    head: {
+      title: "Zumi Shop",
+      link: [
+        { rel: "icon", type: "image/x-icon", href: "/images/favicon.png" },
+      ],
+    },
+  },
   ssr: true,
   css: [
-    '~/assets/css/reset.css',
-    '~/assets/css/base.css',
+    "~/assets/css/reset.css",
+    "~/assets/css/base.css",
     "primevue/resources/themes/aura-light-green/theme.css",
     "primevue/resources/primevue.min.css",
     "primeicons/primeicons.css",
