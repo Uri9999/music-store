@@ -64,7 +64,10 @@
 
     <!-- Enterprise Plan -->
     <div class="card">
-      <h2 class="plan-title">Enterprise</h2>
+      <div class="plan">
+        <h2 class="plan-title">Enterprise</h2>
+        <div class="sale">🎉 Save 20%</div>
+      </div>
       <p class="description">
         Lorem ipsum dolor sit, amet consectetur adipisicing elit.
       </p>
@@ -138,16 +141,31 @@
   width: 300px;
   display: flex;
   flex-direction: column;
-  align-items: center;
   min-height: 500px; /* Đảm bảo chiều cao tối thiểu */
 }
 
+.plan {
+  display: flex;
+  justify-content: space-between;
+}
+.sale {
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  color: #f97316;
+  height: 26px;
+  font-size: 0.9rem;
+  border-radius: 5px;
+  padding: 3.5px 7px;
+  background-color: #ffedd5;
+}
+
 .plan-title {
-  width: 100%;
   font-size: 1.3rem;
   font-weight: bold;
   margin-bottom: 10px;
   color: #464646;
+  margin-bottom: 20px;
 }
 
 .description {
@@ -189,7 +207,6 @@ hr {
 
 .features li {
   display: flex;
-  align-items: center;
   color: #666;
   gap: 10px;
   margin-bottom: 15px;
