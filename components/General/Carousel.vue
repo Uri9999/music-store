@@ -33,7 +33,7 @@
               ${{ slotProps.data.price }}
             </div>
             <span>
-              <Button icon="pi pi-heart" severity="secondary" outlined />
+              <!-- <Button icon="pi pi-heart" severity="secondary" outlined /> -->
               <Button icon="pi pi-shopping-cart" class="ml-2" />
             </span>
           </div>
