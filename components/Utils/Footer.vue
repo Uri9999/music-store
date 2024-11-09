@@ -4,8 +4,8 @@
       <!-- Phần thông tin liên hệ -->
       <div class="footer-section contact-info">
         <h3>Contact Us</h3>
-        <p>📍 123 Main Street, Hanoi, Vietnam</p>
-        <p>📧 Email: info@example.com</p>
+        <p>📍 123 Kien Truc, Hanoi, Vietnam</p>
+        <p>📧 Email: tritran@gmail.com</p>
         <p>📞 Phone: +84 123 456 789</p>
       </div>
 
@@ -35,7 +35,7 @@
 
     <!-- Phần bản quyền -->
     <div class="footer-bottom">
-      <p>&copy; 2024 YourCompany. All rights reserved.</p>
+      <p>&copy; 2024 Kalimba. All rights reserved.</p>
     </div>
   </footer>
 </template>
@@ -136,6 +136,14 @@
   .footer-section {
     text-align: center;
     min-width: 100%;
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 500px) {
+  .footer-section {
+    text-align: left;
+    margin-bottom: 10px;
   }
 }
 </style>

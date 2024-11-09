@@ -8,7 +8,7 @@
 
     <div class="container mt-3 tag-container">
       <div class="table-tag">
-        <h2 class="py-3">Tag music maybe you need</h2>
+        <h2 class="py-3">Sản phẩm mới</h2>
         <div class="grid-container">
           <Tag
             classes="item"
@@ -22,13 +22,17 @@
         </div>
       </div>
       <div class="list-tag">
-        <h2 class="py-3">Free Tags</h2>
+        <h2 class="py-3">Bài tag miễn phí</h2>
         <ListTag></ListTag>
       </div>
     </div>
 
+    <div class="container">
+      <h2>Danh sách bài tag</h2>
+    </div>
+
     <div class="container mb-5">
-      <h2>List Tag for best</h2>
+      <h2>Gợi ý dành cho bạn</h2>
       <Carousel></Carousel>
     </div>
 
