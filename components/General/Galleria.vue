@@ -12,7 +12,7 @@
       :indicatorsPosition="'bottom'"
       :autoPlay="true"
       containerClass="gallaria-custom"
-      transitionInterval="1000"
+      :transitionInterval="3000"
     >
       <template #item="slotProps">
         <img

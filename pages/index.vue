@@ -3,7 +3,7 @@
     <!-- <Menu /> -->
     <MenuMega></MenuMega>
     <Galleria></Galleria>
-    <!-- <Carousel /> -->
+
     <div class="tags flex mt-3">
       <div class="table-tag">
         <h2 class="py-3">Tag music maybe you need</h2>
@@ -24,6 +24,11 @@
         <ListTag></ListTag>
       </div>
     </div>
+
+    <div>
+    <h2>List Tag for best</h2>
+      <Carousel></Carousel>
+      </div>
   </div>
 </template>
 

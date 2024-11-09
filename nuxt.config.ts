@@ -6,7 +6,6 @@ export default defineNuxtConfig({
     '~/assets/css/base.css',
     "primevue/resources/themes/aura-light-green/theme.css",
     "primevue/resources/primevue.min.css",
-    // 'primevue/resources/themes/aura-light-noir/theme.css',
     "primeicons/primeicons.css",
     "primeflex/primeflex.min.css",
   ],
@@ -18,5 +17,4 @@ export default defineNuxtConfig({
       include: "*",
     },
   },
-  plugins: ['~/plugins/primevue-plugin.ts'],
 });

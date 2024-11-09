@@ -1,90 +1,143 @@
 <template>
-  <div class="carousel-container">
+  <div class="card">
     <Carousel
-      :value="images"
-      :numVisible="1"
+      :value="products"
+      :numVisible="5"
       :numScroll="1"
+      :responsiveOptions="responsiveOptions"
       :circular="true"
       :autoplayInterval="3000"
       :showIndicators="false"
+      :showNavigators="false"
     >
       <template #item="slotProps">
-        <div class="image-wrapper">
-          <img
-            :src="slotProps.data.src"
-            :alt="slotProps.data.alt"
-            class="carousel-image"
-          />
+        <div class="border-1 surface-border border-round m-2 p-3">
+          <div class="mb-3">
+            <div class="relative mx-auto">
+              <img
+                :src="slotProps.data.image"
+                :alt="slotProps.data.name"
+                class="w-full border-round"
+              />
+              <Tag
+                :value="slotProps.data.inventoryStatus"
+                :severity="getSeverity(slotProps.data.inventoryStatus)"
+                class="absolute"
+                style="left: 5px; top: 5px"
+              />
+            </div>
+          </div>
+          <div class="mb-3 font-medium">{{ slotProps.data.name }}</div>
+          <div class="flex justify-content-between align-items-center">
+            <div class="mt-0 font-semibold text-xl">
+              ${{ slotProps.data.price }}
+            </div>
+            <span>
+              <Button icon="pi pi-heart" severity="secondary" outlined />
+              <Button icon="pi pi-shopping-cart" class="ml-2" />
+            </span>
+          </div>
         </div>
-      </template>
-
-      <template #nexticon>
-      </template>
-
-      <template #previcon>
       </template>
     </Carousel>
   </div>
 </template>
+
 <script setup>
-// slotProps.item.src  // .data.src
-// https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg?t=st=1731052626~exp=1731056226~hmac=264f6e22575c906d9b661c29470eea03564e65e6d0c4ce4143d615c0fd303831&w=1380
 import { ref } from "vue";
 
-onMounted(() => {
-  const nextButton = document.querySelector('.p-button-next');
-  const prevButton = document.querySelector('.p-button-prev');
-
-  if (nextButton) nextButton.style.display = 'none';
-  if (prevButton) prevButton.style.display = 'none';
-});
-
-const images = ref([
+const responsiveOptions = ref([
   {
-    src: "https://fullscore.cdn1.cafe24.com/banner/370dbfb8-d233-47f2-aff9-c4be777f87e8.jpg",
+    breakpoint: "1400px",
+    numVisible: 5,
+    numScroll: 1,
+  },
+  {
+    breakpoint: "1199px",
+    numVisible: 4,
+    numScroll: 1,
+  },
+  {
+    breakpoint: "767px",
+    numVisible: 3,
+    numScroll: 1,
+  },
+  {
+    breakpoint: "575px",
+    numVisible: 2,
+    numScroll: 1,
+  },
+  {
+    breakpoint: "350px",
+    numVisible: 1,
+    numScroll: 1,
+  },
+]);
+
+const getSeverity = (status) => {
+  switch (status) {
+    case "INSTOCK":
+      return "success";
+
+    case "LOWSTOCK":
+      return "warning";
+
+    case "OUTOFSTOCK":
+      return "danger";
+
+    default:
+      return null;
+  }
+};
+
+const products = ref([
+  {
+    image:
+      "https://fullscore.cdn1.cafe24.com/banner/370dbfb8-d233-47f2-aff9-c4be777f87e8.jpg",
     alt: "Image 1",
+    name: "Product Name",
+    inventoryStatus: "INSTOCK",
+    price: 20,
   },
   {
-    src: "https://fullscore.cdn1.cafe24.com/banner/370dbfb8-d233-47f2-aff9-c4be777f87e8.jpg",
+    image:
+      "https://fullscore.cdn1.cafe24.com/banner/370dbfb8-d233-47f2-aff9-c4be777f87e8.jpg",
     alt: "Image 2",
+    name: "Product Name",
+    inventoryStatus: "LOWSTOCK",
+    price: 20,
   },
   {
-    src: "https://fullscore.cdn1.cafe24.com/banner/370dbfb8-d233-47f2-aff9-c4be777f87e8.jpg",
+    image:
+      "https://fullscore.cdn1.cafe24.com/banner/370dbfb8-d233-47f2-aff9-c4be777f87e8.jpg",
     alt: "Image 3",
+    name: "Product Name",
+    inventoryStatus: "OUTOFSTOCK",
+    price: 20,
+  },
+  {
+    image:
+      "https://fullscore.cdn1.cafe24.com/banner/370dbfb8-d233-47f2-aff9-c4be777f87e8.jpg",
+    alt: "Image 3",
+    name: "Product Name",
+    inventoryStatus: "OUTOFSTOCK",
+    price: 20,
+  },
+  {
+    image:
+      "https://fullscore.cdn1.cafe24.com/banner/370dbfb8-d233-47f2-aff9-c4be777f87e8.jpg",
+    alt: "Image 3",
+    name: "Product Name",
+    inventoryStatus: "OUTOFSTOCK",
+    price: 20,
+  },
+  {
+    image:
+      "https://fullscore.cdn1.cafe24.com/banner/370dbfb8-d233-47f2-aff9-c4be777f87e8.jpg",
+    alt: "Image 3",
+    name: "Product Name",
+    inventoryStatus: "OUTOFSTOCK",
+    price: 20,
   },
 ]);
 </script>
-
-<style scoped>
-.carousel-container {
-  max-width: 100%;
-  margin: 0 auto;
-}
-
-.image-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  position: relative;
-}
-
-.carousel-image {
-  width: 100%;
-  height: auto; /* Đặt chiều cao để ảnh chiếm toàn bộ màn hình */
-  object-fit: cover; /* Đảm bảo ảnh giữ tỷ lệ và bao phủ toàn bộ container */
-  border-radius: 0; /* Bỏ bo góc nếu có */
-}
-
-.carousel-container .p-carousel-next {
-  position: absolute !important;
-  right: 10px;
-}
-
-.carousel-container .p-carousel-prev {
-  position: absolute !important;
-  left: 10px;
-}
-
-</style>
