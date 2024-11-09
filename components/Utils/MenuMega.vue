@@ -2,8 +2,8 @@
   <div class="card">
     <MegaMenu :model="items" class="custom-menu">
       <template #start>
-        <!-- <img class="logo" src="~/public/images/logo.png"/> -->
-        <svg
+        <img class="logo" src="~/public/images/logo.jpg" />
+        <!-- <svg
           width="20"
           height="20"
           viewBox="0 0 35 40"
@@ -19,7 +19,7 @@
             d="M30.69 4.21L24.37 4.81L22.57 0.69L22.86 0H26.48L30.69 4.21ZM23.75 5.67L22.66 3.08L18.05 14.24V17.14H19.7H20.03H20.16H20.2L24.1 15.7L30.11 5.19L23.75 5.67ZM4.21002 4.21L10.53 4.81L12.33 0.69L12.05 0H8.43002L4.22002 4.21H4.21002ZM21.9 17.4L20.6 18.2H14.3L13 17.4L12.4 18.2L12.42 18.23L17.45 26.8L22.48 18.23L22.5 18.2L21.9 17.4ZM4.79002 5.19L10.8 15.7L14.7 17.14H14.74H15.2H16.85V14.24L12.24 3.09L11.15 5.68L4.79002 5.2V5.19Z"
             fill="var(--text-color)"
           />
-        </svg>
+        </svg> -->
       </template>
 
       <template #end>
@@ -216,5 +216,10 @@ const items = ref([
   width: 30px;
   height: 30px;
   margin-left: 10px;
+}
+
+.logo {
+  height: 25px;
+  margin-right: 15px;
 }
 </style>
