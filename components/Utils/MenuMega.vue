@@ -2,6 +2,7 @@
   <div class="card">
     <MegaMenu :model="items" class="custom-menu">
       <template #start>
+        <!-- <img class="logo" src="~/public/images/logo.png"/> -->
         <svg
           width="20"
           height="20"

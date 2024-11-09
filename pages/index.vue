@@ -31,13 +31,17 @@
       <h2>Danh sách bài tag</h2>
       <AllTag></AllTag>
       <div class="card">
-          <Paginate></Paginate>
-        </div>
+        <Paginate></Paginate>
+      </div>
     </div>
 
     <div class="container mb-5">
-      <h2>Gợi ý dành cho bạn</h2>
+      <h2 class="mb-3">Gợi ý dành cho bạn</h2>
       <Carousel></Carousel>
+    </div>
+    <div class="container mb-5">
+      <h2 class="mb-3">Subscription</h2>
+      <Subscription></Subscription>
     </div>
 
     <Footer></Footer>
@@ -55,6 +59,7 @@ import ListTag from "~/components/Utils/ListTag.vue";
 import Galleria from "~/components/General/Galleria.vue";
 import Footer from "~/components/Utils/Footer.vue";
 import AllTag from "~/components/Utils/AllTag.vue";
+import Subscription from "~/components/Utils/Subscription.vue";
 
 const items = [
   {
