@@ -2,11 +2,11 @@
   <div class="card">
     <DataView :value="products" :layout="layout">
       <template #header>
-        <div class="flex justify-content-between">
+        <div class="filter">
           <!-- fillter -->
           <div>
             <Dropdown
-              class="mr-3"
+              class="mr-3 mt-2"
               v-model="sortKey"
               :options="sortOptions"
               optionLabel="label"
@@ -15,7 +15,7 @@
             />
 
             <Dropdown
-              class="mr-3"
+              class="mr-3 mt-2"
               v-model="sortKey"
               :options="sortOptions"
               optionLabel="label"
@@ -24,6 +24,7 @@
             />
 
             <Dropdown
+              class="mt-2"
               v-model="sortKey"
               :options="sortOptions"
               optionLabel="label"
@@ -31,7 +32,7 @@
               @change="onSortChange($event)"
             />
           </div>
-          <DataViewLayoutOptions v-model="layout" />
+          <DataViewLayoutOptions v-model="layout" class="mt-2 filter-layer" />
         </div>
       </template>
 
@@ -119,9 +120,7 @@
             <div
               class="p-4 border-1 surface-border surface-card border-round flex flex-column"
             >
-              <div
-                class="surface-50 flex justify-content-center border-round"
-              >
+              <div class="surface-50 flex justify-content-center border-round">
                 <div class="relative mx-auto">
                   <img
                     class="border-round w-full"
@@ -198,96 +197,84 @@ const sortOptions = ref([
 ]);
 const products = ref([
   {
-    image:
-      "https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg",
+    image: "https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg",
     alt: "Image 1",
     name: "Product Name",
     inventoryStatus: "INSTOCK",
     price: 20,
   },
   {
-    image:
-      "https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg",
+    image: "https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg",
     alt: "Image 2",
     name: "Product Name",
     inventoryStatus: "INSTOCK",
     price: 20,
   },
   {
-    image:
-      "https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg",
+    image: "https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg",
     alt: "Image 3",
     name: "Product Name",
     inventoryStatus: "INSTOCK",
     price: 20,
   },
   {
-    image:
-      "https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg",
+    image: "https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg",
     alt: "Image 3",
     name: "Product Name",
     inventoryStatus: "OUTOFSTOCK",
     price: 20,
   },
   {
-    image:
-      "https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg",
+    image: "https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg",
     alt: "Image 3",
     name: "Product Name",
     inventoryStatus: "INSTOCK",
     price: 20,
   },
   {
-    image:
-      "https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg",
+    image: "https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg",
     alt: "Image 3",
     name: "Product Name",
     inventoryStatus: "OUTOFSTOCK",
     price: 20,
   },
   {
-    image:
-      "https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg",
+    image: "https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg",
     alt: "Image 3",
     name: "Product Name",
     inventoryStatus: "LOWSTOCK",
     price: 20,
   },
   {
-    image:
-      "https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg",
+    image: "https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg",
     alt: "Image 3",
     name: "Product Name",
     inventoryStatus: "LOWSTOCK",
     price: 20,
   },
   {
-    image:
-      "https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg",
+    image: "https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg",
     alt: "Image 3",
     name: "Product Name",
     inventoryStatus: "INSTOCK",
     price: 20,
   },
   {
-    image:
-      "https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg",
+    image: "https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg",
     alt: "Image 3",
     name: "Product Name",
     inventoryStatus: "OUTOFSTOCK",
     price: 20,
   },
   {
-    image:
-      "https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg",
+    image: "https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg",
     alt: "Image 3",
     name: "Product Name",
     inventoryStatus: "INSTOCK",
     price: 20,
   },
   {
-    image:
-      "https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg",
+    image: "https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg",
     alt: "Image 3",
     name: "Product Name",
     inventoryStatus: "INSTOCK",
@@ -316,3 +303,17 @@ const onSortChange = (event) => {
   console.log("change");
 };
 </script>
+
+<style scoped>
+.filter {
+  display: flex;
+  justify-content: space-between;
+}
+
+.filter-layer {
+  min-width: 100px;
+  display: flex;
+  justify-content: end;
+  height: 38px;
+}
+</style>
