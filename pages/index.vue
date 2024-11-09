@@ -1,10 +1,12 @@
 <template>
-  <div class="app px-2">
+  <div class="app">
     <!-- <Menu /> -->
-    <MenuMega></MenuMega>
-    <Galleria></Galleria>
+    <div class="container">
+      <MenuMega></MenuMega>
+      <Galleria></Galleria>
+    </div>
 
-    <div class="mt-3 tag-container">
+    <div class="container mt-3 tag-container">
       <div class="table-tag">
         <h2 class="py-3">Tag music maybe you need</h2>
         <div class="grid-container">
@@ -25,10 +27,12 @@
       </div>
     </div>
 
-    <div>
+    <div class="container mb-5">
       <h2>List Tag for best</h2>
       <Carousel></Carousel>
     </div>
+
+    <Footer></Footer>
   </div>
 </template>
 
@@ -41,6 +45,7 @@ import Paginate from "~/components/General/Paginate.vue";
 import MenuMega from "~/components/Utils/MenuMega.vue";
 import ListTag from "~/components/Utils/ListTag.vue";
 import Galleria from "~/components/General/Galleria.vue";
+import Footer from "~/components/Utils/Footer.vue";
 
 const items = [
   {
@@ -119,9 +124,11 @@ const items = [
 </script>
 
 <style scoped>
-.app {
+.container {
   max-width: 1200px;
   margin: 0 auto;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .tag-container {
