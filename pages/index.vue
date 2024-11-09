@@ -150,7 +150,7 @@ const items = [
 }
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 10px; /* khoảng cách giữa các phần tử */
 }
 
