@@ -200,7 +200,7 @@ const items = [
 /* Khi màn hình nhỏ hơn 480px, hiển thị 1 item trên 1 hàng */
 @media (max-width: 480px) {
   .grid-container {
-    grid-template-columns: repeat(1, 1fr);
+    /* grid-template-columns: repeat(1, 1fr); */
   }
 }
 </style>

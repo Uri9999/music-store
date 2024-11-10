@@ -220,10 +220,15 @@ hr {
   margin-top: auto; /* Đẩy nút xuống cuối cùng */
 }
 
-/* @media (max-width: 980px) {
-    .pricing-container {
-        flex-direction: column;
-        align-items: center;
-    }
-} */
+@media (max-width: 768px) {
+  .card {
+    min-height: 450px;
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    min-height: 420px;
+  }
+}
 </style>

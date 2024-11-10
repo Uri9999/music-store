@@ -115,7 +115,7 @@
           <div
             v-for="(item, index) in slotProps.items"
             :key="index"
-            class="col-12 sm:col-6 md:col-4 xl:col-3 p-2"
+            class="col-6 sm:col-6 md:col-4 xl:col-3 p-2"
           >
             <div
               class="p-4 border-1 surface-border surface-card border-round flex flex-column"
