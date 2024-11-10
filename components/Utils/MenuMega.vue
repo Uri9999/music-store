@@ -1,15 +1,26 @@
 <template>
   <div class="card">
-    <MegaMenu :model="items" class="custom-menu">
+    <MegaMenu
+      :model="items"
+      :breakpoint="pointResponsiveMenu + 'px'"
+      class="custom-menu"
+    >
       <template #start>
-        <div class="logo">
+        <div class="logo" v-if="!responsiveMenu">
           <img src="~/public/images/logo.jpg" />
         </div>
       </template>
 
       <template #end>
         <div class="menu-end">
+          <div class="responsive-items" v-if="responsiveMenu">
+            <div class="logo">
+              <img src="~/public/images/logo.jpg" />
+            </div>
+            <span class="search-icon"> <i class="pi pi-search"></i></span>
+          </div>
           <InputText
+            v-if="!responsiveMenu"
             placeholder="Search"
             type="text"
             class="sm:w-auto search"
@@ -26,7 +37,15 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
+import { useWindowSize } from "vue-window-size";
+
+const pointResponsiveMenu = ref(830);
+const { width, height } = useWindowSize();
+const responsiveMenu = computed(() => {
+  return width.value <= pointResponsiveMenu.value;
+});
+console.log("wid", width.value);
 
 const items = ref([
   {
@@ -214,9 +233,32 @@ const items = ref([
 }
 
 .menu-end {
+  width: 100%;
   display: flex;
   justify-content: end;
 }
+
+.responsive-items {
+  display: flex;
+  align-items: center;
+}
+
+.responsive-items .logo {
+  margin-right: calc(50vw - 130px);
+}
+
+.search-icon {
+  display: inline-block;
+  height: 30px;
+  width: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(238, 238, 238);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
 @media (max-width: 470px) {
   .search {
     width: 75%;

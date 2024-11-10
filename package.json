@@ -15,7 +15,8 @@
     "primeicons": "^7.0.0",
     "primevue": "^3.53.0",
     "vue": "latest",
-    "vue-router": "latest"
+    "vue-router": "latest",
+    "vue-window-size": "^2.0.0"
   },
   "devDependencies": {
     "nuxt-primevue": "^3.0.0"
