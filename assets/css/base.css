@@ -1,17 +1,27 @@
-html {
-    font-size: 16px;
-    font-family: Arial, Helvetica, sans-serif;
+:root {
+  --color-1: #3a320c;
+  --color-2: #8c5112;
+  --color-3: #ca7112;
 }
 
+html {
+  font-size: 16px;
+}
+@import url("https://fonts.googleapis.com/css2?family=Asap:wght@400;700&display=swap");
+
+body {
+  font-family: "Asap", sans-serif;
+  color: var(--color-1);
+}
 
 @media (max-width: 768px) {
-    html {
-        font-size: 14px;
-    }
+  html {
+    font-size: 14px;
+  }
 }
 
 @media (max-width: 480px) {
-    html {
-        font-size: 12px;
-    }
+  html {
+    /* font-size: 12px; */
+  }
 }

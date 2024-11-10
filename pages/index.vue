@@ -42,21 +42,16 @@
       <h2 class="mb-3">Subscription</h2>
       <Subscription></Subscription>
     </div>
-
-    <Footer></Footer>
   </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
-import Menu from "~/components/Utils/Menu.vue";
 import Carousel from "~/components/General/Carousel.vue";
 import Tag from "~/components/General/Tag.vue";
 import Paginate from "~/components/General/Paginate.vue";
-import MenuMega from "~/components/Utils/MenuMega.vue";
 import ListTag from "~/components/Utils/ListTag.vue";
 import Galleria from "~/components/General/Galleria.vue";
-import Footer from "~/components/Utils/Footer.vue";
 import AllTag from "~/components/Utils/AllTag.vue";
 import Subscription from "~/components/Utils/Subscription.vue";
 

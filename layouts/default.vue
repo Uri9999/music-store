@@ -1,17 +1,20 @@
 <template>
   <div class="layout">
     <!-- Sidebar Menu -->
-    <MenuMega class="container"/>
-
+    <MenuMega class="container" />
     <!-- Main content -->
     <div class="content">
       <NuxtPage />
     </div>
+
+    <!-- Footer -->
+    <Footer></Footer>
   </div>
 </template>
 
 <script setup>
 import MenuMega from "~/components/Utils/MenuMega.vue";
+import Footer from "~/components/Utils/Footer.vue";
 </script>
 
 <style scoped lang="scss">
