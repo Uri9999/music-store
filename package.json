@@ -19,6 +19,7 @@
     "vue-window-size": "^2.0.0"
   },
   "devDependencies": {
-    "nuxt-primevue": "^3.0.0"
+    "nuxt-primevue": "^3.0.0",
+    "sass": "^1.80.6"
   }
 }

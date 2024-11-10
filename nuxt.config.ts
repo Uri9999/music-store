@@ -12,6 +12,7 @@ export default defineNuxtConfig({
   css: [
     "~/assets/css/reset.css",
     "~/assets/css/base.css",
+    "~/assets/styles/main.scss",
     "primevue/resources/themes/aura-light-green/theme.css",
     "primevue/resources/primevue.min.css",
     "primeicons/primeicons.css",
@@ -23,6 +24,16 @@ export default defineNuxtConfig({
   primevue: {
     components: {
       include: "*",
+    },
+  },
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          api: "modern-compiler", // or "modern"
+          // additionalData: '@use "~/assets/_colors.scss" as *;'
+        },
+      },
     },
   },
 });

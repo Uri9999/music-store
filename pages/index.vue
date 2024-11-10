@@ -2,7 +2,6 @@
   <div class="app">
     <!-- <Menu /> -->
     <div class="container">
-      <MenuMega></MenuMega>
       <Galleria></Galleria>
     </div>
 
