@@ -179,7 +179,7 @@ const items = [
 /* Khi màn hình nhỏ hơn 768px, hiển thị 2 item trên 1 hàng */
 @media (max-width: 768px) {
   .grid-container {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 
   .tag-container {
@@ -200,7 +200,7 @@ const items = [
 /* Khi màn hình nhỏ hơn 480px, hiển thị 1 item trên 1 hàng */
 @media (max-width: 480px) {
   .grid-container {
-    /* grid-template-columns: repeat(1, 1fr); */
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 </style>
