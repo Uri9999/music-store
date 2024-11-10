@@ -21,7 +21,7 @@
       <div class="mt-0 font-semibold text-xl">${{ item.price }}</div>
       <span>
         <!-- <Button icon="pi pi-heart" severity="secondary" outlined /> -->
-        <Button icon="pi pi-shopping-cart" class="" />
+        <Button icon="pi pi-shopping-cart" class="custom"/>
       </span>
     </div>
   </div>

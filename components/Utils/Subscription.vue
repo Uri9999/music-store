@@ -26,7 +26,7 @@
           Morbi tincidunt augue
         </li>
       </ul>
-      <Button label="Buy Now" class="btn px-5 py-3" />
+      <Button label="Buy Now" class="btn custom px-5 py-3" />
     </div>
 
     <!-- Premium Plan -->
@@ -59,7 +59,7 @@
           Duis ultricies lacus sed
         </li>
       </ul>
-      <Button label="Buy Now" class="btn px-5 py-3" />
+      <Button label="Buy Now" class="btn custom px-5 py-3" />
     </div>
 
     <!-- Enterprise Plan -->
@@ -103,7 +103,7 @@
           Nisi scelerisque
         </li>
       </ul>
-      <Button label="Buy Now" class="btn px-5 py-3" />
+      <Button label="Buy Now" class="btn custom px-5 py-3" />
     </div>
   </div>
 </template>

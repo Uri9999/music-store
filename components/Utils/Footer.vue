@@ -67,9 +67,8 @@
 .footer-section h3 {
   margin-bottom: 10px;
   font-size: 1.5rem;
-  border-bottom: 2px solid #e67e22;
+  border-bottom: 2px solid var(--primary-light-color);
   display: inline-block;
-  padding-bottom: 5px;
 }
 
 /* Phần thông tin liên hệ */

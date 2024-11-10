@@ -17,6 +17,7 @@ export default defineNuxtConfig({
     "primevue/resources/primevue.min.css",
     "primeicons/primeicons.css",
     "primeflex/primeflex.min.css",
+    "~/assets/css/custom-theme.css",
   ],
   compatibilityDate: "2024-04-03",
   devtools: { enabled: true },

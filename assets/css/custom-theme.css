@@ -1,0 +1,20 @@
+:root {
+  --primary-color: #3a320c; /* Màu chính */
+  --primary-light-color: #8c5112;
+  --primary-color-text: #ffffff; /* Màu chữ trên nền chính */
+  --surface-color: #f5f5f5; /* Màu nền */
+  --text-color: #333333; /* Màu chữ mặc định */
+  --border-color: #dcdcdc; /* Màu viền */
+  --hover-primary-color: #1e88e5; /* Màu khi hover */
+  --hover-light-color: #b86c1b; /* Màu khi hover */
+}
+
+.p-button.custom {
+  background-color: var(--primary-light-color);
+  border-color: var(--primary-light-color);
+}
+
+.p-button.custom:hover {
+  background-color: var(--hover-light-color);
+  border-color: var(--hover-light-color);
+}
