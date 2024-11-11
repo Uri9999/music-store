@@ -37,7 +37,9 @@
                                     @click="showMenuMobile = false"
                                 ></i>
                             </div>
-                            <Menu></Menu>
+                            <Menu
+                                @closeMegaMenu="showMenuMobile = false"
+                            ></Menu>
                         </div>
                     </div>
                 </div>
