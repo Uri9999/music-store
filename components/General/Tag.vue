@@ -34,7 +34,6 @@
                     <Button
                         icon="pi pi-shopping-cart"
                         class="flex-auto white-space-nowrap custom"
-                        label="Mua ngay"
                     ></Button>
                     <Button icon="pi pi-heart" outlined></Button>
                 </div>
