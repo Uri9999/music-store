@@ -2,7 +2,7 @@
     <div
         class="flex flex-column sm:flex-row sm:align-items-center p-4 gap-3"
         :class="{
-            'border-top-1 surface-border': index !== 0,
+            'border-top-1 surface-border': true
         }"
     >
         <div class="md:w-10rem relative">
