@@ -19,14 +19,6 @@
                                 :alt="slotProps.data.name"
                                 class="w-full border-round"
                             />
-                            <Tag
-                                :value="slotProps.data.inventoryStatus"
-                                :severity="
-                                    getSeverity(slotProps.data.inventoryStatus)
-                                "
-                                class="absolute"
-                                style="left: 5px; top: 5px"
-                            />
                         </div>
                     </div>
                     <div class="mb-3 font-medium">
@@ -82,22 +74,6 @@ const responsiveOptions = ref([
         numScroll: 1,
     },
 ]);
-
-const getSeverity = (status) => {
-    switch (status) {
-        case 'INSTOCK':
-            return 'success';
-
-        case 'LOWSTOCK':
-            return 'warning';
-
-        case 'OUTOFSTOCK':
-            return 'danger';
-
-        default:
-            return null;
-    }
-};
 
 const products = ref([
     {
