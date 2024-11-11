@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Asap:wght@400;700&display=swap");
 body {
   font-family: "Asap", sans-serif;
-  color: var(--color-1);
+  /* color: var(--color-1); */
 }
 
 :root {

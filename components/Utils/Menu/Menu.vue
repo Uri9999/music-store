@@ -49,6 +49,11 @@ const menuTree = ref([
         toRoute: '/cart/history',
     },
     {
+        label: 'Danh sách tag của user',
+        icon: 'pi pi-shopping-cart',
+        toRoute: '/user/my-tag',
+    },
+    {
         label: 'Home',
         icon: 'pi pi-box',
         //   toRoute:
