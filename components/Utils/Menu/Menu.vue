@@ -31,12 +31,22 @@ const menuTree = ref([
     {
         label: 'Danh sách',
         icon: 'pi pi-list-check',
-        toRoute: '/tags',
+        toRoute: '/tag',
     },
     {
         label: 'Chi tiết',
         icon: 'pi pi-list-check',
         toRoute: '/tag/1',
+    },
+    {
+        label: 'Giỏ hàng',
+        icon: 'pi pi-shopping-cart',
+        toRoute: '/cart',
+    },
+    {
+        label: 'Lịch sử mua hàng',
+        icon: 'pi pi-shopping-cart',
+        toRoute: '/cart/history',
     },
     {
         label: 'Home',
