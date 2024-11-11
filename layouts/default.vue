@@ -1,9 +1,9 @@
 <template>
-  <div class="layout">
+  <div class="app layout">
     <!-- Sidebar Menu -->
     <MenuMega class="container" />
     <!-- Main content -->
-    <div class="content">
+    <div class="container">
       <NuxtPage />
     </div>
 

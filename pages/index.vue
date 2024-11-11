@@ -1,47 +1,42 @@
 <template>
-  <div class="app">
-    <!-- <Menu /> -->
-    <div class="container">
-      <Galleria></Galleria>
-    </div>
+  <Galleria></Galleria>
 
-    <div class="container mt-3 tag-container">
-      <div class="table-tag">
-        <h2 class="py-3">Sản phẩm mới</h2>
-        <div class="grid-container">
-          <Tag
-            classes="item"
-            v-for="(item, index) in items"
-            :key="index"
-            :item="item"
-          ></Tag>
-        </div>
-        <div class="card">
-          <Paginate></Paginate>
-        </div>
+  <div class="mt-3 tag-container">
+    <div class="table-tag">
+      <h2 class="py-3">Sản phẩm mới</h2>
+      <div class="grid-container">
+        <Tag
+          classes="item"
+          v-for="(item, index) in items"
+          :key="index"
+          :item="item"
+        ></Tag>
       </div>
-      <div class="list-tag">
-        <h2 class="py-3">Bài tag miễn phí</h2>
-        <ListTag></ListTag>
-      </div>
-    </div>
-
-    <div class="container">
-      <h2>Danh sách bài tag</h2>
-      <AllTag></AllTag>
       <div class="card">
         <Paginate></Paginate>
       </div>
     </div>
+    <div class="list-tag">
+      <h2 class="py-3">Bài tag miễn phí</h2>
+      <ListTag></ListTag>
+    </div>
+  </div>
 
-    <div class="container mb-5">
-      <h2 class="mb-3">Gợi ý dành cho bạn</h2>
-      <Carousel></Carousel>
+  <div class="">
+    <h2>Danh sách bài tag</h2>
+    <AllTag></AllTag>
+    <div class="card">
+      <Paginate></Paginate>
     </div>
-    <div class="container mb-5">
-      <h2 class="mb-3">Subscription</h2>
-      <Subscription></Subscription>
-    </div>
+  </div>
+
+  <div class="mb-5">
+    <h2 class="mb-3">Gợi ý dành cho bạn</h2>
+    <Carousel></Carousel>
+  </div>
+  <div class="mb-5">
+    <h2 class="mb-3">Subscription</h2>
+    <Subscription></Subscription>
   </div>
 </template>
 
@@ -132,13 +127,6 @@ const items = [
 </script>
 
 <style scoped>
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding-left: 10px;
-  padding-right: 10px;
-}
-
 .tag-container {
   display: flex;
 }
@@ -173,7 +161,7 @@ const items = [
 /* Khi màn hình nhỏ hơn 768px, hiển thị 2 item trên 1 hàng */
 @media (max-width: 768px) {
   .grid-container {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .tag-container {

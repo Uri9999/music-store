@@ -1,44 +1,60 @@
 <template>
-  <div
-    class="border border-surface-200 dark:border-surface-700 rounded" :class="classes"
-  >
-    <div class="mb-1">
-      <div class="relative mx-auto">
-        <img
-          :src="item.image"
-          class="w-full rounded"
-        />
-        <Tag
-          :value="'INSTOCK'"
-          :severity="'true'"
-          class="absolute"
-          style="left: 5px; top: 5px"
-        />
-      </div>
+    <div
+        class="p-4 border-1 surface-border surface-card border-round flex flex-column"
+    >
+        <div class="surface-50 flex justify-content-center border-round">
+            <div class="relative mx-auto">
+                <img
+                    class="border-round w-full"
+                    :src="item.image"
+                    :alt="item.name"
+                />
+            </div>
+        </div>
+        <div class="pt-4">
+            <div
+                class="flex flex-row justify-content-between align-items-start gap-2"
+            >
+                <div>
+                    <span class="font-medium text-secondary text-sm">{{
+                        item?.category
+                    }}</span>
+                    <div class="text-lg font-medium text-900 mt-1">
+                        {{ item.name }}
+                    </div>
+                </div>
+                <!-- Rate starts -->
+                <DisplayRateStars :stars="item?.rating"></DisplayRateStars>
+            </div>
+            <div class="flex flex-column gap-2">
+                <span class="font-semibold text-900"
+                    >Price: ${{ item.price }}</span
+                >
+                <div class="flex gap-2">
+                    <Button
+                        icon="pi pi-shopping-cart"
+                        class="flex-auto white-space-nowrap custom"
+                    ></Button>
+                    <Button icon="pi pi-heart" outlined></Button>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="mb-1 font-medium">{{ item.name }}</div>
-    <div class="flex justify-between items-center detail">
-      <div class="mt-0 font-semibold text-xl">${{ item.price }}</div>
-      <span>
-        <!-- <Button icon="pi pi-heart" severity="secondary" outlined /> -->
-        <Button icon="pi pi-shopping-cart" class="custom"/>
-      </span>
-    </div>
-  </div>
 </template>
 
 <script setup>
+import DisplayRateStars from './DisplayRateStars.vue';
+
 const props = defineProps({
     classes: {
         type: [String, Array, Object],
-        default: ''
+        default: '',
     },
     item: {
         type: [Object],
-        required: true
-    }
-})
-
+        required: true,
+    },
+});
 </script>
 
 <style scoped>
