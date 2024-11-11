@@ -32,7 +32,7 @@
                     Morbi tincidunt augue
                 </li>
             </ul>
-            <Button label="Buy Now" class="btn custom px-5 py-3" />
+            <Button label="Đăng Ký" class="btn custom px-5 py-3" />
         </div>
 
         <!-- Premium Plan -->
@@ -73,7 +73,7 @@
                     Duis ultricies lacus sed
                 </li>
             </ul>
-            <Button label="Buy Now" class="btn custom px-5 py-3" />
+            <Button label="Đăng Ký" class="btn custom px-5 py-3" />
         </div>
 
         <!-- Enterprise Plan -->
@@ -129,7 +129,7 @@
                     Nisi scelerisque
                 </li>
             </ul>
-            <Button label="Buy Now" class="btn custom px-5 py-3" />
+            <Button label="Đăng Ký" class="btn custom px-5 py-3" />
         </div>
     </div>
 </template>
@@ -180,7 +180,7 @@
     align-items: center;
     color: #f97316;
     height: 26px;
-    font-size: 0.9rem;
+    font-size: 1rem;
     border-radius: 5px;
     padding: 3.5px 7px;
     background-color: #ffedd5;
@@ -196,7 +196,7 @@
 
 .description {
     color: #666;
-    font-size: 0.9rem;
+    font-size: 1rem;
 }
 
 .price {
@@ -226,7 +226,7 @@ hr {
 
 .features {
     list-style: none;
-    font-size: 0.9rem;
+    font-size: 1rem;
     padding: 0;
     width: 100%;
 }

@@ -36,8 +36,7 @@
                     <Button icon="pi pi-heart" outlined></Button>
                     <Button
                         icon="pi pi-shopping-cart"
-                        label="Buy Now"
-                        :disabled="item.inventoryStatus === 'OUTOFSTOCK'"
+                        label="Mua ngay"
                         class="custom flex-auto md:flex-initial white-space-nowrap"
                     ></Button>
                 </div>
