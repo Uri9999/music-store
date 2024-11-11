@@ -1,221 +1,202 @@
 <template>
-    <div class="card-wrapper">
+    <div class="pb-5">
+        <h2 class="py-5">Tên bài hát: Chúc bé ngủ ngon</h2>
         <div class="card grid">
             <!-- card left -->
-            <div class="product-imgs col-12 md:col-6">left</div>
-            <!-- card right -->
-            <div class="product-content col-12 md:col-6">
-                <h2 class="product-title">nike shoes</h2>
-                <div class="product-category mb-2">Danh muc: Nhạc</div>
-                <div class="product-rating">
-                    <span
-                        ><Rating
-                            v-model="tag.rate"
-                            :cancel="false"
-                        />4.7(21)</span
-                    >
-                </div>
-
-                <div class="product-price">
-                    <p class="last-price">Old Price: <span>$257.00</span></p>
-                    <p class="new-price">
-                        New Price: <span>$249.00 (-5%)</span>
-                    </p>
-                </div>
-
-                <div class="product-detail">
-                    <h2>about this item:</h2>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Illo eveniet veniam tempora fuga tenetur placeat
-                        sapiente architecto illum soluta consequuntur,
-                        aspernatur quidem at sequi ipsa!
-                    </p>
-                    <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Consequatur, perferendis eius. Dignissimos, labore
-                        suscipit. Unde.
-                    </p>
-                    <ul>
-                        <li>
-                            <span
-                                ><i
-                                    class="pi pi-check-circle text-green-500 text-lg" /></span
-                            >Color: <span>Black</span>
-                        </li>
-                        <li>
-                            <span
-                                ><i
-                                    class="pi pi-check-circle text-green-500 text-lg" /></span
-                            >Available: <span>in stock</span>
-                        </li>
-                        <li>
-                            <span
-                                ><i
-                                    class="pi pi-check-circle text-green-500 text-lg" /></span
-                            >Category: <span>Shoes</span>
-                        </li>
-                        <li>
-                            <span
-                                ><i
-                                    class="pi pi-check-circle text-green-500 text-lg" /></span
-                            >Shipping Area: <span>All over the world</span>
-                        </li>
-                        <li>
-                            <span
-                                ><i
-                                    class="pi pi-check-circle text-green-500 text-lg" /></span
-                            >Shipping Fee: <span>Free</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="purchase-info">
-                    <Button label="Add to Cart" class="custom" />
-                </div>
-
-                <div class="social-links">
-                    <p class="font-bold">Share At:</p>
-                    <span><i class="pi pi-facebook"></i></span>
-                    <span><i class="pi pi-twitter"></i></span>
-                    <span><i class="pi pi-instagram"></i></span>
-                    <span><i class="pi pi-whatsapp"></i></span>
-                    <span><i class="pi pi-pinterest"></i></span>
+            <div class="col-12 md:col-6">
+                <div>
+                    <div class="image-main w-full">
+                        <img
+                            src="https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg"
+                            class="inline-block w-full"
+                            alt=""
+                        />
+                    </div>
+                    <div class="list-img grid">
+                        <div class="item-img col-3">
+                            <img
+                                src="https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg"
+                                alt=""
+                            />
+                        </div>
+                        <div class="item-img col-3">
+                            <img
+                                src="https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg"
+                                alt=""
+                            />
+                        </div>
+                        <div class="item-img col-3">
+                            <img
+                                src="https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg"
+                                alt=""
+                            />
+                        </div>
+                        <div class="item-img col-3">
+                            <img
+                                src="https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg"
+                                alt=""
+                            />
+                        </div>
+                    </div>
                 </div>
             </div>
+            <!-- card right -->
+            <div class="product-content col-12 md:col-6">
+                <TabView>
+                    <TabPanel header="Thông tin">
+                        <div class="product-info">
+                            <div class="product-avatar">
+                                <Avatar
+                                    class="avatar-mobile"
+                                    image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png"
+                                    shape="circle"
+                                />
+                                <span class="ml-3">Nguyễn Văn Nhất</span>
+                            </div>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-info__title">Tên bài hát:</div>
+                            <div>Chuc be ngu ngon</div>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-info__title">Tác giả:</div>
+                            <div>Nguyen Nhat</div>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-info__title">Thể loại:</div>
+                            <div>Chuc be ngu ngon</div>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-info__title">Đánh giá:</div>
+                            <div>
+                                <span class="flex">
+                                    <Rating
+                                        v-model="tag.rate"
+                                        :cancel="false"
+                                        class="mr-3"
+                                    />3.7(21)</span
+                                >
+                            </div>
+                        </div>
+
+                        <div class="product-info">
+                            <div class="product-info__title">Số trang:</div>
+                            <div>3</div>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-info__title">
+                                Định dạng tệp:
+                            </div>
+                            <div>PDF</div>
+                        </div>
+                        <div class="product-info">
+                            <div class="product-info__title">Giá:</div>
+                            <div class="price-value">3000 VND</div>
+                        </div>
+                        <div class="mt-5">
+                            <Button
+                                icon="pi-shopping-bag pi"
+                                label="Mua ngay"
+                                class="custom mr-3 mt-2"
+                            ></Button>
+                            <Button
+                                icon="pi pi-shopping-cart"
+                                label="Thêm vào giỏ hàng"
+                                class="custom mt-2"
+                            ></Button>
+                        </div>
+                    </TabPanel>
+                    <TabPanel header="Mô tả">
+                        <p class="m-0">
+                            Sed ut perspiciatis unde omnis iste natus error sit
+                            voluptatem accusantium doloremque laudantium, totam
+                            rem aperiam, eaque ipsa quae ab illo inventore
+                            veritatis et quasi architecto beatae vitae dicta
+                            sunt explicabo. Nemo enim ipsam voluptatem quia
+                            voluptas sit aspernatur aut odit aut fugit, sed quia
+                            consequuntur magni dolores eos qui ratione
+                            voluptatem sequi nesciunt. Consectetur, adipisci
+                            velit, sed quia non numquam eius modi.
+                        </p>
+                    </TabPanel>
+                    <TabPanel header="Đánh giá">
+                        <p class="m-0">
+                            At vero eos et accusamus et iusto odio dignissimos
+                            ducimus qui blanditiis praesentium voluptatum
+                            deleniti atque corrupti quos dolores et quas
+                            molestias excepturi sint occaecati cupiditate non
+                            provident, similique sunt in culpa qui officia
+                            deserunt mollitia animi, id est laborum et dolorum
+                            fuga. Et harum quidem rerum facilis est et expedita
+                            distinctio. Nam libero tempore, cum soluta nobis est
+                            eligendi optio cumque nihil impedit quo minus.
+                        </p>
+                    </TabPanel>
+                </TabView>
+            </div>
         </div>
+    </div>
+    <div class="mb-5">
+        <h2 class="mb-3">Gợi ý dành cho bạn</h2>
+        <Carousel></Carousel>
     </div>
 </template>
 
 <script setup>
 import Rating from 'primevue/rating';
+import Carousel from '~/components/General/Carousel.vue';
 
-const count = ref(1);
 const tag = ref({
     rate: 3,
 });
+
+const images = ref([
+    {
+        src: 'https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg',
+        alt: 'Image 1',
+    },
+    {
+        src: 'https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg',
+        alt: 'Image 2',
+    },
+    {
+        src: 'https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg',
+        alt: 'Image 3',
+    },
+    {
+        src: 'https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg',
+        alt: 'Image 4',
+    },
+]);
 </script>
 
 <style scoped lang="scss">
-.card-wrapper {
-    max-width: 1100px;
-    margin: 0 auto;
-}
-.product-content {
-    padding: 2rem 1rem;
-}
-.product-title {
-    font-size: 2rem;
-    text-transform: capitalize;
-    font-weight: 700;
-    position: relative;
-    margin: 1rem 0;
-}
-.product-category {
-    font-size: 1.3rem;
-}
-.product-title::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    height: 4px;
-    width: 80px;
-    background: var(--color-1);
-}
-
-.product-rating span {
-    display: flex;
-    font-weight: 600;
-    color: #252525;
-}
-.product-price {
-    margin: 1rem 0;
-    font-size: 1rem;
-    font-weight: 700;
-}
-.product-price span {
-    font-weight: 400;
-}
-.last-price span {
-    color: #f64749;
-    text-decoration: line-through;
-    font-size: 1.3rem;
-}
-.new-price span {
-    font-size: 1.3rem;
-}
-.product-detail h2 {
-    text-transform: capitalize;
-    padding-bottom: 0.6rem;
-}
-.product-detail p {
-    padding: 0.3rem;
-    opacity: 0.8;
-}
-.product-detail ul {
-    margin: 1rem 0;
-}
-.product-detail ul li {
-    i {
-        margin-right: 10px;
-    }
-    display: flex;
-    align-items: center;
-    margin: 0;
-    list-style: none;
-    background-size: 18px;
-    margin: 0.4rem 0;
-    font-weight: 600;
-    opacity: 0.9;
-}
-.product-detail ul li span {
-    font-weight: 400;
-}
-.purchase-info {
-    margin: 1.5rem 0;
-}
-
-.social-links {
-    display: flex;
-    align-items: center;
-    p {
-        margin-right: 10px;
-    }
-    span {
-        padding-left: 5px;
-        padding-right: 5px;
-        border: 1px solid var(--color-1);
-        width: 30px;
-        height: 30px;
-        margin-right: 10px;
-        border-radius: 15px;
-        cursor: pointer;
-        position: relative;
-
-        &:hover {
-            color: #f64749;
-            border-color: #f64749;
-        }
-        i {
-            font-size: 1.2rem;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+.card {
+    .thumbnail-img {
+        img {
+            padding: 10px;
+            border-radius: 10px;
+            width: 100%;
         }
     }
 }
 
-@media screen and (min-width: 768px) {
-    .card-wrapper {
-        display: flex;
-        justify-content: center;
-        align-items: center;
+.product-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+
+    .product-info__title {
+        width: 30%;
     }
-    .product-imgs {
-    }
-    .product-content {
-    }
+}
+
+.product-avatar {
+    display: flex;
+    align-items: center;
+}
+
+.price-value {
+    font-size: 1.5rem;
 }
 </style>

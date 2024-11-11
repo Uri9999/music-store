@@ -7,6 +7,7 @@
   --border-color: #dcdcdc; /* Màu viền */
   --hover-primary-color: #1e88e5; /* Màu khi hover */
   --hover-light-color: #b86c1b; /* Màu khi hover */
+  --p-content-border-color: #e2e8f0;
 }
 
 .p-button.custom {
@@ -17,4 +18,14 @@
 .p-button.custom:hover {
   background-color: var(--hover-light-color);
   border-color: var(--hover-light-color);
+}
+
+.p-galleria-thumbnail-container {
+  background-color: white;
+  border-bottom: 1px solid var(--p-content-border-color);
+  border-left: 1px solid var(--p-content-border-color);
+  border-right: 1px solid var(--p-content-border-color);
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  padding: 0;
 }
