@@ -51,16 +51,18 @@
                         <div class="logo">
                             <img src="~/public/images/logo.jpg" />
                         </div>
-                        <span class="search-icon">
-                            <i class="pi pi-search"></i
-                        ></span>
                     </div>
-                    <InputText
-                        v-if="!isMobile"
-                        placeholder="Search"
-                        type="text"
-                        class="sm:w-auto search"
-                    />
+                    <span class="menu-icon ml-2">
+                        <i class="pi pi-search"></i
+                    ></span>
+                    <span class="menu-icon ml-2">
+                        <i class="pi pi-bell"></i>
+                        <span class="badge">+9</span>
+                    </span>
+                    <span class="menu-icon ml-2">
+                        <i class="pi pi-shopping-cart"></i>
+                        <span class="badge">8</span>
+                    </span>
                     <Avatar
                         v-if="!isMobile"
                         class="avatar"
@@ -283,10 +285,10 @@ const items = ref([
 }
 
 .responsive-items .logo {
-    margin-right: calc(50vw - 110px);
+    margin-right: calc(50vw - 200px);
 }
 
-.search-icon {
+.menu-icon {
     display: inline-block;
     height: 30px;
     width: 30px;
@@ -296,6 +298,22 @@ const items = ref([
     background-color: rgb(238, 238, 238);
     border-radius: 5px;
     cursor: pointer;
+    position: relative;
+
+    .badge {
+        position: absolute;
+        top: 13px;
+        right: -5px;
+        width: 16px;
+        height: 16px;
+        border-radius: 10px;
+        background-color: #10b981;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 0.6rem;
+    }
 }
 
 .icon-bar {
