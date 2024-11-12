@@ -99,7 +99,7 @@ const handleClick = (item) => {
     cursor: pointer;
     display: flex;
     align-items: center;
-    height: 35px;
+    height: 40px;
     position: relative;
 
     .last-icon {
