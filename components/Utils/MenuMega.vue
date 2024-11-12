@@ -285,7 +285,7 @@ const items = ref([
 }
 
 .responsive-items .logo {
-    margin-right: calc(50vw - 200px);
+    margin-right: calc(50vw - 180px);
 }
 
 .menu-icon {
