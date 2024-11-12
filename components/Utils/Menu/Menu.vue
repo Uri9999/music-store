@@ -29,6 +29,11 @@ const menuTree = ref([
         toRoute: '/',
     },
     {
+        label: 'Đăng nhập',
+        icon: 'pi pi-sign-in',
+        toRoute: '/login',
+    },
+    {
         label: 'Danh sách',
         icon: 'pi pi-list-check',
         toRoute: '/tag',
