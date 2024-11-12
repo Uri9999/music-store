@@ -73,21 +73,21 @@
                         label="Login"
                         class="ml-2 login-btn"
                         severity="secondary"
-                        @click="visibleLogin = true"
+                        @click="router.push('/login')"
                     ></Button>
                 </div>
             </template>
         </MegaMenu>
     </div>
-    <Login :visible="visibleLogin" @close="visibleLogin = false"></Login>
 </template>
 
 <script setup>
 import { ref, computed } from 'vue';
 import { useWindowSize } from 'vue-window-size';
 import Menu from './Menu/Menu.vue';
-import Login from './Login.vue';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const showMenuMobile = ref(false);
 const pointisMobile = ref(830);
 const { width, height } = useWindowSize();
@@ -257,7 +257,6 @@ const items = ref([
     },
 ]);
 
-const visibleLogin = ref(false);
 </script>
 
 <style scoped lang="scss">

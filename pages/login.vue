@@ -129,15 +129,23 @@
 <script setup>
 import { ref } from 'vue';
 
+definePageMeta({
+    layout: 'auth',
+});
+
 const activeSignUp = ref(false);
 </script>
 <style scoped lang="scss">
 .container {
+    margin: auto;
+    margin-top: 20px;
     position: relative;
     width: 100%;
     background-color: #fff;
-    min-height: 100vh;
+    min-height: 90vh;
     overflow: hidden;
+    border: 1px solid rgb(228, 228, 228);
+    border-radius: 10px;
 }
 
 .forms-container {
@@ -372,8 +380,9 @@ form.sign-in-form {
 
 @media (max-width: 870px) {
     .container {
-        min-height: 800px;
-        height: 100vh;
+        // min-height: 60vh;
+        // min-height: 800px;
+        // height: 100vh;
     }
     .signin-signup {
         width: 100%;
@@ -474,6 +483,10 @@ form.sign-in-form {
 }
 
 @media (max-width: 570px) {
+    .container {
+        min-height: 60vh;
+        margin-top: 20%;
+    }
     form {
         padding: 0 1.5rem;
     }
