@@ -1,7 +1,6 @@
 <template>
     <div class="card my-5 pb-5">
         <DataTable
-            scrollable
             v-model:selection="selectedProduct"
             :value="products"
             dataKey="id"

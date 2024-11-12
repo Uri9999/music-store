@@ -1,5 +1,5 @@
 <template>
-    <div class="card">
+    <div class="mega-menu">
         <MegaMenu
             :model="items"
             :breakpoint="pointisMobile + 'px'"
@@ -69,16 +69,24 @@
                         image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png"
                         shape="circle"
                     />
+                    <Button
+                        label="Login"
+                        class="ml-2 login-btn"
+                        severity="secondary"
+                        @click="visibleLogin = true"
+                    ></Button>
                 </div>
             </template>
         </MegaMenu>
     </div>
+    <Login :visible="visibleLogin" @close="visibleLogin = false"></Login>
 </template>
 
 <script setup>
 import { ref, computed } from 'vue';
 import { useWindowSize } from 'vue-window-size';
 import Menu from './Menu/Menu.vue';
+import Login from './Login.vue';
 
 const showMenuMobile = ref(false);
 const pointisMobile = ref(830);
@@ -248,9 +256,15 @@ const items = ref([
         ],
     },
 ]);
+
+const visibleLogin = ref(false);
 </script>
 
 <style scoped lang="scss">
+.mega-menu {
+    max-width: 1200px;
+    margin: auto;
+}
 .custom-menu {
     border: none;
     border-radius: 0 !important;
@@ -265,6 +279,10 @@ const items = ref([
     width: 30px;
     height: 30px;
     margin-left: 10px;
+}
+
+.login-btn {
+    padding: 7px;
 }
 
 .logo {
@@ -282,10 +300,9 @@ const items = ref([
 .responsive-items {
     display: flex;
     align-items: center;
-}
-
-.responsive-items .logo {
-    margin-right: calc(50vw - 180px);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .menu-icon {
