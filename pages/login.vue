@@ -152,21 +152,18 @@ const login = async () => {
         .login(authData.value)
         .then((res: any) => {
             console.log('res data:', res);
-            localStorage.setItem('access_token', res.data.token)
-            localStorage.setItem('user', JSON.stringify(res.data.user))
+            localStorage.setItem('access_token', res.data.token);
+            localStorage.setItem('user', JSON.stringify(res.data.user));
         })
         .catch((err: any) => {
             console.log('err', err);
-            
             if (err?.status == 422) {
                 authDataError.value = err.errors;
             }
             if (err?.status == 401) {
                 authDataError.value = {
-                    'password': [
-                        'Tên tài khoản hoặc mật khẩu không chính xác'
-                    ]
-                }
+                    password: ['Tên tài khoản hoặc mật khẩu không chính xác'],
+                };
             }
         });
 };
