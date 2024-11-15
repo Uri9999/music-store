@@ -51,46 +51,69 @@
                 <form action="#" class="sign-up-form">
                     <h2 class="title mb-4">Sign up</h2>
                     <div class="card justify-center">
-                        <div class="flex flex-col gap-1 mb-3">
+                        <div class="mb-3">
                             <InputText
-                                name="name"
+                                v-model="registerData.name"
                                 type="text"
                                 placeholder="name"
                                 class="w-full"
                                 fluid
                             />
+                            <small
+                                class="error"
+                                v-if="registerDataError?.name"
+                                >{{ registerDataError?.name[0] }}</small
+                            >
                         </div>
-                        <div class="flex flex-col gap-1 mb-3">
+                        <div class="mb-3">
                             <InputText
-                                name="email"
+                                v-model="registerData.email"
                                 type="text"
                                 placeholder="email"
                                 class="w-full"
                                 fluid
                             />
+                            <small
+                                class="error"
+                                v-if="registerDataError?.email"
+                                >{{ registerDataError?.email[0] }}</small
+                            >
                         </div>
-                        <div class="flex flex-col gap-1 mb-3">
+                        <div class="mb-3">
                             <Password
-                                name="password"
+                                v-model="registerData.password"
                                 placeholder="Password"
                                 toggleMask
                                 :feedback="false"
                                 fluid
                             />
+                            <small
+                                class="error"
+                                v-if="registerDataError?.password"
+                                >{{ registerDataError?.password[0] }}</small
+                            >
                         </div>
-                        <div class="flex flex-col gap-1 mb-3">
+                        <div class="mb-3">
                             <Password
-                                name="confirm_password"
+                                v-model="registerData.password_confirmation"
                                 placeholder="Confirm password"
                                 toggleMask
                                 :feedback="false"
                                 fluid
                             />
+                            <small
+                                class="error"
+                                v-if="registerDataError?.password_confirmation"
+                                >{{
+                                    registerDataError?.password_confirmation[0]
+                                }}</small
+                            >
                         </div>
                         <Button
                             severity="secondary"
                             class="w-full"
                             label="Sign up"
+                            @click="register()"
                         />
                     </div>
                 </form>
@@ -139,12 +162,24 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import Api from '~/network/Api';
+import { useToast } from 'primevue/usetoast';
 
+const activeSignUp = ref(false);
+const toast = useToast();
 const authData = ref({
     email: '',
     password: '',
 });
 const authDataError = ref({} as any);
+
+const registerData = ref({
+    name: '',
+    email: '',
+    password: '',
+    password_confirmation: '',
+});
+const registerDataError = ref({} as any);
+
 const login = async () => {
     authDataError.value = {};
 
@@ -157,6 +192,12 @@ const login = async () => {
         })
         .catch((err: any) => {
             console.log('err', err);
+            toast.add({
+                severity: 'error',
+                summary: 'Có lỗi xảy ra',
+                detail: err.message,
+                life: 3000,
+            });
             if (err?.status == 422) {
                 authDataError.value = err.errors;
             }
@@ -168,11 +209,41 @@ const login = async () => {
         });
 };
 
+const register = async () => {
+    registerDataError.value = {};
+    await Api.auth
+        .register(registerData.value)
+        .then((res: any) => {
+            registerData.value = {
+                name: '',
+                email: '',
+                password: '',
+                password_confirmation: '',
+            };
+            // activeSignUp.value = false;
+            toast.add({
+                severity: 'success',
+                summary: 'Thành công',
+                detail: res.message,
+                life: 3000,
+            });
+        })
+        .catch((err: any) => {
+            toast.add({
+                severity: 'error',
+                summary: 'Có lỗi xảy ra',
+                detail: err.message,
+                life: 3000,
+            });
+            if (err?.status == 422) {
+                registerDataError.value = err.errors;
+            }
+        });
+};
+
 definePageMeta({
     layout: 'auth',
 });
-
-const activeSignUp = ref(false);
 </script>
 <style scoped lang="scss">
 .card {

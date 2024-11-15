@@ -8,4 +8,8 @@ export default () => ({
     logout() {
         return BaseApi.setAuth().post('logout')
     },
+
+    register(payload: any) {
+        return BaseApi.post('register', payload)
+    }
 })

@@ -97,6 +97,9 @@ class BaseApi {
                         case 200:
                             resolve(data);
                             break
+                        case 201:
+                            resolve(data);
+                            break
                         case 401:
                             // LocalStorageService.clearAuthInfo()
                         case 403:
