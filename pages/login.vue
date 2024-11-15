@@ -13,28 +13,38 @@
                     <h2 class="title mb-4">Sign in</h2>
 
                     <div class="card justify-center">
-                        <div class="flex flex-col gap-1 mb-3">
+                        <div class="mb-3">
                             <InputText
-                                name="username"
                                 type="text"
-                                placeholder="Username"
+                                placeholder="Email"
                                 class="w-full"
+                                v-model="authData.email"
                                 fluid
                             />
+                            <small class="error" v-if="authDataError?.email">{{
+                                authDataError?.email[0]
+                            }}</small>
                         </div>
-                        <div class="flex flex-col gap-1 mb-3">
+                        <div class="mb-3">
                             <Password
                                 name="password"
                                 placeholder="Password"
+                                v-model="authData.password"
                                 toggleMask
                                 :feedback="false"
                                 fluid
                             />
+                            <small
+                                class="error"
+                                v-if="authDataError?.password"
+                                >{{ authDataError?.password[0] }}</small
+                            >
                         </div>
                         <Button
                             severity="secondary"
                             class="w-full"
                             label="Login"
+                            @click="login()"
                         />
                     </div>
                 </form>
@@ -126,8 +136,40 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue';
+import Api from '~/network/Api';
+
+const authData = ref({
+    email: '',
+    password: '',
+});
+const authDataError = ref({} as any);
+const login = async () => {
+    authDataError.value = {};
+
+    await Api.auth
+        .login(authData.value)
+        .then((res: any) => {
+            console.log('res data:', res);
+            localStorage.setItem('access_token', res.data.token)
+            localStorage.setItem('user', JSON.stringify(res.data.user))
+        })
+        .catch((err: any) => {
+            console.log('err', err);
+            
+            if (err?.status == 422) {
+                authDataError.value = err.errors;
+            }
+            if (err?.status == 401) {
+                authDataError.value = {
+                    'password': [
+                        'Tên tài khoản hoặc mật khẩu không chính xác'
+                    ]
+                }
+            }
+        });
+};
 
 definePageMeta({
     layout: 'auth',
@@ -136,6 +178,9 @@ definePageMeta({
 const activeSignUp = ref(false);
 </script>
 <style scoped lang="scss">
+.card {
+    max-width: 278px;
+}
 .container {
     margin: auto;
     margin-top: 20px;

@@ -8,6 +8,11 @@ body {
   --color-1: #3a320c;
   --color-2: #8c5112;
   --color-3: #ca7112;
+  --color-4: #ca0000;
+}
+
+.error {
+  color: var(--color-4);
 }
 
 @media (max-width: 768px) {
