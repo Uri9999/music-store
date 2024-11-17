@@ -11,7 +11,7 @@
             <div class="signin-signup">
                 <form action="#" class="sign-in-form">
                     <div v-if="!forgotPasswordView">
-                        <h2 class="title mb-4">Sign in</h2>
+                        <h3 class="title mb-4">Đăng Nhập</h3>
 
                         <div class="card justify-center">
                             <div class="mb-3">
@@ -48,7 +48,7 @@
                                 class="mb-3 btn-redirect"
                                 @click="showForgotPassword()"
                             >
-                                Forgot password
+                                Quên mật khẩu
                             </div>
                             <Button
                                 severity="secondary"
@@ -59,7 +59,7 @@
                         </div>
                     </div>
                     <div v-else>
-                        <h2 class="title mb-4">Forgot Password</h2>
+                        <h3 class="title mb-4">Quên Mật Khẩu</h3>
 
                         <div class="card justify-center">
                             <div class="mb-3">
@@ -91,7 +91,7 @@
                     </div>
                 </form>
                 <form action="#" class="sign-up-form">
-                    <h2 class="title mb-4">Sign up</h2>
+                    <h2 class="title mb-4">Đăng Ký</h2>
                     <div class="card justify-center">
                         <div class="mb-3">
                             <InputText
@@ -167,8 +167,7 @@
                 <div class="content">
                     <h3>Bạn chưa có tài khoản ?</h3>
                     <p>
-                        Lorem ipsum, dolor sit amet consectetur adipisicing
-                        elit. Debitis, ex ratione. Aliquid!
+                        Đăng ký tài khoản để trải nghiệm dịch vụ của chúng tôi.
                     </p>
                     <button
                         class="btn transparent"
@@ -184,8 +183,7 @@
                 <div class="content">
                     <h3>Bạn đã có tài khoản ?</h3>
                     <p>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Nostrum laboriosam ad deleniti.
+                        Đăng nhập để trải nghiệm trọn vẹn dịch vụ của chúng tôi.
                     </p>
                     <button
                         class="btn transparent"
@@ -199,18 +197,27 @@
             </div>
         </div>
     </div>
+    <Dialog
+        :content="dialogContent"
+        :visible="dialogVisible"
+        @close="dialogVisible = false"
+    ></Dialog>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 import Api from '~/network/Api';
 import { useToast } from 'primevue/usetoast';
+import Dialog from '~/components/General/Dialog.vue';
 
 definePageMeta({
     layout: 'auth',
     title: 'Đăng nhập',
 });
 
+const router = useRouter();
+const dialogContent = ref('');
+const dialogVisible = ref(false);
 const activeSignUp = ref(false);
 const forgotPasswordView = ref(false);
 const toast = useToast();
@@ -237,15 +244,11 @@ const login = async () => {
             console.log('res data:', res);
             localStorage.setItem('access_token', res.data.token);
             localStorage.setItem('user', JSON.stringify(res.data.user));
+
+            router.push('/')
         })
         .catch((err: any) => {
             console.log('err', err);
-            toast.add({
-                severity: 'error',
-                summary: 'Có lỗi xảy ra',
-                detail: err.message,
-                life: 3000,
-            });
             if (err?.status == 422) {
                 authDataError.value = err.errors;
             }
@@ -268,13 +271,8 @@ const register = async () => {
                 password: '',
                 password_confirmation: '',
             };
-            // activeSignUp.value = false;
-            toast.add({
-                severity: 'success',
-                summary: 'Thành công',
-                detail: res.message,
-                life: 3000,
-            });
+            dialogContent.value = res.message;
+            dialogVisible.value = true;
         })
         .catch((err: any) => {
             toast.add({
@@ -297,24 +295,24 @@ const forgotPassword = async () => {
     await Api.auth
         .forgotPassword(fogotPasswordData.value)
         .then((res: any) => {
+            fogotPasswordData.value = {
+                email: '',
+            };
             console.log('res data:', res);
+            dialogContent.value = res.message;
+            dialogVisible.value = true;
         })
         .catch((err: any) => {
             console.log('err', err);
-            // toast.add({
-            //     severity: 'error',
-            //     summary: 'Có lỗi xảy ra',
-            //     detail: err.message,
-            //     life: 3000,
-            // });
-            // if (err?.status == 422) {
-            //     authDataError.value = err.errors;
-            // }
-            // if (err?.status == 401) {
-            //     authDataError.value = {
-            //         password: ['Tên tài khoản hoặc mật khẩu không chính xác'],
-            //     };
-            // }
+            toast.add({
+                severity: 'error',
+                summary: 'Có lỗi xảy ra',
+                detail: err.message,
+                life: 3000,
+            });
+            if (err?.status == 422) {
+                fogotPasswordDataError.value = err.errors;
+            }
         });
 };
 
@@ -391,7 +389,7 @@ form.sign-in-form {
 }
 
 .title {
-    font-size: 2.2rem;
+    font-size: 2rem;
     color: #444;
     margin-bottom: 10px;
 }
