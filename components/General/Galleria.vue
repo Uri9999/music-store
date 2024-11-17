@@ -1,30 +1,32 @@
 <template>
     <div class="card">
-        <Galleria
-            :value="images"
-            :numVisible="10"
-            :circular="true"
-            :showItemNavigators="true"
-            :showThumbnails="false"
-            :showIndicators="false"
-            :changeItemOnIndicatorHover="true"
-            :showIndicatorsOnItem="inside"
-            :indicatorsPosition="'bottom'"
-            :autoPlay="true"
-            containerClass="gallaria-custom"
-            :transitionInterval="3000"
-        >
-            <template #item="slotProps">
-                <img
-                    :src="slotProps.item.src"
-                    :alt="slotProps.item.alt"
-                    class="galleria-image"
-                    style="width: 100%; display: block"
-                />
-            </template>
-            <!-- <template #indicator>
+        <ClientOnly>
+            <Galleria
+                :value="images"
+                :numVisible="10"
+                :circular="true"
+                :showItemNavigators="true"
+                :showThumbnails="false"
+                :showIndicators="false"
+                :changeItemOnIndicatorHover="true"
+                :showIndicatorsOnItem="inside"
+                :indicatorsPosition="'bottom'"
+                :autoPlay="true"
+                containerClass="gallaria-custom"
+                :transitionInterval="3000"
+            >
+                <template #item="slotProps">
+                    <img
+                        :src="slotProps.item.src"
+                        :alt="slotProps.item.alt"
+                        class="galleria-image"
+                        style="width: 100%; display: block"
+                    />
+                </template>
+                <!-- <template #indicator>
         </template> -->
-        </Galleria>
+            </Galleria>
+        </ClientOnly>
     </div>
 </template>
 

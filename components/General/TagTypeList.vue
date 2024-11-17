@@ -33,9 +33,10 @@
                     >${{ item.price }}</span
                 >
                 <div class="flex flex-row-reverse md:flex-row gap-2">
-                    <Button icon="pi pi-heart" outlined></Button>
+                    <!-- <Button icon="pi pi-heart" outlined></Button> -->
+                    <DisplayRateStars :stars="item?.rating"></DisplayRateStars>
                     <Button
-                        icon="pi pi-shopping-cart"
+                        icon="pi pi-info-circle"
                         class="custom flex-auto md:flex-initial white-space-nowrap"
                     ></Button>
                 </div>

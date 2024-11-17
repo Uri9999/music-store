@@ -1,45 +1,41 @@
 <template>
-    <div
-        class="p-4 border-1 surface-border surface-card border-round flex flex-column"
+    <a
+        class="tag border-1 surface-border surface-card border-round flex flex-column"
     >
         <div class="surface-50 flex justify-content-center border-round">
-            <div class="relative mx-auto">
-                <img
-                    class="border-round w-full"
-                    :src="item.image"
-                    :alt="item.name"
-                />
-            </div>
+            <img
+                class="border-round w-full"
+                :src="item.image"
+                :alt="item.name"
+            />
         </div>
-        <div class="pt-4">
-            <div
-                class="flex flex-row justify-content-between align-items-start gap-2"
-            >
-                <div>
-                    <span class="font-medium text-secondary text-sm">{{
-                        item?.category
-                    }}</span>
-                    <div class="text-lg font-medium text-900 mt-1">
-                        {{ item.name }}
-                    </div>
+        <div class="pt-2 gap-1 flex flex-column">
+            <div>
+                <span class="font-medium text-secondary text-sm">{{
+                    item?.category
+                }}</span>
+                <div class="text-lg font-medium text-900 mt-1">
+                    {{ item.name }}
                 </div>
-                <!-- Rate starts -->
-                <DisplayRateStars :stars="item?.rating"></DisplayRateStars>
+            </div>
+            <div>
+                Người soạn: Nguyen Nhat
             </div>
             <div class="flex flex-column gap-2">
-                <span class="font-semibold text-900"
-                    >Price: ${{ item.price }}</span
+                <span class="font-semibold text-700"
+                    >Giá: {{ item.price }} Vnd</span
                 >
-                <div class="flex gap-2">
+                <div class="flex justify-content-end gap-2">
                     <Button
-                        icon="pi pi-shopping-cart"
-                        class="flex-auto white-space-nowrap custom"
+                        icon="pi pi-info-circle"
+                        label="Chi tiết"
+                        class="custom"
                     ></Button>
-                    <Button icon="pi pi-heart" outlined></Button>
+                    <DisplayRateStars :stars="item?.rating"></DisplayRateStars>
                 </div>
             </div>
         </div>
-    </div>
+    </a>
 </template>
 
 <script setup>
@@ -58,6 +54,9 @@ const props = defineProps({
 </script>
 
 <style scoped>
+.tag {
+    padding: 10px;
+}
 .detail {
     display: flex;
     justify-content: space-between;
