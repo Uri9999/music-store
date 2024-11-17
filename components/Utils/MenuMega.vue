@@ -94,7 +94,6 @@ const { width, height } = useWindowSize();
 const isMobile = computed(() => {
     return width.value <= pointisMobile.value;
 });
-console.log('wid', width.value);
 
 const items = ref([
     {

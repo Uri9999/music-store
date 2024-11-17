@@ -1,19 +1,22 @@
-// /stores/authStore.ts
 import { defineStore } from 'pinia';
+import type { Profile } from '~/types/user';
 
 export const useAuthStore = defineStore('auth', {
     state: () => ({
-        user: null as { email: string; name: string } | null, // Lưu thông tin người dùng
+        profile: null as Profile | null,
         isAuthenticated: false,
     }),
 
     actions: {
         logout() {
-            localStorage.removeItem('token'); // Xóa token
+            localStorage.removeItem('token');
             this.isAuthenticated = false;
         },
         setAuthenticated(value = true) {
             this.isAuthenticated = value;
+        },
+        setProfile(user: Profile) {
+            this.profile = user;
         },
     },
 });
