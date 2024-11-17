@@ -10,42 +10,84 @@
         <div class="forms-container">
             <div class="signin-signup">
                 <form action="#" class="sign-in-form">
-                    <h2 class="title mb-4">Sign in</h2>
+                    <div v-if="!forgotPasswordView">
+                        <h2 class="title mb-4">Sign in</h2>
 
-                    <div class="card justify-center">
-                        <div class="mb-3">
-                            <InputText
-                                type="text"
-                                placeholder="Email"
-                                class="w-full"
-                                v-model="authData.email"
-                                fluid
-                            />
-                            <small class="error" v-if="authDataError?.email">{{
-                                authDataError?.email[0]
-                            }}</small>
-                        </div>
-                        <div class="mb-3">
-                            <Password
-                                name="password"
-                                placeholder="Password"
-                                v-model="authData.password"
-                                toggleMask
-                                :feedback="false"
-                                fluid
-                            />
-                            <small
-                                class="error"
-                                v-if="authDataError?.password"
-                                >{{ authDataError?.password[0] }}</small
+                        <div class="card justify-center">
+                            <div class="mb-3">
+                                <InputText
+                                    type="text"
+                                    placeholder="Email"
+                                    class="w-full"
+                                    v-model="authData.email"
+                                    fluid
+                                />
+                                <small
+                                    class="error"
+                                    v-if="authDataError?.email"
+                                    >{{ authDataError?.email[0] }}</small
+                                >
+                            </div>
+                            <div class="mb-3">
+                                <Password
+                                    name="password"
+                                    placeholder="Password"
+                                    v-model="authData.password"
+                                    toggleMask
+                                    :feedback="false"
+                                    fluid
+                                />
+                                <small
+                                    class="error"
+                                    v-if="authDataError?.password"
+                                    >{{ authDataError?.password[0] }}</small
+                                >
+                            </div>
+
+                            <div
+                                class="mb-3 btn-redirect"
+                                @click="showForgotPassword()"
                             >
+                                Forgot password
+                            </div>
+                            <Button
+                                severity="secondary"
+                                class="w-full"
+                                label="Login"
+                                @click="login()"
+                            />
                         </div>
-                        <Button
-                            severity="secondary"
-                            class="w-full"
-                            label="Login"
-                            @click="login()"
-                        />
+                    </div>
+                    <div v-else>
+                        <h2 class="title mb-4">Forgot Password</h2>
+
+                        <div class="card justify-center">
+                            <div class="mb-3">
+                                <InputText
+                                    type="text"
+                                    placeholder="Email"
+                                    class="w-full"
+                                    v-model="fogotPasswordData.email"
+                                    fluid
+                                />
+                                <small
+                                    class="error"
+                                    v-if="fogotPasswordDataError?.email"
+                                    >{{
+                                        fogotPasswordDataError?.email[0]
+                                    }}</small
+                                >
+                            </div>
+                            <div class="mb-3 btn-redirect" @click="showLogin()">
+                                Trở lại màn login
+                            </div>
+                            <Button
+                                severity="secondary"
+                                class="w-full"
+                                label="Forgot Password"
+                                @click="forgotPassword()"
+                            />
+                        </div>
                     </div>
                 </form>
                 <form action="#" class="sign-up-form">
@@ -164,7 +206,13 @@ import { ref } from 'vue';
 import Api from '~/network/Api';
 import { useToast } from 'primevue/usetoast';
 
+definePageMeta({
+    layout: 'auth',
+    title: 'Đăng nhập',
+});
+
 const activeSignUp = ref(false);
+const forgotPasswordView = ref(false);
 const toast = useToast();
 const authData = ref({
     email: '',
@@ -241,11 +289,51 @@ const register = async () => {
         });
 };
 
-definePageMeta({
-    layout: 'auth',
+const fogotPasswordData = ref({
+    email: '',
 });
+const fogotPasswordDataError = ref({} as any);
+const forgotPassword = async () => {
+    await Api.auth
+        .forgotPassword(fogotPasswordData.value)
+        .then((res: any) => {
+            console.log('res data:', res);
+        })
+        .catch((err: any) => {
+            console.log('err', err);
+            // toast.add({
+            //     severity: 'error',
+            //     summary: 'Có lỗi xảy ra',
+            //     detail: err.message,
+            //     life: 3000,
+            // });
+            // if (err?.status == 422) {
+            //     authDataError.value = err.errors;
+            // }
+            // if (err?.status == 401) {
+            //     authDataError.value = {
+            //         password: ['Tên tài khoản hoặc mật khẩu không chính xác'],
+            //     };
+            // }
+        });
+};
+
+const showForgotPassword = () => {
+    forgotPasswordView.value = true;
+};
+const showLogin = () => {
+    forgotPasswordView.value = false;
+};
 </script>
 <style scoped lang="scss">
+.btn-redirect {
+    text-align: right;
+    width: 100%;
+    cursor: pointer;
+    &:hover {
+        color: green;
+    }
+}
 .card {
     max-width: 278px;
 }
