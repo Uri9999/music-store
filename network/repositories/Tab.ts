@@ -8,4 +8,8 @@ export default () => ({
     newTab() {
         return BaseApi.get('new-tab');
     },
+
+    randomTab() {
+        return BaseApi.get('random-tab');
+    },
 });

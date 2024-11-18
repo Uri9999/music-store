@@ -1,86 +1,39 @@
 <template>
     <div class="tags">
-        <div class="item" v-for="(item, index) in products">
+        <div class="item" v-for="(item, index) in tabs">
             <div class="image">
-                <img :src="item.image" />
-                <div class="pl-3">{{ item.name }}</div>
+                <!-- <img :src="item.image" /> -->
+                <img
+                    src="https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg"
+                />
+                <div class="pl-3">
+                    <div>{{ item.name }}</div>
+                    <div>Người soạn: {{ item.user.name }}</div>
+                </div>
             </div>
-            <div>${{ item.price }}</div>
+            <!-- <div>{{ item.price }} Vnd</div> -->
         </div>
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue';
+import Api from '~/network/Api';
+import type { Tab } from '~/types/tab';
 
-const products = [
-    {
-        id: 1,
-        image: 'https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg',
-        name: 'Happy birthday',
-        price: 20,
-    },
-    {
-        id: 1,
-        image: 'https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg',
-        name: 'Chuc be ngu ngon',
-        price: 20,
-    },
-    {
-        id: 1,
-        image: 'https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg',
-        name: 'Chuc mung sinh nhat',
-        price: 20,
-    },
-    {
-        id: 1,
-        image: 'https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg',
-        name: 'How to win',
-        price: 20,
-    },
-    {
-        id: 1,
-        image: 'https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg',
-        name: 'Influence',
-        price: 20,
-    },
-    {
-        id: 1,
-        image: 'https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg',
-        name: 'Influence',
-        price: 20,
-    },
-    {
-        id: 1,
-        image: 'https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg',
-        name: 'Influence',
-        price: 20,
-    },
-    {
-        id: 1,
-        image: 'https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg',
-        name: 'Influence',
-        price: 20,
-    },
-    {
-        id: 1,
-        image: 'https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg',
-        name: 'Influence',
-        price: 20,
-    },
-    {
-        id: 1,
-        image: 'https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg',
-        name: 'Influence',
-        price: 20,
-    },
-];
-const selectedId = ref(null);
+const tabs = ref([] as Tab[]);
+onMounted(async () => {
+    Api.tab
+        .randomTab()
+        .then((res: any) => {
+            tabs.value = res.data;
+        })
+        .catch((err) => console.log(err));
+});
 </script>
 
 <style scoped>
 .tags {
-    padding: 10px;
     border-radius: 5px;
     border: 1px solid rgb(236, 236, 236);
 }
@@ -93,7 +46,6 @@ const selectedId = ref(null);
 }
 .item:hover {
     background-color: rgb(245, 245, 245);
-    border-radius: 5px;
 }
 .image {
     display: flex;
