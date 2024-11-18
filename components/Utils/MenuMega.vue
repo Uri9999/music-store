@@ -81,12 +81,16 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, computed } from 'vue';
 import { useWindowSize } from 'vue-window-size';
 import Menu from './Menu/Menu.vue';
 import { useRouter } from 'vue-router';
+import { useSelectionStore } from '~/stores/selectionStore';
+import type { MenuType } from '~/types/menu';
 
+const items = ref<[]>([]);
+const selectionStore = useSelectionStore();
 const router = useRouter();
 const showMenuMobile = ref(false);
 const pointisMobile = ref(830);
@@ -95,167 +99,64 @@ const isMobile = computed(() => {
     return width.value <= pointisMobile.value;
 });
 
-const items = ref([
-    {
-        label: 'Home',
-        icon: 'pi pi-box',
-        items: [
-            [
-                {
-                    label: 'Living Room',
-                    items: [
-                        { label: 'Accessories' },
-                        { label: 'Armchair' },
-                        { label: 'Coffee Table' },
-                        { label: 'Couch' },
-                        { label: 'TV Stand' },
-                    ],
-                },
-            ],
-            [
-                {
-                    label: 'Kitchen',
-                    items: [
-                        { label: 'Bar stool' },
-                        { label: 'Chair' },
-                        { label: 'Table' },
-                    ],
-                },
-                {
-                    label: 'Bathroom',
-                    items: [{ label: 'Accessories' }],
-                },
-            ],
-            [
-                {
-                    label: 'Bedroom',
-                    items: [
-                        { label: 'Bed' },
-                        { label: 'Chaise lounge' },
-                        { label: 'Cupboard' },
-                        { label: 'Dresser' },
-                        { label: 'Wardrobe' },
-                    ],
-                },
-            ],
-            [
-                {
-                    label: 'Office',
-                    items: [
-                        { label: 'Bookcase' },
-                        { label: 'Cabinet' },
-                        { label: 'Chair' },
-                        { label: 'Desk' },
-                        { label: 'Executive Chair' },
-                    ],
-                },
-            ],
-        ],
-    },
-    {
-        label: 'Features',
-        icon: 'pi pi-mobile',
-        items: [
-            [
-                {
-                    label: 'Computer',
-                    items: [
-                        { label: 'Monitor' },
-                        { label: 'Mouse' },
-                        { label: 'Notebook' },
-                        { label: 'Keyboard' },
-                        { label: 'Printer' },
-                        { label: 'Storage' },
-                    ],
-                },
-            ],
-            [
-                {
-                    label: 'Home Theater',
-                    items: [
-                        { label: 'Projector' },
-                        { label: 'Speakers' },
-                        { label: 'TVs' },
-                    ],
-                },
-            ],
-            [
-                {
-                    label: 'Gaming',
-                    items: [
-                        { label: 'Accessories' },
-                        { label: 'Console' },
-                        { label: 'PC' },
-                        { label: 'Video Games' },
-                    ],
-                },
-            ],
-            [
-                {
-                    label: 'Appliances',
-                    items: [
-                        { label: 'Coffee Machine' },
-                        { label: 'Fridge' },
-                        { label: 'Oven' },
-                        { label: 'Vaccum Cleaner' },
-                        { label: 'Washing Machine' },
-                    ],
-                },
-            ],
-        ],
-    },
-    {
-        label: 'Projects',
-        icon: 'pi pi-clock',
-        items: [
-            [
-                {
-                    label: 'Football',
-                    items: [
-                        { label: 'Kits' },
-                        { label: 'Shoes' },
-                        { label: 'Shorts' },
-                        { label: 'Training' },
-                    ],
-                },
-            ],
-            [
-                {
-                    label: 'Running',
-                    items: [
-                        { label: 'Accessories' },
-                        { label: 'Shoes' },
-                        { label: 'T-Shirts' },
-                        { label: 'Shorts' },
-                    ],
-                },
-            ],
-            [
-                {
-                    label: 'Swimming',
-                    items: [
-                        { label: 'Kickboard' },
-                        { label: 'Nose Clip' },
-                        { label: 'Swimsuits' },
-                        { label: 'Paddles' },
-                    ],
-                },
-            ],
-            [
-                {
-                    label: 'Tennis',
-                    items: [
-                        { label: 'Balls' },
-                        { label: 'Rackets' },
-                        { label: 'Shoes' },
-                        { label: 'Training' },
-                    ],
-                },
-            ],
-        ],
-    },
-]);
+onMounted(async () => {
+    const selection = await selectionStore.getData();
 
+    const itemsCategory = selection?.categories?.map((category: any) => {
+        var item = {
+            label: category.label,
+            items: null,
+        };
+        if (category.children) {
+            item.items = category.children.map((subItem: any) => {
+                return {
+                    label: subItem.label,
+                    toRoute: 'tab?categoy=' + subItem.value,
+                    command: (event: any) => handleNavigation(event.item.toRoute),
+                };
+            });
+        }
+        return [item];
+    });
+
+    items.value = [
+        {
+            label: 'Trang chủ',
+            icon: 'pi pi-home',
+            toRoute: '/',
+            command: (event: any) => handleNavigation(event.item.toRoute),
+        },
+        {
+            label: 'Chuyên mục',
+            icon: 'pi pi-box',
+            items: itemsCategory,
+        },
+        {
+            label: 'Bài tab',
+            icon: 'pi pi-list',
+            toRoute: '/tab',
+            command: (event: any) => handleNavigation(event.item.toRoute),
+        },
+        {
+            label: 'Yêu cầu tab',
+            icon: 'pi pi-th-large',
+            toRoute: '/request-tab',
+            command: (event: any) => handleNavigation(event.item.toRoute),
+        },
+        {
+            label: 'Blog',
+            icon: 'pi pi-book',
+            toRoute: '/blog',
+            command: (event: any) => handleNavigation(event.item.toRoute),
+        },
+    ] as any;
+});
+
+const handleNavigation = (route: string) => {
+    if (route) {
+        router.push(route);
+    }
+};
 </script>
 
 <style scoped lang="scss">

@@ -1,7 +1,7 @@
 <template>
     <div class="mt-5">
         <h2>Danh sách bài tag</h2>
-        <AllTag :tags="tags">
+        <AllTag :tabs="tabs">
             <template #filter>
                 <Dropdown
                     class="mr-3 mt-2"
@@ -49,7 +49,7 @@ const sortOptions = ref([
 const onSortChange = (event) => {
     console.log('change');
 };
-const tags = ref([
+const tabs = ref([
     {
         image: 'https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg',
         alt: 'Image 1',

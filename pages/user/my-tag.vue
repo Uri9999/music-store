@@ -56,7 +56,7 @@
         </div>
     </div>
     <div class="products mb-3">
-        <AllTag :tags="tags">
+        <AllTag :tabs="tabs">
             <template #filter>
                 <h3 class="h-full flex align-items-end">Sản phẩm tạo bởi user</h3>
             </template>
@@ -70,7 +70,7 @@ import { ref } from 'vue';
 import AllTag from '~/components/Utils/AllTag.vue';
 import Paginate from '~/components/General/Paginate.vue';
 
-const tags = ref([
+const tabs = ref([
     {
         image: 'https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg',
         alt: 'Image 1',
