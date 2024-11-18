@@ -1,19 +1,16 @@
 <template>
     <Galleria></Galleria>
 
-    <div class="mt-3 tag-container">
+    <div class="mt-3 tag-container mb-5">
         <div class="table-tag">
             <h2 class="py-3">Sản phẩm mới</h2>
             <div class="grid-container">
                 <Tag
                     classes="item"
-                    v-for="(item, index) in items"
+                    v-for="(item, index) in newTab"
                     :key="index"
                     :item="item"
                 ></Tag>
-            </div>
-            <div class="card">
-                <Paginate></Paginate>
             </div>
         </div>
         <div class="list-tag">
@@ -24,39 +21,25 @@
 
     <div class="">
         <h2>Danh sách bài tab</h2>
-        <AllTag :tags="tags">
+        <AllTag :tabs="tabs">
             <template #filter>
                 <Dropdown
                     class="mr-3 mt-2"
-                    v-model="sortKey"
-                    :options="sortOptions"
+                    v-model="sortKey.price"
+                    :options="sortPriceOptions"
                     optionLabel="label"
-                    placeholder="Sort By Price"
-                    @change="onSortChange($event)"
-                />
-
-                <Dropdown
-                    class="mr-3 mt-2"
-                    v-model="sortKey"
-                    :options="sortOptions"
-                    optionLabel="label"
-                    placeholder="Sort By Sold"
-                    @change="onSortChange($event)"
-                />
-
-                <Dropdown
-                    class="mt-2"
-                    v-model="sortKey"
-                    :options="sortOptions"
-                    optionLabel="label"
-                    placeholder="Sort By Rate"
+                    placeholder="Lọc theo giá"
                     @change="onSortChange($event)"
                 />
             </template>
         </AllTag>
-        <div class="card">
-            <Paginate></Paginate>
-        </div>
+        <Paginator
+            :rows="tabsPagination.perPage"
+            :totalRecords="tabsPagination.total"
+            :first="(currentPage - 1) * tabsPagination.perPage"
+            @page="onPageChange"
+        ></Paginator>
+
     </div>
 
     <div class="mb-5">
@@ -69,173 +52,71 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue';
 import Carousel from '~/components/General/Carousel.vue';
 import Tag from '~/components/General/Tag.vue';
-import Paginate from '~/components/General/Paginate.vue';
 import ListTag from '~/components/Utils/ListTag.vue';
 import Galleria from '~/components/General/Galleria.vue';
 import AllTag from '~/components/Utils/AllTag.vue';
 import Subscription from '~/components/Utils/Subscription.vue';
+import Api from '~/network/Api';
+import type { FilterIndex, Tab } from '~/types/tab';
+import type { Paginator } from '~/types/paginator';
 
-const sortKey = ref();
-const sortOptions = ref([
-    { label: 'Price High to Low', value: '!price' },
-    { label: 'Price Low to High', value: 'price' },
+const sortKey = ref({
+    price: null,
+});
+const sortPriceOptions = ref([
+    { label: 'Tăng dần', value: 'asc' },
+    { label: 'Giảm dần', value: 'desc' },
 ]);
-const onSortChange = (event) => {
-    console.log('change');
-};
-const items = [
-    {
-        name: 'Black watch',
-        price: 20,
-        image: 'https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg',
-    },
-    {
-        name: 'Yellow watch',
-        price: 20,
-        image: 'https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg',
-    },
-    {
-        name: 'Blue watch',
-        price: 20,
-        image: 'https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg',
-    },
-    {
-        name: 'Green watch',
-        price: 20,
-        image: 'https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg',
-    },
-    {
-        name: 'Black watch',
-        price: 20,
-        image: 'https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg',
-    },
-    {
-        name: 'Black watch',
-        price: 20,
-        image: 'https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg',
-    },
-    {
-        name: 'Black watch',
-        price: 20,
-        image: 'https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg',
-    },
-    {
-        name: 'Black watch',
-        price: 20,
-        image: 'https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg',
-    },
-    {
-        name: 'Black watch',
-        price: 20,
-        image: 'https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg',
-    },
-    {
-        name: 'Black watch',
-        price: 20,
-        image: 'https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg',
-    },
-    {
-        name: 'Black watch',
-        price: 20,
-        image: 'https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg',
-    },
-    {
-        name: 'Black watch',
-        price: 20,
-        image: 'https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg',
-    },
-];
+const newTab = ref([] as Tab[]);
+const tabs = ref([] as Tab[]);
+const tabsPagination = ref({} as Paginator);
+const currentPage = ref(1);
+const filters = ref({
+    orderPrice: '',
+} as FilterIndex);
 
-const tags = [
-    {
-        image: 'https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg',
-        alt: 'Image 1',
-        name: 'Product Name',
-        inventoryStatus: 'INSTOCK',
-        price: 20,
+onMounted(async () => {
+    await Api.tab
+        .newTab()
+        .then((res: any) => {
+            newTab.value = res.data;
+        })
+        .catch((err) => console.log(err));
+
+    await getTabIndex();
+});
+
+watch(
+    () => currentPage.value,
+    async (newValue, oldValue) => {
+        if (newValue != oldValue) {
+            await getTabIndex();
+        }
     },
-    {
-        image: 'https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg',
-        alt: 'Image 2',
-        name: 'Product Name',
-        inventoryStatus: 'INSTOCK',
-        price: 20,
-    },
-    {
-        image: 'https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg',
-        alt: 'Image 3',
-        name: 'Product Name',
-        inventoryStatus: 'INSTOCK',
-        price: 20,
-    },
-    {
-        image: 'https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg',
-        alt: 'Image 3',
-        name: 'Product Name',
-        inventoryStatus: 'OUTOFSTOCK',
-        price: 20,
-    },
-    {
-        image: 'https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg',
-        alt: 'Image 3',
-        name: 'Product Name',
-        inventoryStatus: 'INSTOCK',
-        price: 20,
-    },
-    {
-        image: 'https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg',
-        alt: 'Image 3',
-        name: 'Product Name',
-        inventoryStatus: 'OUTOFSTOCK',
-        price: 20,
-    },
-    {
-        image: 'https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg',
-        alt: 'Image 3',
-        name: 'Product Name',
-        inventoryStatus: 'LOWSTOCK',
-        price: 20,
-    },
-    {
-        image: 'https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg',
-        alt: 'Image 3',
-        name: 'Product Name',
-        inventoryStatus: 'LOWSTOCK',
-        price: 20,
-    },
-    {
-        image: 'https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg',
-        alt: 'Image 3',
-        name: 'Product Name',
-        inventoryStatus: 'INSTOCK',
-        price: 20,
-    },
-    {
-        image: 'https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg',
-        alt: 'Image 3',
-        name: 'Product Name',
-        inventoryStatus: 'OUTOFSTOCK',
-        price: 20,
-    },
-    {
-        image: 'https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg',
-        alt: 'Image 3',
-        name: 'Product Name',
-        inventoryStatus: 'INSTOCK',
-        price: 20,
-    },
-    {
-        image: 'https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg',
-        alt: 'Image 3',
-        name: 'Product Name',
-        inventoryStatus: 'INSTOCK',
-        price: 20,
-    },
-];
+);
+const getTabIndex = async () => {
+    await Api.tab
+        .index({ page: currentPage.value, ...filters.value })
+        .then((res: any) => {
+            tabs.value = res.data;
+            tabsPagination.value = res.meta;
+        })
+        .catch((err) => console.log(err));
+};
+
+const onPageChange = (event: any) => {
+    currentPage.value = event.first / tabsPagination.value.perPage + 1;
+};
+
+const onSortChange = async (event: any) => {
+    currentPage.value = 1;
+    filters.value.orderPrice = event.value.value;
+    await getTabIndex();
+};
 </script>
 
 <style scoped>

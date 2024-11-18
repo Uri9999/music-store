@@ -3,23 +3,24 @@
         class="tag border-1 surface-border surface-card border-round flex flex-column"
     >
         <div class="surface-50 flex justify-content-center border-round">
-            <img
+            <!-- <img
                 class="border-round w-full"
                 :src="item.image"
                 :alt="item.name"
+            /> -->
+             <img
+                class="border-round w-full"
+                src="https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg"
             />
         </div>
         <div class="pt-2 gap-1 flex flex-column">
             <div>
-                <span class="font-medium text-secondary text-sm">{{
-                    item?.category
-                }}</span>
                 <div class="text-lg font-medium text-900 mt-1">
                     {{ item.name }}
                 </div>
             </div>
             <div>
-                Người soạn: Nguyen Nhat
+                Người soạn: {{ item?.user?.name }}
             </div>
             <div class="flex flex-column gap-2">
                 <span class="font-semibold text-700"
@@ -31,7 +32,7 @@
                         label="Chi tiết"
                         class="custom"
                     ></Button>
-                    <DisplayRateStars :stars="item?.rating"></DisplayRateStars>
+                    <!-- <DisplayRateStars :stars="item?.rating"></DisplayRateStars> -->
                 </div>
             </div>
         </div>

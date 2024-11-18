@@ -1,6 +1,6 @@
 <template>
     <div class="card">
-        <DataView :value="tags" :layout="layout">
+        <DataView :value="tabs" :layout="layout">
             <template #header>
                 <div class="filter">
                     <div>
@@ -46,7 +46,7 @@ import Tag from '../General/Tag.vue';
 import TagTypeList from '../General/TagTypeList.vue';
 
 const props = defineProps({
-    tags: {
+    tabs: {
         type: [Array],
         required: true,
     },
