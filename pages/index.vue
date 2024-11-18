@@ -17,13 +17,13 @@
             </div>
         </div>
         <div class="list-tag">
-            <h2 class="py-3">Bài tag miễn phí</h2>
+            <h2 class="py-3">Bài tab miễn phí</h2>
             <ListTag></ListTag>
         </div>
     </div>
 
     <div class="">
-        <h2>Danh sách bài tag</h2>
+        <h2>Danh sách bài tab</h2>
         <AllTag :tags="tags">
             <template #filter>
                 <Dropdown
@@ -60,11 +60,11 @@
     </div>
 
     <div class="mb-5">
-        <h2 class="mb-3">Gợi ý dành cho bạn</h2>
+        <h2 class="mb-3">Blog chia sẻ</h2>
         <Carousel></Carousel>
     </div>
     <div class="mb-5">
-        <h2 class="mb-3">Subscription</h2>
+        <h2 class="mb-3">Các gói đăng ký</h2>
         <Subscription></Subscription>
     </div>
 </template>
