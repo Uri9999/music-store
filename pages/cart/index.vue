@@ -1,8 +1,8 @@
 <template>
-    <div class="card my-5 pb-5">
+    <div class="cart my-5 pb-5">
         <DataTable
-            v-model:selection="selectedProduct"
-            :value="products"
+            v-model:selection="selectedItems"
+            :value="items"
             dataKey="id"
             tableStyle="min-width: 50rem"
         >
@@ -22,7 +22,7 @@
             ></Column>
             <Column field="name" header="Tên">
                 <template #body="slotProps">
-                    {{ slotProps.data.name }}
+                    {{ slotProps.data.tab.name }}
                 </template>
             </Column>
             <Column header="Ảnh">
@@ -35,26 +35,40 @@
             </Column>
             <Column field="price" header="Giá">
                 <template #body="slotProps">
-                    {{ slotProps.data.price }} VND
+                    {{ slotProps.data.tab.price }} VND
                 </template>
             </Column>
-            <Column field="category" header="Danh mục"></Column>
-            <Column field="user_name" header="Người soạn"></Column>
+            <Column field="category" header="Danh mục">
+                <template #body="slotProps">
+                    {{ slotProps.data.tab.category.name }}
+                </template>
+            </Column>
+            <Column field="action" header="Hành động">
+                <template #body="slotProps">
+                    <div class="flex gap-2">
+                        <Button
+                            label="Xóa"
+                            severity="danger"
+                            outlined
+                            @click="confirmDelete(slotProps.data.id)"
+                        />
+                    </div> </template
+            ></Column>
 
             <template #footer>
                 <div class="footer">
                     <div class="quantity">
                         <div>
                             Tổng số sản phẩm
-                            {{ products ? products.length : 0 }}
+                            {{ items ? items.length : 0 }}
                         </div>
                         <div>
                             Số lượng sản phẩm đã chọn:
-                            {{ selectedProduct ? selectedProduct.length : 0 }}
+                            {{ selectedItems ? selectedItems.length : 0 }}
                         </div>
                     </div>
                     <Button
-                        :disabled="selectedProduct.length == 0"
+                        :disabled="selectedItems.length == 0"
                         label="Thanh toán"
                         class="custom"
                     ></Button>
@@ -64,71 +78,69 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue';
+import { useConfirm } from 'primevue/useconfirm';
+import Api from '~/network/Api';
+import { useToast } from 'primevue/usetoast';
 
-const selectedProduct = ref([]);
+const toast = useToast();
+const confirm = useConfirm();
+const selectedItems = ref([]);
 
-const products = ref([
-    {
-        id: 1,
-        name: 'Chuc be ngu ngon',
-        category: 'Bai hat',
-        price: 3000,
-        rating: 3,
-        image: 'https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg',
-        user_name: 'Nguyen Van Nhat'
-    },
-    {
-        id: 2,
-        name: 'Chuc be ngu ngon',
-        category: 'Bai hat',
-        price: 3000,
-        rating: 3,
-        image: 'https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg',
-        user_name: 'Nguyen Van Nhat'
-    },
-    {
-        id: 3,
+const items = ref([]);
+onMounted(async () => {
+    await getCart();
+});
 
-        name: 'Chuc be ngu ngon',
-        category: 'Bai hat',
-        price: 3000,
-        rating: 3,
-        image: 'https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg',
-        user_name: 'Nguyen Van Nhat'
-    },
-    {
-        id: 4,
+const getCart = async () => {
+    await Api.cart
+        .getByMe()
+        .then((res: any) => {
+            items.value = res.data;
+        })
+        .catch((err: any) => {
+            console.log(err);
+        });
+};
 
-        name: 'Chuc be ngu ngon',
-        category: 'Bai hat',
-        price: 3000,
-        rating: 3,
-        image: 'https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg',
-        user_name: 'Nguyen Van Nhat'
-    },
-    {
-        id: 5,
+const deleteItem = async (id: number) => {
+    await Api.cart
+        .delete(id)
+        .then((res: any) => {
+            toast.add({
+                severity: 'success',
+                summary: 'Thông báo',
+                detail: res.message,
+                life: 3000,
+            });
+        })
+        .catch((err: any) => {
+            toast.add({
+                severity: 'error',
+                summary: 'Thông báo',
+                detail: err.message,
+                life: 3000,
+            });
+        });
+};
 
-        name: 'Chuc be ngu ngon',
-        category: 'Bai hat',
-        price: 3000,
-        rating: 3,
-        image: 'https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg',
-        user_name: 'Nguyen Van Nhat'
-    },
-    {
-        id: 6,
-
-        name: 'Chuc be ngu ngon',
-        category: 'Bai hat',
-        price: 3000,
-        rating: 3,
-        image: 'https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg',
-        user_name: 'Nguyen Van Nhat'
-    },
-]);
+const confirmDelete = (id: number) => {
+    confirm.require({
+        header: 'Xác nhận xóa sản phẩm',
+        message: 'Bạn có chắc chắn muốn xóa sản phẩm ?',
+        icon: 'pi pi-info-circle',
+        rejectLabel: 'Đóng',
+        acceptLabel: 'Xóa',
+        rejectClass: 'p-button-secondary p-button-outlined',
+        acceptClass: 'p-button-danger',
+        accept: async () => {
+            await deleteItem(id);
+            await getCart();
+        },
+        reject: () => {},
+    });
+};
 </script>
 
 <style scoped lang="scss">
@@ -136,5 +148,8 @@ const products = ref([
     margin-top: 20px;
     display: flex;
     justify-content: space-between;
+}
+.cart {
+    min-height: 70vh;
 }
 </style>

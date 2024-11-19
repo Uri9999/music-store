@@ -59,9 +59,9 @@
                         <i class="pi pi-bell"></i>
                         <span class="badge">+9</span>
                     </span>
-                    <span class="menu-icon ml-2">
+                    <span class="menu-icon ml-2" @click="gotoCartView()">
                         <i class="pi pi-shopping-cart"></i>
-                        <span class="badge">8</span>
+                        <span class="badge">{{ countCartItem }}</span>
                     </span>
                     <Avatar
                         v-if="!isMobile"
@@ -88,6 +88,7 @@ import Menu from './Menu/Menu.vue';
 import { useRouter } from 'vue-router';
 import { useSelectionStore } from '~/stores/selectionStore';
 import type { MenuType } from '~/types/menu';
+import Api from '~/network/Api';
 
 const items = ref<[]>([]);
 const selectionStore = useSelectionStore();
@@ -112,7 +113,8 @@ onMounted(async () => {
                 return {
                     label: subItem.label,
                     toRoute: 'tab?categoy=' + subItem.value,
-                    command: (event: any) => handleNavigation(event.item.toRoute),
+                    command: (event: any) =>
+                        handleNavigation(event.item.toRoute),
                 };
             });
         }
@@ -150,12 +152,32 @@ onMounted(async () => {
             command: (event: any) => handleNavigation(event.item.toRoute),
         },
     ] as any;
+
+    // count cart items
+    await getCountCartItem();
 });
 
 const handleNavigation = (route: string) => {
     if (route) {
         router.push(route);
     }
+};
+
+const countCartItem = ref(0);
+const gotoCartView = () => {
+    router.push('/cart');
+};
+
+const getCountCartItem = async () => {
+    Api.cart
+        .getCountByMe()
+        .then((res: any) => {
+            console.log('count cart');
+            countCartItem.value = res.data;
+        })
+        .catch((err: any) => {
+            console.log(err);
+        });
 };
 </script>
 
