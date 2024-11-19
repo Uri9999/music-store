@@ -27,12 +27,11 @@ class BaseApi {
 
     setAuth() {
         const token = localStorage.getItem('access_token')
-        var accessToken = 'No Auth'
+        var authorization = 'No Auth'
         if (token) {
-            accessToken = `Bearer ${accessToken}`
+            authorization = `Bearer ${token}`
         }
-
-        this.headers['Authorization'] = accessToken
+        this.headers['Authorization'] = authorization
 
         return this;
     }

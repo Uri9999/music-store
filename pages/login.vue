@@ -242,7 +242,7 @@ const login = async () => {
         .login(authData.value)
         .then((res: any) => {
             console.log('res data:', res);
-            localStorage.setItem('access_token', res.data.token);
+            localStorage.setItem('access_token', res.data.access_token);
             localStorage.setItem('user', JSON.stringify(res.data.user));
 
             router.push('/')

@@ -8,7 +8,7 @@ export default defineNuxtConfig({
       ],
     },
   },
-  ssr: true,
+  ssr: false,
   css: [
     "~/assets/css/reset.css",
     "~/assets/css/base.css",
