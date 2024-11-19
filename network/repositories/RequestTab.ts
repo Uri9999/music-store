@@ -7,6 +7,9 @@ export default () => ({
     store(payload: any) {
         return BaseApi.setAuth().post('request-tabs', payload);
     },
+    update(id: number, payload: any) {
+        return BaseApi.setAuth().put('request-tabs/' + id, payload);
+    },
     delete(id: number) {
         return BaseApi.setAuth().delete('request-tabs/' + id);
     },
