@@ -8,7 +8,7 @@
                 :src="item.image"
                 :alt="item.name"
             /> -->
-             <img
+            <img
                 class="border-round w-full"
                 src="https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg"
             />
@@ -19,9 +19,7 @@
                     {{ item.name }}
                 </div>
             </div>
-            <div>
-                Người soạn: {{ item?.user?.name }}
-            </div>
+            <div>Người soạn: {{ item?.user?.name }}</div>
             <div class="flex flex-column gap-2">
                 <span class="font-semibold text-700"
                     >Giá: {{ item.price }} Vnd</span
@@ -31,6 +29,7 @@
                         icon="pi pi-info-circle"
                         label="Chi tiết"
                         class="custom"
+                        @click="gotoDetail(item.id)"
                     ></Button>
                     <!-- <DisplayRateStars :stars="item?.rating"></DisplayRateStars> -->
                 </div>
@@ -39,8 +38,9 @@
     </a>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import DisplayRateStars from './DisplayRateStars.vue';
+import { useRouter } from 'vue-router';
 
 const props = defineProps({
     classes: {
@@ -52,6 +52,11 @@ const props = defineProps({
         required: true,
     },
 });
+
+const router = useRouter();
+const gotoDetail = async (id: number) => {
+    router.push('/tab/' + id);
+};
 </script>
 
 <style scoped>

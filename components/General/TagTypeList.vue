@@ -41,6 +41,7 @@
                         icon="pi pi-info-circle"
                         label="Chi tiết"
                         class="custom flex-auto md:flex-initial white-space-nowrap"
+                        @click="gotoDetail(item.id)"
                     ></Button>
                 </div>
             </div>
@@ -48,8 +49,9 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import DisplayRateStars from './DisplayRateStars.vue';
+import { useRouter } from 'vue-router';
 
 const props = defineProps({
     classes: {
@@ -61,6 +63,11 @@ const props = defineProps({
         required: true,
     },
 });
+
+const router = useRouter();
+const gotoDetail = async (id: number) => {
+    router.push('/tab/' + id);
+};
 </script>
 
 <style scoped></style>

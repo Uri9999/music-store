@@ -1,6 +1,6 @@
 <template>
     <div class="tags">
-        <div class="item" v-for="(item, index) in tabs">
+        <div class="item" v-for="(item, index) in tabs" @click="gotoDetail(item.id)">
             <div class="image">
                 <!-- <img :src="item.image" /> -->
                 <img
@@ -20,7 +20,12 @@
 import { ref } from 'vue';
 import Api from '~/network/Api';
 import type { Tab } from '~/types/tab';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
+const gotoDetail = async (id: number) => {
+    router.push('/tab/' + id);
+};
 const tabs = ref([] as Tab[]);
 onMounted(async () => {
     Api.tab

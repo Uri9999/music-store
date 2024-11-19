@@ -14,7 +14,7 @@
             </div>
         </div>
         <div class="list-tag">
-            <h2 class="py-3">Bài tab miễn phí</h2>
+            <h2 class="py-3">Bài tab bán chạy</h2>
             <ListTag></ListTag>
         </div>
     </div>
