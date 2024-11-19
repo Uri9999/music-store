@@ -51,20 +51,20 @@
                                     image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png"
                                     shape="circle"
                                 />
-                                <span class="ml-3">Nguyễn Văn Nhất</span>
+                                <span class="ml-3">{{ tab?.user?.name }}</span>
                             </div>
                         </div>
                         <div class="product-info">
                             <div class="product-info__title">Tên bài hát:</div>
-                            <div>Chuc be ngu ngon</div>
+                            <div>{{ tab.name }}</div>
                         </div>
                         <div class="product-info">
                             <div class="product-info__title">Tác giả:</div>
-                            <div>Nguyen Nhat</div>
+                            <div>{{ tab.author }}</div>
                         </div>
                         <div class="product-info">
                             <div class="product-info__title">Thể loại:</div>
-                            <div>Chuc be ngu ngon</div>
+                            <div>{{ tab.category?.name }}</div>
                         </div>
                         <div class="product-info">
                             <div class="product-info__title">Đánh giá:</div>
@@ -91,7 +91,7 @@
                         </div>
                         <div class="product-info">
                             <div class="product-info__title">Giá:</div>
-                            <div class="price-value">3000 VND</div>
+                            <div class="price-value">{{ tab.price }} VND</div>
                         </div>
                         <div class="mt-5">
                             <Button
@@ -103,20 +103,13 @@
                                 icon="pi pi-shopping-cart"
                                 label="Thêm vào giỏ hàng"
                                 class="custom mt-2"
+                                @click="addToCart()"
                             ></Button>
                         </div>
                     </TabPanel>
                     <TabPanel header="Mô tả">
                         <p class="m-0">
-                            Sed ut perspiciatis unde omnis iste natus error sit
-                            voluptatem accusantium doloremque laudantium, totam
-                            rem aperiam, eaque ipsa quae ab illo inventore
-                            veritatis et quasi architecto beatae vitae dicta
-                            sunt explicabo. Nemo enim ipsam voluptatem quia
-                            voluptas sit aspernatur aut odit aut fugit, sed quia
-                            consequuntur magni dolores eos qui ratione
-                            voluptatem sequi nesciunt. Consectetur, adipisci
-                            velit, sed quia non numquam eius modi.
+                            {{ tab.description }}
                         </p>
                     </TabPanel>
                     <TabPanel header="Đánh giá">
@@ -142,9 +135,21 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import Rating from 'primevue/rating';
 import Carousel from '~/components/General/Carousel.vue';
+import { useRoute, useRouter } from 'vue-router';
+import Api from '~/network/Api';
+import { useToast } from 'primevue/usetoast';
+
+const toast = useToast();
+const route = useRoute();
+const router = useRouter();
+const id = Number(route.params.id);
+const tab = ref({} as any);
+onMounted(async () => {
+    await getDetailTab(id);
+});
 
 const tag = ref({
     rate: 3,
@@ -168,6 +173,39 @@ const images = ref([
         alt: 'Image 4',
     },
 ]);
+
+const getDetailTab = async (id: number) => {
+    await Api.tab
+        .show(id)
+        .then((res: any) => {
+            console.log(res);
+            tab.value = res.data;
+        })
+        .catch((err: any) => {
+            console.log(err);
+        });
+};
+const addToCart = async () => {
+    await Api.cart
+        .add({ tab_id: id })
+        .then((res: any) => {
+            toast.add({
+                severity: 'success',
+                summary: 'Thông báo',
+                detail: res.message,
+                life: 3000,
+            });
+        })
+        .catch((err: any) => {
+            console.log(err);
+            toast.add({
+                severity: 'error',
+                summary: 'Thông báo',
+                detail: err.message,
+                life: 3000,
+            });
+        });
+};
 </script>
 
 <style scoped lang="scss">

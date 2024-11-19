@@ -12,4 +12,8 @@ export default () => ({
     randomTab() {
         return BaseApi.get('random-tab');
     },
+
+    show(id: number) {
+        return BaseApi.get('tabs/' + id);
+    }
 });
