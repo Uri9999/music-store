@@ -140,7 +140,7 @@ onMounted(async () => {
             command: (event: any) => handleNavigation(event.item.toRoute),
         },
         {
-            label: 'Yêu cầu tab',
+            label: 'Yêu cầu',
             icon: 'pi pi-th-large',
             toRoute: '/request-tab',
             command: (event: any) => handleNavigation(event.item.toRoute),
@@ -150,6 +150,11 @@ onMounted(async () => {
             icon: 'pi pi-book',
             toRoute: '/blog',
             command: (event: any) => handleNavigation(event.item.toRoute),
+        },
+        {
+            label: 'Shopee',
+            icon: 'pi pi-shop',
+            command: (event: any) =>  window.open('https://shope.ee/8UZ8lUUeWM', '_blank'),
         },
     ] as any;
 
