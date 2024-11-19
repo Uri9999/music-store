@@ -1,6 +1,6 @@
 <template>
     <div class="request-tab">
-        <h2 class="title">Danh sách yêu cầu tab của bạn</h2>
+        <h2 class="title">Danh sách yêu cầu của bạn</h2>
         <Button
             label="Tạo yêu cầu tab"
             class="custom"
@@ -30,7 +30,14 @@
                         <Button
                             label="Xóa"
                             severity="danger"
+                            outlined
                             :disabled="slotProps.data.status !== 0"
+                            @click="
+                                confirmDelete(
+                                    slotProps.data.id,
+                                    slotProps.data.name,
+                                )
+                            "
                         />
                     </div>
                 </template>
@@ -49,7 +56,9 @@
         :style="{ width: '25rem' }"
     >
         <div class="mb-2">
-            <label for="name" class="font-semibold w-24 block mb-1">Bài hát</label>
+            <label for="name" class="font-semibold w-24 block mb-1"
+                >Bài hát</label
+            >
             <InputText
                 id="name"
                 class="flex-auto w-full"
@@ -61,7 +70,9 @@
             }}</small>
         </div>
         <div class="mb-2">
-            <label for="author" class="font-semibold w-24 block mb-1">Tác giả</label>
+            <label for="author" class="font-semibold w-24 block mb-1"
+                >Tác giả</label
+            >
             <InputText
                 id="author"
                 class="flex-auto w-full"
@@ -88,7 +99,9 @@
 import { ref, onMounted } from 'vue';
 import Api from '~/network/Api';
 import { useToast } from 'primevue/usetoast';
+import { useConfirm } from 'primevue/useconfirm';
 
+const confirm = useConfirm();
 const toast = useToast();
 const tabs = ref([]);
 onMounted(async () => {
@@ -123,6 +136,7 @@ const getStatus = (status: number) => {
     }
 };
 
+// Create
 const visibleCreate = ref(false);
 const tabData = ref({
     name: '',
@@ -167,6 +181,46 @@ const saveTab = async () => {
             if (err?.status == 422) {
                 tabDataError.value = err.errors;
             }
+        });
+};
+
+// Delete
+const confirmDelete = (id: number, name: string) => {
+    confirm.require({
+        header: 'Xóa yêu cầu',
+        message:
+            'Bạn có thực sự muốn xóa yêu cầu tạo tab cho bài hát "' + name + '" không ?',
+        icon: 'pi pi-info-circle',
+        rejectLabel: 'Đóng',
+        acceptLabel: 'Xóa',
+        rejectClass: 'p-button-secondary p-button-outlined',
+        acceptClass: 'p-button-danger',
+        accept: async () => {
+            await deleteTab(id);
+            await getTab();
+        },
+        reject: () => {},
+    });
+};
+const deleteTab = async (id: number) => {
+    await Api.requestTab
+        .delete(id)
+        .then((res: any) => {
+            toast.add({
+                severity: 'success',
+                summary: 'Thông báo',
+                detail: res.message,
+                life: 3000,
+            });
+        })
+        .catch((err) => {
+            console.log(err);
+            toast.add({
+                severity: 'error',
+                summary: 'Thông báo',
+                detail: err.message,
+                life: 3000,
+            });
         });
 };
 </script>

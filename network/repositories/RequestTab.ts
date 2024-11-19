@@ -1,4 +1,4 @@
-import BaseApi from "../BaseApi";
+import BaseApi from '../BaseApi';
 
 export default () => ({
     getCreatedByMy() {
@@ -6,5 +6,8 @@ export default () => ({
     },
     store(payload: any) {
         return BaseApi.setAuth().post('request-tabs', payload);
-    }
+    },
+    delete(id: number) {
+        return BaseApi.setAuth().delete('request-tabs/' + id);
+    },
 });
