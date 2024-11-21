@@ -1,20 +1,12 @@
 <template>
     <div class="cart my-5 pb-5">
+        <h2>Danh sách sản phẩm trong giỏ hàng</h2>
         <DataTable
             v-model:selection="selectedItems"
             :value="items"
             dataKey="id"
             tableStyle="min-width: 50rem"
         >
-            <template #header>
-                <div
-                    class="flex flex-wrap align-items-center justify-content-between gap-2"
-                >
-                    <span class="text-xl text-900 font-bold"
-                        >Danh sách sản phẩm trong giỏ hàng</span
-                    >
-                </div>
-            </template>
             <Column
                 selectionMode="multiple"
                 frozen
@@ -69,8 +61,9 @@
                     </div>
                     <Button
                         :disabled="selectedItems.length == 0"
-                        label="Thanh toán"
+                        label="Tạo đơn hàng"
                         class="custom"
+                        @click="checkout()"
                     ></Button>
                 </div>
             </template>
@@ -87,7 +80,7 @@ import { useToast } from 'primevue/usetoast';
 const toast = useToast();
 const confirm = useConfirm();
 const selectedItems = ref([]);
-
+const router = useRouter();
 const items = ref([]);
 onMounted(async () => {
     await getCart();
@@ -140,6 +133,13 @@ const confirmDelete = (id: number) => {
         },
         reject: () => {},
     });
+};
+
+const checkout = () => {
+    const ids = selectedItems.value.map((item: any) => {
+        return item.id;
+    });
+    router.push({ path: '/order/create', query: { ids: ids } });
 };
 </script>
 
