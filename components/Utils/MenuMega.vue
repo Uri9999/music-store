@@ -64,7 +64,7 @@
                         <span class="badge">{{ countCartItem }}</span>
                     </span>
                     <Avatar
-                        v-if="!isMobile"
+                        v-if="!isMobile && isAuthenticated"
                         class="avatar"
                         image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png"
                         shape="circle"
@@ -74,6 +74,7 @@
                         class="ml-2 login-btn"
                         severity="secondary"
                         @click="router.push('/login')"
+                        v-if="!isAuthenticated"
                     ></Button>
                 </div>
             </template>
@@ -89,6 +90,7 @@ import { useRouter } from 'vue-router';
 import { useSelectionStore } from '~/stores/selectionStore';
 import type { MenuType } from '~/types/menu';
 import Api from '~/network/Api';
+import { useAuthStore } from '~/stores/authStore';
 
 const items = ref<[]>([]);
 const selectionStore = useSelectionStore();
@@ -99,6 +101,8 @@ const { width, height } = useWindowSize();
 const isMobile = computed(() => {
     return width.value <= pointisMobile.value;
 });
+const authStore = useAuthStore();
+const { isAuthenticated } = storeToRefs(authStore);
 
 onMounted(async () => {
     const selection = await selectionStore.getData();
@@ -154,7 +158,8 @@ onMounted(async () => {
         {
             label: 'Shopee',
             icon: 'pi pi-shop',
-            command: (event: any) =>  window.open('https://shope.ee/8UZ8lUUeWM', '_blank'),
+            command: (event: any) =>
+                window.open('https://shope.ee/8UZ8lUUeWM', '_blank'),
         },
     ] as any;
 
