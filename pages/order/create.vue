@@ -43,8 +43,13 @@
                                         style="max-width: 300px"
                                     />
                                 </div>
+                                <small
+                                    class="error block"
+                                    v-if="orderDataError?.bill"
+                                    >{{ orderDataError?.bill[0] }}</small
+                                >
                                 <ImageUploader
-                                label="Tải ảnh bill chuyển khoản"
+                                    label="Tải ảnh bill chuyển khoản"
                                     collection="avatar"
                                     @upload="handleUpload"
                                 ></ImageUploader>
@@ -53,7 +58,16 @@
                                 <label class="block mb-2" for=""
                                     >Ghi chú <span class="error">*</span></label
                                 >
-                                <Textarea v-model="note" rows="5" cols="30" />
+                                <Textarea
+                                    v-model="orderData.note"
+                                    rows="5"
+                                    cols="30"
+                                />
+                                <small
+                                    class="error block"
+                                    v-if="orderDataError?.note"
+                                    >{{ orderDataError?.note[0] }}</small
+                                >
                             </div>
                         </div>
                     </div>
@@ -62,6 +76,7 @@
                             label="Gửi yêu cầu thanh toán"
                             class="custom"
                             @click="createOrder"
+                            :disabled="btnDisable"
                         ></Button>
                     </div>
                 </div>
@@ -76,6 +91,7 @@ import Api from '~/network/Api';
 import { useToast } from 'primevue/usetoast';
 import ImageUploader from '~/components/General/ImageUploader.vue';
 
+const btnDisable = ref(false)
 const toast = useToast();
 const totalPrice = ref(0);
 const route = useRoute();
@@ -83,9 +99,19 @@ var ids = route.query.ids;
 if (typeof ids == 'string') {
     ids = [ids];
 }
-const note = ref('');
 const imageUrl = ref();
+const note = ref('');
 const bill = ref();
+const orderData = ref({
+    bill: null,
+    note: null,
+    tab_ids: ids,
+});
+const orderDataError = ref({
+    bill: [],
+    note: [],
+    tab_ids: [],
+});
 
 const items = ref([]);
 onMounted(async () => {
@@ -95,6 +121,7 @@ const handleUpload = (file: any) => {
     console.log('upload', file);
     imageUrl.value = URL.createObjectURL(file);
     bill.value = file;
+    orderData.value.bill = file;
 };
 const getTabs = async () => {
     await Api.tab
@@ -113,17 +140,19 @@ const getTabs = async () => {
 };
 
 const createOrder = async () => {
+    btnDisable.value = true
     await Api.order
-        .store({
-            tab_ids: ids,
-            note: note.value,
-            bill: bill.value,
-        })
+        .store(orderData.value)
         .then((res: any) => {
             console.log('res', res);
         })
         .catch((err: any) => {
             console.log(err);
+            if (err.status == 422) {
+                orderDataError.value = err.errors;
+            }
+        }).finally(() => {
+            btnDisable.value = false
         });
 };
 </script>
