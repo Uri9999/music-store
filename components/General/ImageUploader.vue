@@ -1,13 +1,13 @@
 <template>
-    <CIcon
-        name="pen"
-        :class="classes"
-        class="cursor-pointer"
-        @click="openPopup"
-    ></CIcon>
+    <Button class="btn-upload" @click="openPopup">
+        {{ label }}
+    </Button>
     <PopupCommon ref="popup">
         <div class="container">
-            <h2>Upload and Crop Image</h2>
+            <div class="upload-head">
+                <h2 class="mr-6">{{ label }}</h2>
+                <i class="pi pi-times close" @click="close()"></i>
+            </div>
             <div class="upload-container" v-if="!imageUrl">
                 <input
                     type="file"
@@ -18,36 +18,29 @@
                     @dragleave="onDragLeave"
                     @dragover.prevent
                 />
-                <span>Click or drop image to here!</span>
+                <span>Nhấn hoặc kéo ảnh vào đây!</span>
             </div>
 
-            <div class="img mx-auto" v-if="imageUrl">
+            <div class="img mx-auto mb-5" v-if="imageUrl">
                 <img
                     ref="image"
                     class="crop-img"
                     :src="imageUrl"
                     alt="Image for Cropping"
                 />
-
-                <div class="progress-bar-container mt-5">
-                    <div
-                        class="progress-bar"
-                        :style="{ width: progress + '%' }"
-                    ></div>
-                </div>
-                <p>{{ progress }}%</p>
             </div>
 
-            <div class="flex justify-between mt-[20px]" v-if="imageUrl">
+            <div class="upload-footer" v-if="imageUrl">
                 <Button
-                    label="Save"
-                    classes="px-[15px] h-[30px] btn"
-                    @clickCButton="saveImg()"
+                    label="Chọn lại ảnh"
+                    classes="px-[15px] btn"
+                    @click="clear($event)"
+                    outlined
                 ></Button>
                 <Button
-                label="Clear"
-                    classes="px-[15px] btn"
-                    @clickCButton="clear"
+                    label="Lưu"
+                    classes="px-[15px] h-[30px] btn"
+                    @click="saveImg()"
                 ></Button>
             </div>
         </div>
@@ -62,6 +55,10 @@ import Api from '@/network/Api';
 import PopupCommon from './PopupCommon.vue';
 
 const props = defineProps({
+    label: {
+        type: String,
+        default: '',
+    },
     collection: {
         type: String,
         default: '',
@@ -72,11 +69,10 @@ const props = defineProps({
     },
     aspectRatio: {
         type: Number as PropType<number>,
-        default: 1 / 1,
+        default: 0, // 1 / 1
     },
 });
 
-const progress = ref(0);
 const popup = ref<InstanceType<typeof PopupCommon> | null>(null);
 const openPopup = (event: any) => {
     popup.value?.showPopup(event); // Gọi phương thức showPopup từ CommonPopup
@@ -125,6 +121,8 @@ const onFileChange = (event: Event) => {
 };
 
 const saveImg = async () => {
+    console.log('save');
+
     if (cropper.value) {
         const canvas = cropper.value.getCroppedCanvas();
         croppedImage.value = canvas.toDataURL('image/png');
@@ -134,33 +132,21 @@ const saveImg = async () => {
     const blob = dataURLtoBlob(croppedImage.value);
 
     const file = new File([blob], 'avatar.png', { type: 'image/png' });
-    // await Api.user
-    //     .upload(props.collection, file, (progressEvent) => {
-    //         const percentCompleted = Math.round(
-    //             (progressEvent.loaded * 100) / progressEvent.total,
-    //         );
-    //         progress.value = percentCompleted;
-    //     })
-    //     .then((res: any) => {
-    //         // cho delay 0.7s vì trường hợp load nhanh quá ko nhìn được thanh progress
-    //         setTimeout(() => {
-    //             emit('upload', res.data.original_url);
-    //             popup.value?.hidePopup();
-    //             clear();
-    //         }, 700);
-    //     })
-    //     .catch((err: any) => {
-    //         console.log(err);
-    //         // toast.error(err);
-    //     });
+
+    emit('upload', file);
+    close();
 };
 
-const clear = () => {
+const close = () => {
+    popup.value?.hidePopup();
+};
+
+const clear = (event: any) => {
     imageUrl.value = null;
     cropper.value = null;
     croppedImage.value = null;
     isDragging.value = false;
-    progress.value = 0;
+    popup.value?.showPopup(event);
 };
 
 const dataURLtoBlob = (dataurl: string) => {
@@ -181,8 +167,9 @@ const dataURLtoBlob = (dataurl: string) => {
     max-width: 500px;
     margin: 0 auto;
     text-align: center;
-    background-color: var(--bg-color-primary);
-    box-shadow: var(--shadow-color-primary) 0px 2px 8px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: rgb(197, 197, 197) 0px 2px 8px;
     padding: 20px;
     position: fixed;
     top: 50%;
@@ -190,11 +177,11 @@ const dataURLtoBlob = (dataurl: string) => {
     transform: translate(-50%, -50%);
 }
 .upload-container:has(.dragging) {
-    border-color: var(--text-color-second);
+    border-color: rgb(90, 221, 3);
 }
 
 .upload-container {
-    border: 2px dashed var(--border-color-primary);
+    border: 2px dashed rgb(221, 221, 221);
     border-radius: 3px;
     height: 200px;
     position: relative;
@@ -221,14 +208,6 @@ const dataURLtoBlob = (dataurl: string) => {
     }
 }
 
-h2 {
-    font-family: 'Roboto', sans-serif;
-    color: #2c3e50;
-    font-size: 24px;
-    margin-bottom: 20px;
-    text-align: left;
-}
-
 .crop-container {
     margin-top: 20px;
     border: 2px dashed #3498db;
@@ -251,23 +230,22 @@ h2 {
     align-items: center;
 }
 
-.bg-second {
-    background-color: var(--bg-color-second);
+.btn-upload {
+    cursor: pointer;
 }
 
-.progress-bar-container {
-    width: 100%;
-    height: 5px;
-    background-color: #f3f3f3;
-    border-radius: 10px;
-    overflow: hidden;
-    border: 1px solid var(--border-color-primary);
+.upload-footer {
+    display: flex;
+    justify-content: space-between;
 }
+.upload-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
-.progress-bar {
-    height: 100%;
-    background-color: #3787ff; /* Màu xanh lá cây */
-    width: 0%; /* Bắt đầu với chiều rộng là 0 */
-    transition: width 0.4s ease;
+    margin-bottom: 20px;
+}
+.close {
+    cursor: pointer;
 }
 </style>
