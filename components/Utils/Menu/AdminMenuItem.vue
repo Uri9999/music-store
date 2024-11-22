@@ -6,7 +6,8 @@
             :style="{ paddingLeft: depth * 20 + 20 + 'px' }"
         >
             <div class="left">
-                <i v-if="icon" class="pi" :class="icon"></i>
+                <!-- <i v-if="icon" class="pi" :class="icon"></i> -->
+                <Icon v-if="icon" :name="icon"></Icon>
                 <span v-if="showLabel">{{ label }}</span>
             </div>
             <div v-if="data" class="right">
@@ -38,8 +39,13 @@
 </template>
 
 <script>
+import Icon from '~/components/General/Icon.vue';
+
 export default {
     name: 'menu-item',
+    components: {
+        Icon,
+    },
     data: () => ({
         showChildren: false,
         expanded: false,

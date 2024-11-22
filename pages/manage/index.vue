@@ -1,6 +1,9 @@
 <template>
-    <div>
-        <AdminMenu></AdminMenu>
+    <div class="main">
+        <div class="head">
+            <AdminMenu></AdminMenu>
+            <div>ok</div>
+        </div>
     </div>
 </template>
 <script lang="ts" setup>
@@ -11,3 +14,9 @@ definePageMeta({
     title: 'Đăng nhập',
 });
 </script>
+
+<style lang="scss" scoped>
+.head {
+    display: flex;
+}
+</style>

@@ -50,34 +50,35 @@ export default {
             },
             {
                 label: 'Quản lý user',
-                icon: 'dashboard',
+                icon: 'manage-account',
                 children: [
                     {
-                        label: 'level 2.1',
+                        label: 'Danh sách user',
                     },
                     {
-                        label: 'level 2.2',
-                    },
-                    {
-                        label: 'level 2.3',
-                    },
+                        label: 'Tạo mới user',
+                    }
                 ],
             },
             {
+                label: 'Quản lý tab',
+                icon: 'library-music',
+            },
+            {
                 label: 'Quản lý đơn hàng',
-                icon: 'settings',
+                icon: 'list-alt-check',
             },
             {
                 label: 'Quản lý danh mục',
-                icon: 'settings',
-            },
-            {
-                label: 'Quản lý blog',
-                icon: 'settings',
+                icon: 'category',
             },
             {
                 label: 'Quản lý Yêu cầu tab',
-                icon: 'settings',
+                icon: 'clinical-notes',
+            },
+            {
+                label: 'Quản lý blog',
+                icon: 'menu-book',
             },
         ],
     }),
@@ -90,7 +91,7 @@ export default {
 
 <style lang="scss" scoped>
 .menu {
-    position: fixed;
+    // position: fixed;
     height: 100vh;
     width: 240px;
     left: 0;
