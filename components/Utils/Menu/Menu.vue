@@ -18,184 +18,113 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue';
 import MenuItem from './MenuItem.vue';
+import { useSelectionStore } from '~/stores/selectionStore';
 
-const menuTree = ref([
-    {
-        label: 'Trang chủ',
-        icon: 'pi pi-home',
-        toRoute: '/',
-    },
-    {
-        label: 'Đăng nhập',
-        icon: 'pi pi-sign-in',
-        toRoute: '/login',
-    },
-    {
-        label: 'Danh sách',
-        icon: 'pi pi-list-check',
-        toRoute: '/tag',
-    },
-    {
-        label: 'Chi tiết',
-        icon: 'pi pi-list-check',
-        toRoute: '/tag/1',
-    },
-    {
-        label: 'Giỏ hàng',
-        icon: 'pi pi-shopping-cart',
-        toRoute: '/cart',
-    },
-    {
-        label: 'Lịch sử mua hàng',
-        icon: 'pi pi-shopping-cart',
-        toRoute: '/cart/history',
-    },
-    {
-        label: 'Danh sách tag của user',
-        icon: 'pi pi-shopping-cart',
-        toRoute: '/user/my-tag',
-    },
-    {
-        label: 'Home',
-        icon: 'pi pi-box',
-        //   toRoute:
-        children: [
-            {
-                label: 'Living Room',
-                children: [
-                    { label: 'Accessories' },
-                    { label: 'Armchair' },
-                    { label: 'Coffee Table' },
-                    { label: 'Couch' },
-                    { label: 'TV Stand' },
-                ],
-            },
-            {
-                label: 'Kitchen',
-                children: [
-                    { label: 'Bar stool' },
-                    { label: 'Chair' },
-                    { label: 'Table' },
-                ],
-            },
-            {
-                label: 'Bathroom',
-                children: [{ label: 'Accessories' }],
-            },
+const selectionStore = useSelectionStore();
+const menuTree = ref();
 
-            {
-                label: 'Bedroom',
-                children: [
-                    { label: 'Bed' },
-                    { label: 'Chaise lounge' },
-                    { label: 'Cupboard' },
-                    { label: 'Dresser' },
-                    { label: 'Wardrobe' },
-                ],
-            },
+onMounted(async () => {
+    const selection = await selectionStore.getData();
 
-            {
-                label: 'Office',
-                children: [
-                    { label: 'Bookcase' },
-                    { label: 'Cabinet' },
-                    { label: 'Chair' },
-                    { label: 'Desk' },
-                    { label: 'Executive Chair' },
-                ],
-            },
-        ],
-    },
-    {
-        label: 'Features',
-        icon: 'pi pi-mobile',
-        children: [
-            {
-                label: 'Computer',
-                children: [
-                    { label: 'Monitor' },
-                    { label: 'Mouse' },
-                    { label: 'Notebook' },
-                    { label: 'Keyboard' },
-                    { label: 'Printer' },
-                    { label: 'Storage' },
-                ],
-            },
-            {
-                label: 'Home Theater',
-                children: [
-                    { label: 'Projector' },
-                    { label: 'Speakers' },
-                    { label: 'TVs' },
-                ],
-            },
-            {
-                label: 'Gaming',
-                children: [
-                    { label: 'Accessories' },
-                    { label: 'Console' },
-                    { label: 'PC' },
-                    { label: 'Video Games' },
-                ],
-            },
-            {
-                label: 'Appliances',
-                children: [
-                    { label: 'Coffee Machine' },
-                    { label: 'Fridge' },
-                    { label: 'Oven' },
-                    { label: 'Vaccum Cleaner' },
-                    { label: 'Washing Machine' },
-                ],
-            },
-        ],
-    },
-    {
-        label: 'Projects',
-        icon: 'pi pi-clock',
-        children: [
-            {
-                label: 'Football',
-                children: [
-                    { label: 'Kits' },
-                    { label: 'Shoes' },
-                    { label: 'Shorts' },
-                    { label: 'Training' },
-                ],
-            },
-            {
-                label: 'Running',
-                children: [
-                    { label: 'Accessories' },
-                    { label: 'Shoes' },
-                    { label: 'T-Shirts' },
-                    { label: 'Shorts' },
-                ],
-            },
-            {
-                label: 'Swimming',
-                children: [
-                    { label: 'Kickboard' },
-                    { label: 'Nose Clip' },
-                    { label: 'Swimsuits' },
-                    { label: 'Paddles' },
-                ],
-            },
-            {
-                label: 'Tennis',
-                children: [
-                    { label: 'Balls' },
-                    { label: 'Rackets' },
-                    { label: 'Shoes' },
-                    { label: 'Training' },
-                ],
-            },
-        ],
-    },
-]);
+    const itemsCategory = selection?.categories?.map((category: any) => {
+        var item = {
+            label: category.label,
+            items: null,
+        };
+        if (category.children) {
+            item.items = category.children.map((subItem: any) => {
+                return {
+                    label: subItem.label,
+                    toRoute: 'tab?categoy=' + subItem.value,
+                };
+            });
+        }
+        return item;
+    });
+
+    menuTree.value = [
+        {
+            label: 'Trang chủ',
+            icon: 'pi pi-home',
+            toRoute: '/',
+        },
+        {
+            label: 'Chuyên mục',
+            icon: 'pi pi-box',
+            items: itemsCategory,
+        },
+        {
+            label: 'Bài tab',
+            icon: 'pi pi-list',
+            toRoute: '/tab',
+        },
+        {
+            label: 'Yêu cầu',
+            icon: 'pi pi-th-large',
+            toRoute: '/request-tab',
+        },
+        {
+            label: 'Blog',
+            icon: 'pi pi-book',
+            toRoute: '/blog',
+        },
+        {
+            label: 'Shopee',
+            icon: 'pi pi-shop',
+            newView: 'https://shope.ee/8UZ8lUUeWM'
+        },
+    ] as any;
+
+    console.log('m', menuTree.value);
+});
+
+// const menuTree = ref([
+//     {
+//         label: 'Projects',
+//         icon: 'pi pi-clock',
+//         children: [
+//             {
+//                 label: 'Football',
+//                 children: [
+//                     { label: 'Kits' },
+//                     { label: 'Shoes' },
+//                     { label: 'Shorts' },
+//                     { label: 'Training' },
+//                 ],
+//             },
+//             {
+//                 label: 'Running',
+//                 children: [
+//                     { label: 'Accessories' },
+//                     { label: 'Shoes' },
+//                     { label: 'T-Shirts' },
+//                     { label: 'Shorts' },
+//                 ],
+//             },
+//             {
+//                 label: 'Swimming',
+//                 children: [
+//                     { label: 'Kickboard' },
+//                     { label: 'Nose Clip' },
+//                     { label: 'Swimsuits' },
+//                     { label: 'Paddles' },
+//                 ],
+//             },
+//             {
+//                 label: 'Tennis',
+//                 children: [
+//                     { label: 'Balls' },
+//                     { label: 'Rackets' },
+//                     { label: 'Shoes' },
+//                     { label: 'Training' },
+//                 ],
+//             },
+//         ],
+//     },
+// ]);
 const emit = defineEmits(['closeMegaMenu']);
 const closeMegaMenu = () => {
     emit('closeMegaMenu');

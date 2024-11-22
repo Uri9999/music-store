@@ -39,6 +39,7 @@
                             </div>
                             <Menu
                                 @closeMegaMenu="showMenuMobile = false"
+                                :menuTree="items"
                             ></Menu>
                         </div>
                     </div>
@@ -278,6 +279,9 @@ const getCountCartItem = async () => {
     height: 100vh;
 
     .menu-header {
+        padding-top: 20px;
+        padding-left: 20px;
+        padding-right: 20px;
         display: flex;
         justify-content: space-between;
         padding-bottom: 20px;
@@ -301,7 +305,6 @@ const getCountCartItem = async () => {
         }
     }
     .menu-content {
-        padding: 20px;
         max-width: 400px;
         background-color: white;
         box-shadow: 0 0px 10px rgb(71, 71, 71);

@@ -25,7 +25,7 @@
         <div v-show="isShowSubItem(item)">
             <MenuItem
                 :classes="[{ 'pl-4': level == 1 }, { 'pl-6': level == 2 }]"
-                v-for="(subItem, index) in item.children"
+                v-for="(subItem, index) in item.items"
                 :key="index"
                 :item="subItem"
                 :level="level + 1"
@@ -70,21 +70,17 @@ const routeName = computed(() => {
 });
 
 const isShowSubItem = (item) => {
-    return !!(item?.isShowSubItem && item?.children);
+    return !!(item?.isShowSubItem && item?.items);
 };
 const hasChildren = (item) => {
-    return !!item?.children;
+    return !!item?.items;
 };
-// const isActive = (item) => {
-//   if (item.toRoute?.query?.name) {
-//     return routeName.value === item.toRoute?.query?.name;
-//   }
-//   return false;
-// };
 const handleClick = (item) => {
     if (item?.toRoute) {
         emit('itemClicked');
         router.push(item.toRoute);
+    } else if (item?.newView) {
+        window.open(item.newView, '_blank');
     } else if (item.isShowSubItem) {
         item.isShowSubItem = !item.isShowSubItem;
     } else {
@@ -95,12 +91,16 @@ const handleClick = (item) => {
 
 <style lang="scss" scoped>
 .label-item {
+    &:hover {
+        background-color: rgb(235, 235, 235);
+    }
     font-size: 1.2rem;
     cursor: pointer;
     display: flex;
     align-items: center;
     height: 40px;
     position: relative;
+    padding-left: 20px;
 
     .last-icon {
         position: absolute;
