@@ -8,6 +8,7 @@
             :icon="item.icon"
             :depth="0"
             :smallMenu="smallMenu"
+            :toRoute="item?.toRoute"
         />
         <Icon
             class="icon-bar"
@@ -29,24 +30,25 @@ export default {
             {
                 label: 'Trang chủ',
                 icon: 'home',
-                children: [
-                    {
-                        label: 'level 1.1',
-                        children: [
-                            {
-                                label: 'level 1.1.1',
-                                children: [
-                                    {
-                                        label: 'level 1.1.1.1',
-                                    },
-                                ],
-                            },
-                        ],
-                    },
-                    {
-                        label: 'level 1.2',
-                    },
-                ],
+                toRoute: '/admin'
+                // children: [
+                //     {
+                //         label: 'level 1.1',
+                //         children: [
+                //             {
+                //                 label: 'level 1.1.1',
+                //                 children: [
+                //                     {
+                //                         label: 'level 1.1.1.1',
+                //                     },
+                //                 ],
+                //             },
+                //         ],
+                //     },
+                //     {
+                //         label: 'level 1.2',
+                //     },
+                // ],
             },
             {
                 label: 'Quản lý user',
@@ -54,6 +56,7 @@ export default {
                 children: [
                     {
                         label: 'Danh sách user',
+                        toRoute: '/admin/user'
                     },
                     {
                         label: 'Tạo mới user',

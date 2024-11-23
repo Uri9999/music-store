@@ -10,16 +10,15 @@
                 />
                 <span class="ml-3">Nguyễn Văn Nhất</span>
             </div>
+            <div class="container">
+                <NuxtPage />
+            </div>
         </div>
     </div>
 </template>
 <script lang="ts" setup>
 import AdminMenu from '~/components/Utils/Menu/AdminMenu.vue';
 
-definePageMeta({
-    layout: 'manage',
-    title: 'Đăng nhập',
-});
 </script>
 
 <style lang="scss" scoped>
@@ -45,5 +44,11 @@ definePageMeta({
     align-items: center;
     justify-content: end;
     padding-right: 20px;
+}
+
+.container {
+    padding-right: 20px;
+    padding-left: 20px;
+    padding-top: 20px;
 }
 </style>

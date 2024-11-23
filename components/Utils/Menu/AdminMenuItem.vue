@@ -24,7 +24,7 @@
             :style="{ height: containerHeight }"
             ref="container"
         >
-            <menu-item
+            <AdminMenuItem
                 :class="{ opened: showChildren }"
                 v-for="(item, index) in data"
                 :key="index"
@@ -33,6 +33,7 @@
                 :icon="item.icon"
                 :depth="depth + 1"
                 :smallMenu="smallMenu"
+                :toRoute="item?.toRoute"
             />
         </div>
     </div>
@@ -67,6 +68,9 @@ export default {
         smallMenu: {
             type: Boolean,
         },
+        toRoute: {
+            type: String,
+        },
     },
     computed: {
         showLabel() {
@@ -75,6 +79,9 @@ export default {
     },
     methods: {
         toggleMenu() {
+            if (this.toRoute) {
+                this.$router.push(this.toRoute)
+            }
             this.expanded = !this.expanded;
             if (!this.showChildren) {
                 this.showChildren = true;
