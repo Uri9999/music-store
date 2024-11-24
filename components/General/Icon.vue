@@ -32,8 +32,6 @@ export default {
     methods: {},
     setup(props) {
         const icon = ref(icons[props.name]);
-        console.log('icon', icon);
-        
 
         return { icon };
     },
