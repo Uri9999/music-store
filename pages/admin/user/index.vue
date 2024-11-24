@@ -7,13 +7,42 @@
                     class="flex flex-wrap gap-2 align-items-center justify-content-between"
                 >
                     <div>
-                        <!-- <Button
+                        <Button
                             type="button"
                             icon="pi pi-filter-slash"
-                            label="Clear"
+                            label="Reset bộ lọc"
                             outlined
-                            @click=""
-                        /> -->
+                            @click="clearFilter()"
+                        />
+                        <div class="flex gap-2 mt-2">
+                            <MultiSelect
+                                v-model="filter.status"
+                                :options="selection?.user_status"
+                                optionLabel="label"
+                                optionValue="value"
+                                filter
+                                placeholder="Trạng thái"
+                                :maxSelectedLabels="3"
+                            />
+                            <MultiSelect
+                                v-model="filter.roles"
+                                :options="selection?.user_role"
+                                optionLabel="label"
+                                optionValue="value"
+                                filter
+                                placeholder="Cấp bậc"
+                                :maxSelectedLabels="3"
+                            />
+                            <MultiSelect
+                                v-model="filter.genders"
+                                :options="selection?.user_gender"
+                                optionLabel="label"
+                                optionValue="value"
+                                filter
+                                placeholder="Giới tính"
+                                :maxSelectedLabels="3"
+                            />
+                        </div>
                     </div>
                     <div class="flex gap-2">
                         <IconField>
@@ -25,7 +54,7 @@
                                 v-model="filter.search_name"
                             />
                         </IconField>
-                        <Button>Tìm kiếm</Button>
+                        <Button @click="search()">Tìm kiếm</Button>
                     </div>
                 </div>
             </template>
@@ -53,17 +82,17 @@
             </Column>
             <Column field="role_id" header="Cấp bậc">
                 <template #body="slotProps">
-                    <span class="role-admin" v-if="slotProps.data.role_id == 0"
+                    <span class="role-admin" v-if="slotProps.data.role_id == 1"
                         >Admin</span
                     >
                     <span
                         class="role-staff"
-                        v-else-if="slotProps.data.status == 1"
+                        v-else-if="slotProps.data.role_id == 2"
                         >Staff</span
                     >
                     <span
                         class="role-affiliate"
-                        v-else-if="slotProps.data.status == 1"
+                        v-else-if="slotProps.data.role_id == 3"
                         >Afiliate</span
                     >
                     <span class="role-user" v-else>Khách hàng</span>
@@ -125,9 +154,17 @@
 import TableCommon from '~/components/General/TableCommon.vue';
 import Api from '~/network/Api';
 import { useConfirm } from 'primevue/useconfirm';
+import { useSelectionStore } from '~/stores/selectionStore';
+import type { Selection, Item } from '~/types/selection';
 
 definePageMeta({
     layout: 'admin',
+});
+
+const selection = ref<Selection | null>();
+const selectionStore = useSelectionStore();
+onMounted(async () => {
+    selection.value = await selectionStore.getData();
 });
 
 const toast = useToast();
@@ -136,8 +173,8 @@ const confirm = useConfirm();
 const filter = ref({
     search_name: null,
     status: null,
-    role_id: null,
-    gender: null,
+    roles: null,
+    genders: null,
 });
 
 const fetchUsers = (payload: any) => {
@@ -177,7 +214,7 @@ const confirmUnlock = (id: number) => {
     });
 };
 const lockUser = async (id: number) => {
-    Api.user
+    await Api.user
         .lock(id)
         .then((res: any) => {
             toast.add({
@@ -197,7 +234,7 @@ const lockUser = async (id: number) => {
         });
 };
 const unlockUser = async (id: number) => {
-    Api.user
+    await Api.user
         .unlock(id)
         .then((res: any) => {
             toast.add({
@@ -215,6 +252,18 @@ const unlockUser = async (id: number) => {
                 life: 3000,
             });
         });
+};
+const clearFilter = async () => {
+    filter.value = {
+        search_name: null,
+        status: null,
+        roles: null,
+        genders: null,
+    };
+    await search();
+};
+const search = async () => {
+    await tableCommon.value.refresh(filter.value);
 };
 </script>
 <style scoped lang="scss">

@@ -1,5 +1,8 @@
 type Selection = {
-    categories: Item[]
+    categories: Item[],
+    user_status: Item[],
+    user_role: Item[],
+    user_gender: Item[],
 };
 
 type Item = {
@@ -9,4 +12,4 @@ type Item = {
 };
 
 
-export type { Selection };
+export type { Selection, Item };

@@ -44,11 +44,11 @@ const error = ref<string | null>(null);
 
 const currentPage = ref(1);
 
-const fetchData = async () => {
+const fetchData = async (payload: any = null) => {
     isLoading.value = true;
     error.value = null;
     await props
-        .apiFunction({ page: currentPage.value })
+        .apiFunction({ page: currentPage.value, ...payload })
         .then((res: any) => {
             tableData.value = res.data;
             paginator.value = res.meta;
@@ -73,6 +73,6 @@ onMounted(() => {
 });
 
 defineExpose({
-    refresh: () => fetchData(),
+    refresh: (payload: any) => fetchData(payload),
 });
 </script>
