@@ -78,7 +78,6 @@ onMounted(async () => {
         },
     ] as any;
 
-    console.log('m', menuTree.value);
 });
 
 // const menuTree = ref([

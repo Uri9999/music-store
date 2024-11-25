@@ -52,7 +52,6 @@ const fetchData = async (payload: any = null) => {
         .then((res: any) => {
             tableData.value = res.data;
             paginator.value = res.meta;
-            console.log('paginator', paginator.value);
         })
         .catch((err: any) => {
             error.value = err.message || 'Error fetching data';

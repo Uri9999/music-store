@@ -183,7 +183,6 @@ const getCountCartItem = async () => {
     Api.cart
         .getCountByMe()
         .then((res: any) => {
-            console.log('count cart');
             countCartItem.value = res.data;
         })
         .catch((err: any) => {

@@ -207,7 +207,6 @@ const closeCreateTab = () => {
     visibleCreate.value = false;
 };
 const saveTab = async () => {
-    console.log('tabData.value', tabData.value);
 
     Api.requestTab
         .store(tabData.value)

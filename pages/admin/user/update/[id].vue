@@ -147,14 +147,12 @@ const getUserDetail = async () => {
     await Api.user
         .show(id)
         .then((res: any) => {
-            console.log('res', res);
             userData.value = res.data;
         })
         .catch((err: any) => console.log(err));
 };
 
 const save = async () => {
-    console.log('userData.value', userData.value);
     const payload = {
         ...userData.value,
         dob: userData.value.dob

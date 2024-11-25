@@ -61,7 +61,6 @@ const getTabs = async () => {
         .getMyOrder()
         .then((res: any) => {
             items.value = res.data;
-            console.log('items.value', items.value);
         })
         .catch((err: any) => {
             console.log(err);

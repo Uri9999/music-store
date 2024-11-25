@@ -51,7 +51,7 @@
                     }}</small>
                 </div>
                 <div class="mb-3 flex justify-content-between">
-                    <Button label="Trở lại" severity="secondary"></Button>
+                    <Button label="Trở lại" severity="secondary" @click="back()"></Button>
                     <Button label="Lưu" @click="save()"></Button>
                 </div>
             </div>
@@ -84,7 +84,6 @@ const selection = ref<Selection | null>();
 const selectionStore = useSelectionStore();
 onMounted(async () => {
     selection.value = await selectionStore.getData();
-    console.log('selection.value', selection.value);
 });
 
 const save = async () => {
@@ -117,6 +116,10 @@ const save = async () => {
                 categoryDataError.value = err.errors;
             }
         });
+};
+
+const back = () => {
+    router.go(-1);
 };
 </script>
 

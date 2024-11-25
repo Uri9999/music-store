@@ -53,7 +53,11 @@
                     }}</small>
                 </div>
                 <div class="mb-3 flex justify-content-between">
-                    <Button label="Trở lại" severity="secondary"></Button>
+                    <Button
+                        label="Trở lại"
+                        @click="back()"
+                        severity="secondary"
+                    ></Button>
                     <Button label="Lưu" @click="update()"></Button>
                 </div>
             </div>
@@ -88,7 +92,6 @@ const route = useRoute();
 const id = Number(route.params.id);
 onMounted(async () => {
     selection.value = await selectionStore.getData();
-    console.log('selection.value', selection.value);
     await getCategory();
 });
 
@@ -138,6 +141,10 @@ const update = async () => {
                 categoryDataError.value = err.errors;
             }
         });
+};
+
+const back = () => {
+    router.go(-1);
 };
 </script>
 

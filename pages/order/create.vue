@@ -118,7 +118,6 @@ onMounted(async () => {
     await getTabs();
 });
 const handleUpload = (file: any) => {
-    console.log('upload', file);
     imageUrl.value = URL.createObjectURL(file);
     bill.value = file;
     orderData.value.bill = file;
@@ -128,7 +127,6 @@ const getTabs = async () => {
         .getTabByIds({ ids: ids })
         .then((res: any) => {
             items.value = res.data;
-            console.log('items.value', items.value);
             totalPrice.value = items.value.reduce(
                 (total, i: any) => total + i.price,
                 0,
