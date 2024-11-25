@@ -11,7 +11,7 @@
         <TableCommon ref="tableCommon" :apiFunction="fetchUsers">
             <template #header>
                 <div
-                    class="flex flex-wrap gap-2 align-items-center justify-content-between"
+                    class="flex flex-wrap gap-2 align-items-end justify-content-between"
                 >
                     <div>
                         <Button
