@@ -5,6 +5,7 @@ export const useAuthStore = defineStore('auth', {
     state: () => ({
         profile: null as Profile | null,
         isAuthenticated: false,
+        isAdmin: false,
     }),
 
     actions: {
@@ -17,6 +18,7 @@ export const useAuthStore = defineStore('auth', {
         },
         setProfile(user: Profile) {
             this.profile = user;
+            this.isAdmin = user.role_id == 1;
         },
     },
 });

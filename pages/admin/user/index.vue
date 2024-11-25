@@ -118,7 +118,7 @@
                         outlined
                         rounded
                         class="mr-2"
-                        @click=""
+                        @click="gotoEditUser(slotProps.data.id)"
                     />
 
                     <Button
@@ -167,6 +167,7 @@ onMounted(async () => {
     selection.value = await selectionStore.getData();
 });
 
+const router = useRouter();
 const toast = useToast();
 const tableCommon = ref<any>();
 const confirm = useConfirm();
@@ -265,6 +266,9 @@ const clearFilter = async () => {
 const search = async () => {
     await tableCommon.value.refresh(filter.value);
 };
+const gotoEditUser = (id: number) => {
+    router.push('/admin/user/update/' + id)
+}
 </script>
 <style scoped lang="scss">
 .status-active {

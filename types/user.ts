@@ -3,10 +3,26 @@ type Profile = {
     name: string;
     email: string;
     status: number;
-    dob: string;
+    dob: Date|null;
     gender: number;
     role_id: number;
-    avatar: string;
+    avatar: Avatar;
+    media_avatar: File;
 };
 
-export type { Profile };
+type Avatar = {
+    id: number;
+    url: string;
+};
+
+type UserDataError = {
+    name: [string],
+    email: [string],
+    dob: [string],
+    status: [string],
+    gender: [string],
+    role_id: [string],
+    media_avatar: [string],
+}
+
+export type { Profile, UserDataError };

@@ -175,6 +175,7 @@ const dataURLtoBlob = (dataurl: string) => {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    z-index: 10;
 }
 .upload-container:has(.dragging) {
     border-color: rgb(90, 221, 3);

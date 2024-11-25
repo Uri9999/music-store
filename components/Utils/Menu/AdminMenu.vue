@@ -53,15 +53,16 @@ export default {
             {
                 label: 'Quản lý user',
                 icon: 'manage-account',
-                children: [
-                    {
-                        label: 'Danh sách user',
-                        toRoute: '/admin/user'
-                    },
-                    {
-                        label: 'Tạo mới user',
-                    }
-                ],
+                toRoute: '/admin/user'
+                // children: [
+                //     {
+                //         label: 'Danh sách user',
+                //         toRoute: '/admin/user'
+                //     },
+                //     {
+                //         label: 'Tạo mới user',
+                //     }
+                // ],
             },
             {
                 label: 'Quản lý tab',
@@ -82,6 +83,10 @@ export default {
             {
                 label: 'Quản lý blog',
                 icon: 'menu-book',
+            },
+            {
+                label: 'Quản lý doanh thu',
+                icon: 'payments',
             },
         ],
     }),
