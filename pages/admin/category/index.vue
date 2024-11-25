@@ -1,6 +1,13 @@
 <template>
     <div>
-        <h2>Danh sách User</h2>
+        <h2 class="mb-2">Danh sách User</h2>
+        <Button
+            label="Tạo mới"
+            icon="pi pi-plus"
+            severity="success"
+            @click="gotoCreate()"
+            class="ml-3"
+        />
         <TableCommon ref="tableCommon" :apiFunction="fetchUsers">
             <template #header>
                 <div
@@ -83,7 +90,7 @@ onMounted(async () => {});
 const filter = ref({
     name: '',
 });
-
+const router = useRouter();
 const toast = useToast();
 const confirm = useConfirm();
 const tableCommon = ref<any>();
@@ -128,7 +135,7 @@ const deleteCategory = async (id: number) => {
 
 const clearFilter = async () => {
     filter.value.name = '';
-    await search()
+    await search();
 };
 const search = async () => {
     await tableCommon.value.refresh(filter.value);
@@ -137,7 +144,12 @@ const search = async () => {
 const fetchUsers = (payload: any) => {
     return Api.category.index(payload);
 };
-</script>
-<style scoped lang="scss">
 
-</style>
+const gotoCreate = () => {
+    router.push('/admin/category/create');
+};
+const gotoEditCategory = (id: number) => {
+    router.push('/admin/category/update/' + id);
+};
+</script>
+<style scoped lang="scss"></style>
