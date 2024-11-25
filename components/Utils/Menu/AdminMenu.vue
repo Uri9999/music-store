@@ -75,6 +75,7 @@ export default {
             {
                 label: 'Quản lý danh mục',
                 icon: 'category',
+                toRoute: '/admin/category'
             },
             {
                 label: 'Quản lý Yêu cầu tab',
