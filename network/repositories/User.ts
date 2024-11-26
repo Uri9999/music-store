@@ -4,6 +4,9 @@ export default () => ({
     index(payload: any) {
         return BaseApi.setAuth().get('admin/user', payload);
     },
+    getAllAffiliate(payload: any) {
+        return BaseApi.setAuth().get('admin/user/affiliate', payload);
+    },
     lock(id: number) {
         return BaseApi.setAuth().post('admin/user/' + id + '/lock');
     },

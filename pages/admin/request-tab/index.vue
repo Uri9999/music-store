@@ -47,7 +47,34 @@
             </Column>
             <Column field="receiver" header="Nhân viên thực hiện" style="">
                 <template #body="slotProps">
-                    <span>{{ slotProps.data?.receiver?.name }}</span>
+                    <div
+                        v-if="
+                            visibleSelect &&
+                            originReiverId == slotProps.data?.id
+                        "
+                        class="flex gap-2"
+                    >
+                        <Dropdown
+                            v-model="selectedReiverId"
+                            :options="allUserAffiliate"
+                            filter
+                            optionLabel="name"
+                            optionValue="id"
+                            placeholder="Select a Affiliate"
+                            class="w-full md:w-14rem"
+                        >
+                        </Dropdown>
+                        <Button
+                            label="Lưu"
+                            @click="updateReceiver(slotProps.data.id)"
+                        ></Button>
+                        <Button
+                            label="Đóng"
+                            severity="secondary"
+                            @click="closeEdit()"
+                        ></Button>
+                    </div>
+                    <span v-else>{{ slotProps.data?.receiver?.name }}</span>
                 </template>
             </Column>
             <Column
@@ -61,7 +88,7 @@
                         outlined
                         rounded
                         class="mr-2"
-                        @click="editRequestTab(slotProps.data.id)"
+                        @click="editRequestTab(slotProps.data)"
                     />
                 </template>
             </Column>
@@ -77,15 +104,26 @@ import { useConfirm } from 'primevue/useconfirm';
 definePageMeta({
     layout: 'admin',
 });
-
-onMounted(async () => {});
+const visibleSelect = ref(false);
+const selectedReiverId = ref();
+const originReiverId = ref();
+const allUserAffiliate = ref([]);
+onMounted(async () => {
+    await Api.user
+        .getAllAffiliate({})
+        .then((res: any) => {
+            console.log('res', res);
+            allUserAffiliate.value = res.data;
+        })
+        .catch((err: any) => {
+            console.log(err);
+        });
+});
 
 const filter = ref({
     search: '',
 });
-const router = useRouter();
 const toast = useToast();
-const confirm = useConfirm();
 const tableCommon = ref<any>();
 
 const clearFilter = async () => {
@@ -110,9 +148,39 @@ const convertStatus = (status: number) => {
     }
 };
 
-const editRequestTab = (id: number) => {
+const editRequestTab = (requestTab: any) => {
+    originReiverId.value = requestTab.id;
+    selectedReiverId.value = requestTab?.receiver?.id;
+    visibleSelect.value = true;
+};
 
-}
+const closeEdit = () => {
+    originReiverId.value = null;
+    selectedReiverId.value = null;
+    visibleSelect.value = false;
+};
+const updateReceiver = async (id: number) => {
+    await Api.requestTab
+        .updateReceiver(id, { receiver_id: selectedReiverId.value })
+        .then(async (res: any) => {
+            await tableCommon.value.refresh(filter.value);
+            closeEdit();
+            toast.add({
+                severity: 'success',
+                summary: 'Thông báo',
+                detail: res.message,
+                life: 3000,
+            });
+        })
+        .catch((err: any) => {
+            toast.add({
+                severity: 'error',
+                summary: 'Thông báo',
+                detail: err.message,
+                life: 3000,
+            });
+        });
+};
 </script>
 <style scoped lang="scss">
 .status-create {

@@ -17,5 +17,8 @@ export default () => ({
     // only manage
     index(payload: any) {
         return BaseApi.setAuth().get('admin/request-tabs', payload);
+    },
+    updateReceiver(id: number, payload: any) {
+        return BaseApi.setAuth().post('admin/request-tabs/update-receiver/' + id, payload);
     }
 });
