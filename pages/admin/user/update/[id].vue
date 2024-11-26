@@ -1,6 +1,6 @@
 <template>
     <div class="update-user">
-        <h1>Chỉnh sửa thông tin user</h1>
+        <h2>Chỉnh sửa thông tin user</h2>
 
         <div class="form mt-3">
             <div>

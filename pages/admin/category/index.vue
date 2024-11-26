@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2 class="mb-2">Danh sách User</h2>
+        <h2 class="mb-2">Danh sách danh mục</h2>
         <Button
             label="Tạo mới"
             icon="pi pi-plus"

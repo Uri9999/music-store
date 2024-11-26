@@ -1,6 +1,13 @@
 <template>
     <div>
         <h2 class="mb-2">Danh sách bài tab</h2>
+        <Button
+            label="Tạo mới"
+            icon="pi pi-plus"
+            severity="success"
+            @click=""
+            class="ml-3"
+        />
         <TableCommon
             ref="tableCommon"
             :payload="filter"
