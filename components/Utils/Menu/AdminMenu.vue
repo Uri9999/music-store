@@ -67,6 +67,7 @@ export default {
             {
                 label: 'Quản lý tab',
                 icon: 'library-music',
+                toRoute: '/admin/tab'
             },
             {
                 label: 'Quản lý đơn hàng',

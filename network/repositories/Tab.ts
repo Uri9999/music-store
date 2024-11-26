@@ -18,6 +18,11 @@ export default () => ({
     },
 
     getTabByIds(payload: any) {
-        return BaseApi.setAuth().get('/tabs/get/by-ids', payload)
-    }
+        return BaseApi.setAuth().get('/tabs/get/by-ids', payload);
+    },
+
+    // only manage
+    adminIndex(payload: any) {
+        return BaseApi.setAuth().get('admin/tabs', payload);
+    },
 });
