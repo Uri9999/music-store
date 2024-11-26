@@ -34,6 +34,7 @@ interface Props {
     rows?: number;
     rowsPerPageOptions?: number[];
     tableProps?: Record<string, any>;
+    payload?: any
 }
 
 const props = defineProps<Props>();
@@ -64,7 +65,7 @@ const fetchData = async (payload: any = null) => {
 // Handle page change
 const onPageChange = (event: any) => {
     currentPage.value = event.page + 1; // PrimeVue starts from 0, so add 1
-    fetchData();
+    fetchData(props.payload);
 };
 
 onMounted(() => {

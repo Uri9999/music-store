@@ -1,7 +1,7 @@
 <template>
     <div>
         <h2 class="mb-2">Danh sách yêu cầu</h2>
-        <TableCommon ref="tableCommon" :apiFunction="fetchRequests">
+        <TableCommon ref="tableCommon" :payload="filter" :apiFunction="fetchRequests">
             <template #header>
                 <div
                     class="flex flex-wrap gap-2 align-items-end justify-content-between"
