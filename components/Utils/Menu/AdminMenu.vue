@@ -80,6 +80,7 @@ export default {
             {
                 label: 'Quản lý Yêu cầu tab',
                 icon: 'clinical-notes',
+                toRoute: '/admin/request-tab'
             },
             {
                 label: 'Quản lý blog',

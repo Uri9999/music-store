@@ -13,4 +13,9 @@ export default () => ({
     delete(id: number) {
         return BaseApi.setAuth().delete('request-tabs/' + id);
     },
+
+    // only manage
+    index(payload: any) {
+        return BaseApi.setAuth().get('admin/request-tabs', payload);
+    }
 });
