@@ -77,7 +77,7 @@
                 style="min-width: 12rem"
             >
                 <template #body="slotProps">
-                    <Button icon="pi pi-pencil" outlined rounded class="mr-2" />
+                    <Button icon="pi pi-pencil" @click="gotoUpdateTab(slotProps.data?.id)" outlined rounded class="mr-2" />
                     <Button
                         icon="pi pi-info-circle"
                         outlined
@@ -184,6 +184,10 @@ const truncateDescription = (str: string | null, length = 20) => {
 
 const gotoDetailTab = (id: number) => {
     router.push('/admin/tab/' + id);
+};
+
+const gotoUpdateTab = (id: number) => {
+    router.push('/admin/tab/update/' + id);
 };
 </script>
 <style scoped lang="scss"></style>
