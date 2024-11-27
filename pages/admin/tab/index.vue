@@ -64,7 +64,13 @@
                     >
                 </template>
             </Column>
-            <Column field="description" header="Mô tả" style=""></Column>
+            <Column field="description" header="Mô tả" style="">
+                <template #body="slotProps">
+                    <span>
+                        {{ truncateDescription(slotProps.data?.description) }}
+                    </span>
+                </template>
+            </Column>
             <Column
                 :exportable="false"
                 header="Hành động"
@@ -169,6 +175,11 @@ const deleteTab = async (id: number) => {
             life: 3000,
         });
     }
+};
+
+const truncateDescription = (str: string | null, length = 20) => {
+    if (str == null) return;
+    return str.length > length ? str.substring(0, length) + '...' : str;
 };
 
 const gotoDetailTab = (id: number) => {
