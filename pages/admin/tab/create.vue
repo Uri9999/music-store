@@ -2,8 +2,8 @@
     <div class="tab-creation">
         <h2>Tạo Tab</h2>
 
-        <div class="form mt-3">
-            <div>
+        <div class="form flex gap-5 mt-3">
+            <div class="attribute">
                 <!-- Tên Tab -->
                 <div class="mb-3">
                     <label for="name" class="block mb-1">
@@ -94,21 +94,6 @@
                     }}</small>
                 </div>
 
-                <!-- Mô tả -->
-                <div class="mb-3">
-                    <label for="description" class="block mb-1">Mô Tả</label>
-                    <Textarea
-                        v-model="tabData.description"
-                        id="description"
-                        rows="5"
-                        class="w-full"
-                        fluid
-                    />
-                    <small class="error" v-if="tabErrors?.description">{{
-                        tabErrors?.description[0]
-                    }}</small>
-                </div>
-
                 <!-- Giá -->
                 <div class="mb-3">
                     <label for="price" class="block mb-1">
@@ -121,7 +106,9 @@
                         tabErrors?.price[0]
                     }}</small>
                 </div>
+            </div>
 
+            <div class="attribute">
                 <!-- Tải ảnh -->
                 <div class="mb-3">
                     <label for="images" class="block mb-1">
@@ -138,7 +125,11 @@
                         :showCancelButton="false"
                         chooseLabel="Chọn ảnh"
                         :auto="false"
-                    />
+                    >
+                        <template #empty>
+                            <p>Tỉ lệ ảnh đề xuất là 1 : 2.</p>
+                        </template>
+                    </FileUpload>
                     <small class="error" v-if="tabErrors?.images">{{
                         tabErrors?.images[0]
                     }}</small>
@@ -159,6 +150,21 @@
                     />
                     <small class="error" v-if="tabErrors?.pdf">{{
                         tabErrors?.pdf[0]
+                    }}</small>
+                </div>
+
+                <!-- Mô tả -->
+                <div class="mb-3">
+                    <label for="description" class="block mb-1">Mô Tả</label>
+                    <Textarea
+                        v-model="tabData.description"
+                        id="description"
+                        rows="5"
+                        class="w-full"
+                        fluid
+                    />
+                    <small class="error" v-if="tabErrors?.description">{{
+                        tabErrors?.description[0]
                     }}</small>
                 </div>
 
@@ -251,6 +257,7 @@ const saveTab = async () => {
             detail: response?.message,
             life: 3000,
         });
+        router.push('/admin/tab/' + response.data?.id);
     } catch (error: any) {
         if (error?.status == 422) {
             tabErrors.value = error.errors;
@@ -271,13 +278,7 @@ const goBack = () => {
 </script>
 
 <style lang="scss" scoped>
-.avatar {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-}
-
-.tab-creation {
-    max-width: 600px;
+.attribute {
+    width: 50%;
 }
 </style>
