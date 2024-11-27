@@ -1,149 +1,158 @@
 <template>
-    <div class="update-user">
-        <h2>Tạo tab</h2>
+    <div class="tab-creation">
+        <h2>Tạo Tab</h2>
 
         <div class="form mt-3">
             <div>
+                <!-- Tên Tab -->
                 <div class="mb-3">
-                    <label for="name" class="block mb-1"
-                        >Tên <span class="error">*</span></label
-                    >
+                    <label for="name" class="block mb-1">
+                        Tên <span class="error">*</span>
+                    </label>
                     <InputText
-                        type="text"
-                        placeholder="Name"
-                        class="w-full"
                         v-model="tabData.name"
                         id="name"
+                        placeholder="Tên Tab"
+                        class="w-full"
                         fluid
                     />
-                    <small class="error" v-if="tabDataError?.name">{{
-                        tabDataError?.name[0]
+                    <small class="error" v-if="tabErrors?.name">{{
+                        tabErrors?.name[0]
                     }}</small>
                 </div>
 
+                <!-- Tác Giả -->
                 <div class="mb-3">
-                    <label for="author" class="block mb-1"
-                        >Tác giả <span class="error">*</span></label
-                    >
+                    <label for="author" class="block mb-1">
+                        Tác Giả <span class="error">*</span>
+                    </label>
                     <InputText
-                        type="text"
-                        placeholder="Author"
-                        class="w-full"
                         v-model="tabData.author"
                         id="author"
+                        placeholder="Tác Giả"
+                        class="w-full"
                         fluid
                     />
-                    <small class="error" v-if="tabDataError?.author">{{
-                        tabDataError?.author[0]
+                    <small class="error" v-if="tabErrors?.author">{{
+                        tabErrors?.author[0]
                     }}</small>
                 </div>
 
+                <!-- Youtube URL -->
                 <div class="mb-3">
                     <label for="youtube" class="block mb-1">Youtube</label>
                     <InputText
-                        type="text"
-                        placeholder="Youtube"
-                        class="w-full"
                         v-model="tabData.youtube_url"
                         id="youtube"
+                        placeholder="Youtube"
+                        class="w-full"
                         fluid
                     />
-                    <small class="error" v-if="tabDataError?.youtube_url">{{
-                        tabDataError?.youtube_url[0]
+                    <small class="error" v-if="tabErrors?.youtube_url">{{
+                        tabErrors?.youtube_url[0]
                     }}</small>
                 </div>
 
+                <!-- Danh mục -->
                 <div class="mb-3">
-                    <label for="category" class="block mb-1"
-                        >Danh mục <span class="error">*</span></label
-                    >
-                    <TreeSelect
-                        v-model="tabData.category_value"
-                        :options="selection?.categories"
-                        dataKey="value"
-                        placeholder="Select an item"
-                        :selection-mode="'single'"
-                        id="category"
-                    />
-                    <small class="error" v-if="tabDataError?.category_id">{{
-                        tabDataError?.category_id[0]
+                    <label for="category" class="block mb-1">
+                        Danh Mục <span class="error">*</span>
+                    </label>
+                    <div>
+                        <TreeSelect
+                            v-model="tabData.category_value"
+                            :options="selection?.categories"
+                            dataKey="value"
+                            placeholder="Chọn danh mục"
+                            selection-mode="single"
+                            id="category"
+                        />
+                    </div>
+                    <small class="error" v-if="tabErrors?.category_id">{{
+                        tabErrors?.category_id[0]
                     }}</small>
                 </div>
 
+                <!-- Người làm tab -->
                 <div class="mb-3">
-                    <label for="user" class="block mb-1"
-                        >Người làm tab (Affiliate)
-                        <span class="error">*</span></label
-                    >
-                    <Dropdown
-                        id="user"
-                        v-model="tabData.user_id"
-                        :options="allUserAffiliate"
-                        filter
-                        optionLabel="name"
-                        optionValue="id"
-                        placeholder="Select a Affiliate"
-                        class="w-full md:w-14rem"
-                    ></Dropdown>
-                    <small class="error" v-if="tabDataError?.user_id">{{
-                        tabDataError?.user_id[0]
+                    <label for="user" class="block mb-1">
+                        Người làm Tab (Affiliate) <span class="error">*</span>
+                    </label>
+                    <div>
+                        <Dropdown
+                            v-model="tabData.user_id"
+                            :options="affiliateUsers"
+                            filter
+                            optionLabel="name"
+                            optionValue="id"
+                            placeholder="Chọn Affiliate"
+                            class="w-full md:w-14rem"
+                        />
+                    </div>
+                    <small class="error" v-if="tabErrors?.user_id">{{
+                        tabErrors?.user_id[0]
                     }}</small>
                 </div>
 
+                <!-- Mô tả -->
                 <div class="mb-3">
-                    <label for="description" class="block mb-1">Mô tả</label>
+                    <label for="description" class="block mb-1">Mô Tả</label>
                     <Textarea
                         v-model="tabData.description"
                         id="description"
-                        class="w-full"
                         rows="5"
+                        class="w-full"
                         fluid
                     />
-                    <small class="error" v-if="tabDataError?.description">{{
-                        tabDataError?.description[0]
+                    <small class="error" v-if="tabErrors?.description">{{
+                        tabErrors?.description[0]
                     }}</small>
                 </div>
 
+                <!-- Giá -->
                 <div class="mb-3">
-                    <label for="price" class="block mb-1"
-                        >Giá <span class="error">*</span></label
-                    >
-                    <InputNumber v-model="tabData.price" id="price" fluid />
-                    <small class="error" v-if="tabDataError?.price">{{
-                        tabDataError?.price[0]
+                    <label for="price" class="block mb-1">
+                        Giá <span class="error">*</span>
+                    </label>
+                    <div>
+                        <InputNumber v-model="tabData.price" id="price" fluid />
+                    </div>
+                    <small class="error" v-if="tabErrors?.price">{{
+                        tabErrors?.price[0]
                     }}</small>
                 </div>
 
+                <!-- Tải ảnh -->
                 <div class="mb-3">
-                    <label for="price" class="block mb-1"
-                        >Ảnh bài tab (tối đa 5 mảnh)
-                        <span class="error">*</span></label
-                    >
+                    <label for="images" class="block mb-1">
+                        Ảnh bài Tab (Tối đa 5 ảnh)
+                        <span class="error">*</span>
+                    </label>
                     <FileUpload
-                        name="demo[]"
-                        :url="''"
+                        ref="imageUpload"
+                        name="images[]"
                         :multiple="true"
-                        chooseLabel="Chọn ảnh"
-                        :showCancelButton="false"
-                        :showUploadButton="false"
                         :fileLimit="5"
                         :maxFileSize="4194304"
-                        ref="imageUpload"
+                        :showUploadButton="false"
+                        :showCancelButton="false"
+                        chooseLabel="Chọn ảnh"
                         :auto="false"
-                    >
-                    </FileUpload>
-                    <small class="error" v-if="tabDataError?.images">{{
-                        tabDataError?.price[0]
+                        @upload="onFileUpload"
+                    />
+                    <small class="error" v-if="tabErrors?.images">{{
+                        tabErrors?.images[0]
                     }}</small>
                 </div>
 
+                <!-- Button group -->
                 <div class="mb-3 flex justify-content-between">
                     <Button
                         label="Trở lại"
                         severity="secondary"
-                        @click="back()"
-                    ></Button>
-                    <Button label="Lưu" @click="save()"></Button>
+                        @click="goBack"
+                    />
+                    <Button label="Lưu" @click="saveTab" />
                 </div>
             </div>
         </div>
@@ -154,44 +163,36 @@
 import Api from '~/network/Api';
 import { useSelectionStore } from '~/stores/selectionStore';
 import type { Selection } from '~/types/selection';
+import { ref, onMounted } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { useToast } from 'primevue/usetoast';
 
-definePageMeta({
-    layout: 'admin',
-});
+definePageMeta({ layout: 'admin' });
+
+const toast = useToast();
+const router = useRouter();
+const route = useRoute();
 
 const imageUpload = ref<any>();
-const allUserAffiliate = ref([]);
-const toast = useToast();
-const selection = ref<Selection | null>();
+const affiliateUsers = ref<any[]>([]);
+const selection = ref<Selection | null>(null);
 const selectionStore = useSelectionStore();
-onMounted(async () => {
-    selection.value = await selectionStore.getData();
-    await Api.user
-        .getAllAffiliate({})
-        .then((res: any) => {
-            console.log('res', res);
-            allUserAffiliate.value = res.data;
-        })
-        .catch((err: any) => {
-            console.log(err);
-        });
-});
-const route = useRoute();
-const router = useRouter();
 
+// Data model
 const tabData = ref({
-    name: null,
-    author: null,
-    description: null,
+    name: '',
+    author: '',
+    description: '',
     user_id: null,
     price: null,
     category_id: null,
     category_value: null,
-    youtube_url: null,
-    images: [],
+    youtube_url: '',
+    images: [] as File[],
     pdf: null,
 } as any);
-const tabDataError = ref({
+
+const tabErrors = ref({
     name: [],
     author: [],
     description: [],
@@ -201,37 +202,59 @@ const tabDataError = ref({
     youtube_url: [],
     images: [],
     pdf: [],
-} as any);
+});
 
-const save = async () => {
-    console.log(
-        'imageUpload.value.files.length',
-        imageUpload.value.files.length,
-    );
-
-    await imageUpload.value.upload();
-    if (imageUpload.value.files.length > 0) {
-        tabData.value.images = imageUpload.value.files;
-    } else {
-        console.log('Không có tệp nào để tải lên!');
+onMounted(async () => {
+    try {
+        selection.value = await selectionStore.getData();
+        const response = await Api.user.getAllAffiliate({});
+        affiliateUsers.value = response.data;
+    } catch (error) {
+        console.error('Error loading data:', error);
     }
+});
 
-    tabData.value.category_id = tabData.value.category_value
-        ? parseInt(Object.keys(tabData.value.category_value)[0])
-        : null;
-    console.log('tabData.value', tabData.value);
-
-    await Api.tab
-        .adminStore(tabData.value)
-        .then((res: any) => {
-            console.log('res', res);
-        })
-        .catch((err: any) => {
-            console.log(err);
-        });
+// Handle file upload event
+const onFileUpload = (event: any) => {
+    tabData.value.images = event.files;
+    console.log('Uploaded files:', event.files);
 };
 
-const back = () => {
+// Save tab data
+const saveTab = async () => {
+    try {
+        if (imageUpload.value.files.length > 0) {
+            tabData.value.images = imageUpload.value.files;
+        }
+
+        tabData.value.category_id = tabData.value.category_value
+            ? parseInt(Object.keys(tabData.value.category_value)[0])
+            : null;
+
+        const response = (await Api.tab.adminStore(tabData.value)) as any;
+        console.log('Tab saved successfully:', response);
+        toast.add({
+            severity: 'success',
+            summary: 'Thông báo',
+            detail: response?.message,
+            life: 3000,
+        });
+    } catch (error: any) {
+        console.error('Error saving tab:', error);
+        if (error?.status == 422) {
+            tabErrors.value = error.errors;
+        }
+        toast.add({
+            severity: 'error',
+            summary: 'Thông báo',
+            detail: error?.message,
+            life: 3000,
+        });
+    }
+};
+
+// Navigate back to previous page
+const goBack = () => {
     router.push('/admin/user');
 };
 </script>
@@ -240,10 +263,10 @@ const back = () => {
 .avatar {
     width: 100px;
     height: 100px;
-    border-radius: 50px;
+    border-radius: 50%;
 }
 
-.update-user {
+.tab-creation {
     max-width: 600px;
 }
 </style>
