@@ -6,9 +6,7 @@
             <div class="attribute">
                 <!-- Tên Tab -->
                 <div class="mb-3">
-                    <label for="name" class="block mb-1">
-                        Tên <span class="error">*</span>
-                    </label>
+                    <label for="name" class="block mb-1"> Tên </label>
                     <InputText
                         v-model="tabData.name"
                         id="name"
@@ -24,9 +22,7 @@
 
                 <!-- Tác Giả -->
                 <div class="mb-3">
-                    <label for="author" class="block mb-1">
-                        Tác Giả <span class="error">*</span>
-                    </label>
+                    <label for="author" class="block mb-1"> Tác Giả </label>
                     <InputText
                         v-model="tabData.author"
                         id="author"
@@ -58,16 +54,14 @@
 
                 <!-- Danh mục -->
                 <div class="mb-3">
-                    <label for="category" class="block mb-1">
-                        Danh Mục <span class="error">*</span>
-                    </label>
+                    <label for="category" class="block mb-1"> Danh Mục </label>
                     <div>
                         <TreeSelect
                             disabled
                             v-model="tabData.category_value"
                             :options="selection?.categories"
                             dataKey="value"
-                            placeholder="Chọn danh mục"
+                            placeholder="Danh mục trống"
                             selection-mode="single"
                             id="category"
                         />
@@ -80,7 +74,7 @@
                 <!-- Người làm tab -->
                 <div class="mb-3">
                     <label for="user" class="block mb-1">
-                        Người làm Tab (Affiliate) <span class="error">*</span>
+                        Người làm Tab (Affiliate)
                     </label>
                     <div>
                         <Dropdown
@@ -90,7 +84,7 @@
                             filter
                             optionLabel="name"
                             optionValue="id"
-                            placeholder="Chọn Affiliate"
+                            placeholder="Affiliate trống"
                             class="w-full md:w-14rem"
                         />
                     </div>
@@ -101,9 +95,7 @@
 
                 <!-- Giá -->
                 <div class="mb-3">
-                    <label for="price" class="block mb-1">
-                        Giá <span class="error">*</span>
-                    </label>
+                    <label for="price" class="block mb-1"> Giá </label>
                     <div>
                         <InputNumber
                             disabled
@@ -121,25 +113,16 @@
             <div class="attribute">
                 <!-- Tải ảnh -->
                 <div class="mb-3">
-                    <label for="images" class="block mb-1">
-                        Ảnh bài Tab (Tối đa 5 ảnh)
-                        <span class="error">*</span>
-                    </label>
-                    <FileUpload
-                        ref="imageUpload"
-                        name="images[]"
-                        :multiple="true"
-                        :fileLimit="5"
-                        :maxFileSize="4194304"
-                        :showUploadButton="false"
-                        :showCancelButton="false"
-                        chooseLabel="Chọn ảnh"
-                        :auto="false"
-                    >
-                        <template #empty>
-                            <p>Tỉ lệ ảnh đề xuất là 1 : 2.</p>
-                        </template>
-                    </FileUpload>
+                    <label for="images" class="block mb-1"> Ảnh bài Tab </label>
+                    <div class="image-list" v-if="tabData.images_url.length > 0">
+                        <div
+                            class="image-item"
+                            v-for="(img, index) in tabData.images_url"
+                        >
+                            <img :src="img.url" alt="" />
+                        </div>
+                    </div>
+                    <div v-else>Không có ảnh</div>
                     <small class="error" v-if="tabErrors?.images">{{
                         tabErrors?.images[0]
                     }}</small>
@@ -147,17 +130,14 @@
 
                 <!-- Tải PDF -->
                 <div class="mb-3">
-                    <label for="pdf" class="block mb-1">
-                        Tải PDF (1 file pdf) <span class="error">*</span>
-                    </label>
-                    <FileUpload
-                        mode="basic"
-                        ref="pdfUpload"
-                        name="pdf"
-                        :accept="'application/pdf'"
-                        :maxFileSize="10485760"
-                        chooseLabel="Chọn PDF"
+                    <label for="pdf" class="block mb-1"> PDF </label>
+                    <Button
+                        label="Download PDF"
+                        v-if="tabData?.pdf"
+                        icon="pi pi-download"
+                        @click="downloadPdf"
                     />
+                    <div v-else>File không tồn tại</div>
                     <small class="error" v-if="tabErrors?.pdf">{{
                         tabErrors?.pdf[0]
                     }}</small>
@@ -199,14 +179,10 @@ import { useSelectionStore } from '~/stores/selectionStore';
 import type { Selection } from '~/types/selection';
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { useToast } from 'primevue/usetoast';
 
 definePageMeta({ layout: 'admin' });
 
-const toast = useToast();
 const router = useRouter();
-const pdfUpload = ref<any>();
-const imageUpload = ref<any>();
 const affiliateUsers = ref<any[]>([]);
 const selection = ref<Selection | null>(null);
 const selectionStore = useSelectionStore();
@@ -222,6 +198,7 @@ const tabData = ref({
     category_value: null,
     youtube_url: '',
     images: [] as File[],
+    images_url: [] as string[],
     pdf: null as File | null,
 } as any);
 
@@ -252,7 +229,14 @@ onMounted(async () => {
     }
 });
 
-// Navigate back to previous page
+const downloadPdf = () => {
+    const link = document.createElement('a');
+    link.href = tabData.value.pdf.url;
+    link.download = tabData.value.name + '.pdf';
+    link.target = '_blank';
+    link.click();
+};
+
 const goBack = () => {
     router.go(-1);
 };
@@ -261,5 +245,14 @@ const goBack = () => {
 <style lang="scss" scoped>
 .attribute {
     width: 50%;
+
+    .image-list {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        img {
+            display: inline-block;
+        }
+    }
 }
 </style>
