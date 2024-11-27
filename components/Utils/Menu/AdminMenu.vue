@@ -102,7 +102,7 @@ export default {
 
 <style lang="scss" scoped>
 .menu {
-    // position: fixed;
+    position: sticky;
     height: 100vh;
     width: 240px;
     left: 0;

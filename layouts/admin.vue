@@ -38,6 +38,10 @@ import AdminMenu from '~/components/Utils/Menu/AdminMenu.vue';
 }
 
 .head {
+    // position: sticky;
+    // top: 0;
+    // z-index: 10;
+    background-color: white;
     height: 56px;
     border-bottom: 1px solid rgb(235, 235, 235);
     display: flex;
