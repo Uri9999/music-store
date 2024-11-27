@@ -20,5 +20,8 @@ export default () => ({
     },
     updateReceiver(id: number, payload: any) {
         return BaseApi.setAuth().post('admin/request-tabs/update-receiver/' + id, payload);
-    }
+    },
+    adminDelete(id: number) {
+        return BaseApi.setAuth().delete('admin/request-tabs/' + id);
+    },
 });

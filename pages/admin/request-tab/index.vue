@@ -1,12 +1,16 @@
 <template>
     <div>
         <h2 class="mb-2">Danh sách yêu cầu</h2>
-        <TableCommon ref="tableCommon" :payload="filter" :apiFunction="fetchRequests">
+        <TableCommon
+            ref="tableCommon"
+            :payload="filter"
+            :apiFunction="fetchRequests"
+        >
             <template #header>
                 <div
                     class="flex flex-wrap gap-2 align-items-end justify-content-between"
                 >
-                    <div>
+                    <div class="flex gap-2 mt-2">
                         <Button
                             type="button"
                             icon="pi pi-filter-slash"
@@ -14,17 +18,15 @@
                             outlined
                             @click="clearFilter()"
                         />
-                        <div class="flex gap-2 mt-2">
-                            <MultiSelect
-                                v-model="filter.status"
-                                :options="selection?.request_tab_status"
-                                optionLabel="label"
-                                optionValue="value"
-                                filter
-                                placeholder="Trạng thái"
-                                :maxSelectedLabels="3"
-                            />
-                        </div>
+                        <MultiSelect
+                            v-model="filter.status"
+                            :options="selection?.request_tab_status"
+                            optionLabel="label"
+                            optionValue="value"
+                            filter
+                            placeholder="Trạng thái"
+                            :maxSelectedLabels="3"
+                        />
                     </div>
                     <div class="flex gap-2">
                         <IconField>
@@ -101,6 +103,13 @@
                         class="mr-2"
                         @click="editRequestTab(slotProps.data)"
                     />
+                    <Button
+                        icon="pi pi-times"
+                        outlined
+                        rounded
+                        severity="danger"
+                        @click="confirmDelete(slotProps.data?.id)"
+                    />
                 </template>
             </Column>
         </TableCommon>
@@ -116,6 +125,7 @@ import type { Selection } from '~/types/selection';
 definePageMeta({
     layout: 'admin',
 });
+const confirm = useConfirm();
 const visibleSelect = ref(false);
 const selectedReiverId = ref();
 const originReiverId = ref();
@@ -199,6 +209,41 @@ const updateReceiver = async (id: number) => {
                 life: 3000,
             });
         });
+};
+const confirmDelete = (id: number) => {
+    confirm.require({
+        header: 'Xác nhận xóa yêu cầu',
+        message: 'Bạn có chắc chắn muốn xóa yêu cầu ?',
+        icon: 'pi pi-info-circle',
+        rejectLabel: 'Đóng',
+        acceptLabel: 'Xóa',
+        rejectClass: 'p-button-secondary p-button-outlined',
+        acceptClass: 'p-button-danger',
+        accept: async () => {
+            await deleteRequestTab(id);
+            tableCommon.value.refresh(filter.value);
+        },
+        reject: () => {},
+    });
+};
+
+const deleteRequestTab = async (id: number) => {
+    try {
+        const resDelete = (await Api.requestTab.adminDelete(id)) as any;
+        toast.add({
+            severity: 'success',
+            summary: 'Thông báo',
+            detail: resDelete?.message,
+            life: 3000,
+        });
+    } catch (error: any) {
+        toast.add({
+            severity: 'error',
+            summary: 'Thông báo',
+            detail: error?.message,
+            life: 3000,
+        });
+    }
 };
 </script>
 <style scoped lang="scss">

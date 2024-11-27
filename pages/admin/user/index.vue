@@ -6,7 +6,7 @@
                 <div
                     class="flex flex-wrap gap-2 align-items-end justify-content-between"
                 >
-                    <div>
+                    <div class="flex gap-2 mt-2">
                         <Button
                             type="button"
                             icon="pi pi-filter-slash"
@@ -14,35 +14,33 @@
                             outlined
                             @click="clearFilter()"
                         />
-                        <div class="flex gap-2 mt-2">
-                            <MultiSelect
-                                v-model="filter.status"
-                                :options="selection?.user_status"
-                                optionLabel="label"
-                                optionValue="value"
-                                filter
-                                placeholder="Trạng thái"
-                                :maxSelectedLabels="3"
-                            />
-                            <MultiSelect
-                                v-model="filter.roles"
-                                :options="selection?.user_role"
-                                optionLabel="label"
-                                optionValue="value"
-                                filter
-                                placeholder="Cấp bậc"
-                                :maxSelectedLabels="3"
-                            />
-                            <MultiSelect
-                                v-model="filter.genders"
-                                :options="selection?.user_gender"
-                                optionLabel="label"
-                                optionValue="value"
-                                filter
-                                placeholder="Giới tính"
-                                :maxSelectedLabels="3"
-                            />
-                        </div>
+                        <MultiSelect
+                            v-model="filter.status"
+                            :options="selection?.user_status"
+                            optionLabel="label"
+                            optionValue="value"
+                            filter
+                            placeholder="Trạng thái"
+                            :maxSelectedLabels="3"
+                        />
+                        <MultiSelect
+                            v-model="filter.roles"
+                            :options="selection?.user_role"
+                            optionLabel="label"
+                            optionValue="value"
+                            filter
+                            placeholder="Cấp bậc"
+                            :maxSelectedLabels="3"
+                        />
+                        <MultiSelect
+                            v-model="filter.genders"
+                            :options="selection?.user_gender"
+                            optionLabel="label"
+                            optionValue="value"
+                            filter
+                            placeholder="Giới tính"
+                            :maxSelectedLabels="3"
+                        />
                     </div>
                     <div class="flex gap-2">
                         <IconField>
@@ -267,8 +265,8 @@ const search = async () => {
     await tableCommon.value.refresh(filter.value);
 };
 const gotoEditUser = (id: number) => {
-    router.push('/admin/user/update/' + id)
-}
+    router.push('/admin/user/update/' + id);
+};
 </script>
 <style scoped lang="scss">
 .status-active {

@@ -146,7 +146,7 @@ const confirmDelete = (id: number) => {
         acceptClass: 'p-button-danger',
         accept: async () => {
             await deleteTab(id);
-            tableCommon.value.refresh();
+            tableCommon.value.refresh(filter.value);
         },
         reject: () => {},
     });
