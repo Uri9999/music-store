@@ -14,6 +14,17 @@
                             outlined
                             @click="clearFilter()"
                         />
+                        <div class="flex gap-2 mt-2">
+                            <MultiSelect
+                                v-model="filter.status"
+                                :options="selection?.request_tab_status"
+                                optionLabel="label"
+                                optionValue="value"
+                                filter
+                                placeholder="Trạng thái"
+                                :maxSelectedLabels="3"
+                            />
+                        </div>
                     </div>
                     <div class="flex gap-2">
                         <IconField>
@@ -99,7 +110,8 @@
 <script setup lang="ts">
 import TableCommon from '~/components/General/TableCommon.vue';
 import Api from '~/network/Api';
-import { useConfirm } from 'primevue/useconfirm';
+import { useSelectionStore } from '~/stores/selectionStore';
+import type { Selection } from '~/types/selection';
 
 definePageMeta({
     layout: 'admin',
@@ -122,9 +134,16 @@ onMounted(async () => {
 
 const filter = ref({
     search: '',
+    status: null,
 });
 const toast = useToast();
 const tableCommon = ref<any>();
+
+const selection = ref<Selection | null>();
+const selectionStore = useSelectionStore();
+onMounted(async () => {
+    selection.value = await selectionStore.getData();
+});
 
 const clearFilter = async () => {
     filter.value.search = '';

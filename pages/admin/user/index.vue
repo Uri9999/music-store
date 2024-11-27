@@ -188,7 +188,7 @@ const confirmLock = (id: number) => {
         message: 'Bạn có chắc chắn muốn khóa tài khoản ?',
         icon: 'pi pi-info-circle',
         rejectLabel: 'Đóng',
-        acceptLabel: 'Xóa',
+        acceptLabel: 'Khóa',
         rejectClass: 'p-button-secondary p-button-outlined',
         acceptClass: 'p-button-danger',
         accept: async () => {
@@ -204,7 +204,7 @@ const confirmUnlock = (id: number) => {
         message: 'Bạn có chắc chắn muốn mở khóa tài khoản ?',
         icon: 'pi pi-info-circle',
         rejectLabel: 'Đóng',
-        acceptLabel: 'Xóa',
+        acceptLabel: 'Mở khóa',
         rejectClass: 'p-button-secondary p-button-outlined',
         acceptClass: 'p-button-danger',
         accept: async () => {

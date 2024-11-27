@@ -28,5 +28,13 @@ export default () => ({
 
     adminStore(payload: any) {
         return BaseApi.setAuth().post('admin/tabs', payload);
-    }
+    },
+
+    adminShow(id: number) {
+        return BaseApi.setAuth().get('admin/tabs/' + id);
+    },
+
+    adminDelete(id: number) {
+        return BaseApi.setAuth().delete('admin/tabs/' + id);
+    },
 });

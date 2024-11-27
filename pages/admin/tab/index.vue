@@ -56,7 +56,12 @@
             </Column>
             <Column field="youtube_url" header="Youtube" style="">
                 <template #body="slotProps">
-                    <a v-tooltip="slotProps.data?.youtube_url" :href="slotProps.data?.youtube_url">Link</a>
+                    <a
+                        v-tooltip="slotProps.data?.youtube_url"
+                        :href="slotProps.data?.youtube_url"
+                        target="_blank"
+                        >Link</a
+                    >
                 </template>
             </Column>
             <Column field="description" header="Mô tả" style=""></Column>
@@ -66,11 +71,21 @@
                 style="min-width: 12rem"
             >
                 <template #body="slotProps">
+                    <Button icon="pi pi-pencil" outlined rounded class="mr-2" />
                     <Button
-                        icon="pi pi-pencil"
+                        icon="pi pi-info-circle"
                         outlined
                         rounded
+                        severity="info"
                         class="mr-2"
+                        @click="gotoDetailTab(slotProps.data?.id)"
+                    />
+                    <Button
+                        icon="pi pi-times"
+                        outlined
+                        rounded
+                        severity="danger"
+                        @click="confirmDelete(slotProps.data?.id)"
                     />
                 </template>
             </Column>
@@ -91,7 +106,6 @@ onMounted(async () => {
     await Api.user
         .getAllAffiliate({})
         .then((res: any) => {
-            console.log('res', res);
             allUserAffiliate.value = res.data;
         })
         .catch((err: any) => {
@@ -104,7 +118,7 @@ const filter = ref({
 });
 const toast = useToast();
 const tableCommon = ref<any>();
-
+const confirm = useConfirm();
 const clearFilter = async () => {
     filter.value.search = '';
     await search();
@@ -118,9 +132,47 @@ const fetchTabs = (payload: any) => {
 };
 
 const goCreateTab = () => {
-    router.push('/admin/tab/create')
-}
+    router.push('/admin/tab/create');
+};
 
+const confirmDelete = (id: number) => {
+    confirm.require({
+        header: 'Xác nhận xóa bài tab',
+        message: 'Bạn có chắc chắn muốn xóa bài tab ?',
+        icon: 'pi pi-info-circle',
+        rejectLabel: 'Đóng',
+        acceptLabel: 'Xóa',
+        rejectClass: 'p-button-secondary p-button-outlined',
+        acceptClass: 'p-button-danger',
+        accept: async () => {
+            await deleteTab(id);
+            tableCommon.value.refresh();
+        },
+        reject: () => {},
+    });
+};
+
+const deleteTab = async (id: number) => {
+    try {
+        const resDelete = (await Api.tab.adminDelete(id)) as any;
+        toast.add({
+            severity: 'success',
+            summary: 'Thông báo',
+            detail: resDelete?.message,
+            life: 3000,
+        });
+    } catch (error: any) {
+        toast.add({
+            severity: 'error',
+            summary: 'Thông báo',
+            detail: error?.message,
+            life: 3000,
+        });
+    }
+};
+
+const gotoDetailTab = (id: number) => {
+    router.push('/admin/tab/' + id);
+};
 </script>
-<style scoped lang="scss">
-</style>
+<style scoped lang="scss"></style>
