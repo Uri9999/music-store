@@ -138,10 +138,27 @@
                         :showCancelButton="false"
                         chooseLabel="Chọn ảnh"
                         :auto="false"
-                        @upload="onFileUpload"
                     />
                     <small class="error" v-if="tabErrors?.images">{{
                         tabErrors?.images[0]
+                    }}</small>
+                </div>
+
+                <!-- Tải PDF -->
+                <div class="mb-3">
+                    <label for="pdf" class="block mb-1">
+                        Tải PDF (1 file pdf) <span class="error">*</span>
+                    </label>
+                    <FileUpload
+                        mode="basic"
+                        ref="pdfUpload"
+                        name="pdf"
+                        :accept="'application/pdf'"
+                        :maxFileSize="10485760"
+                        chooseLabel="Chọn PDF"
+                    />
+                    <small class="error" v-if="tabErrors?.pdf">{{
+                        tabErrors?.pdf[0]
                     }}</small>
                 </div>
 
@@ -171,8 +188,7 @@ definePageMeta({ layout: 'admin' });
 
 const toast = useToast();
 const router = useRouter();
-const route = useRoute();
-
+const pdfUpload = ref<any>();
 const imageUpload = ref<any>();
 const affiliateUsers = ref<any[]>([]);
 const selection = ref<Selection | null>(null);
@@ -189,7 +205,7 @@ const tabData = ref({
     category_value: null,
     youtube_url: '',
     images: [] as File[],
-    pdf: null,
+    pdf: null as File | null,
 } as any);
 
 const tabErrors = ref({
@@ -207,18 +223,12 @@ const tabErrors = ref({
 onMounted(async () => {
     try {
         selection.value = await selectionStore.getData();
-        const response = await Api.user.getAllAffiliate({});
+        const response = (await Api.user.getAllAffiliate({})) as any;
         affiliateUsers.value = response.data;
     } catch (error) {
         console.error('Error loading data:', error);
     }
 });
-
-// Handle file upload event
-const onFileUpload = (event: any) => {
-    tabData.value.images = event.files;
-    console.log('Uploaded files:', event.files);
-};
 
 // Save tab data
 const saveTab = async () => {
@@ -226,13 +236,15 @@ const saveTab = async () => {
         if (imageUpload.value.files.length > 0) {
             tabData.value.images = imageUpload.value.files;
         }
+        if (pdfUpload.value.files.length > 0) {
+            tabData.value.pdf = pdfUpload.value.files[0];
+        }
 
         tabData.value.category_id = tabData.value.category_value
             ? parseInt(Object.keys(tabData.value.category_value)[0])
             : null;
 
         const response = (await Api.tab.adminStore(tabData.value)) as any;
-        console.log('Tab saved successfully:', response);
         toast.add({
             severity: 'success',
             summary: 'Thông báo',
@@ -240,7 +252,6 @@ const saveTab = async () => {
             life: 3000,
         });
     } catch (error: any) {
-        console.error('Error saving tab:', error);
         if (error?.status == 422) {
             tabErrors.value = error.errors;
         }
@@ -255,7 +266,7 @@ const saveTab = async () => {
 
 // Navigate back to previous page
 const goBack = () => {
-    router.push('/admin/user');
+    router.go(-1);
 };
 </script>
 

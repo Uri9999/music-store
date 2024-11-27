@@ -5,7 +5,7 @@
             label="Tạo mới"
             icon="pi pi-plus"
             severity="success"
-            @click=""
+            @click="goCreateTab()"
             class="ml-3"
         />
         <TableCommon
@@ -85,7 +85,7 @@ import Api from '~/network/Api';
 definePageMeta({
     layout: 'admin',
 });
-
+const router = useRouter();
 const allUserAffiliate = ref([]);
 onMounted(async () => {
     await Api.user
@@ -117,6 +117,9 @@ const fetchTabs = (payload: any) => {
     return Api.tab.adminIndex(payload);
 };
 
+const goCreateTab = () => {
+    router.push('/admin/tab/create')
+}
 
 </script>
 <style scoped lang="scss">
