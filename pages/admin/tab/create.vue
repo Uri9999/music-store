@@ -58,7 +58,7 @@
                         >Danh mục <span class="error">*</span></label
                     >
                     <TreeSelect
-                        v-model="tabData.category_id"
+                        v-model="tabData.category_value"
                         :options="selection?.categories"
                         dataKey="value"
                         placeholder="Select an item"
@@ -105,29 +105,38 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="price" class="block mb-1">Giá</label>
-                    <InputNumber
-                        v-model="tabData.price"
-                        id="price"
-                        fluid
-                    />
+                    <label for="price" class="block mb-1"
+                        >Giá <span class="error">*</span></label
+                    >
+                    <InputNumber v-model="tabData.price" id="price" fluid />
                     <small class="error" v-if="tabDataError?.price">{{
                         tabDataError?.price[0]
                     }}</small>
                 </div>
 
                 <div class="mb-3">
-                    <label for="price" class="block mb-1">Ảnh bài tab</label>
-                    <InputNumber
-                        v-model="tabData.price"
-                        id="price"
-                        fluid
-                    />
+                    <label for="price" class="block mb-1"
+                        >Ảnh bài tab (tối đa 5 mảnh)
+                        <span class="error">*</span></label
+                    >
+                    <FileUpload
+                        name="demo[]"
+                        :url="''"
+                        :multiple="true"
+                        chooseLabel="Chọn ảnh"
+                        :showCancelButton="false"
+                        :showUploadButton="false"
+                        :fileLimit="5"
+                        :maxFileSize="4194304"
+                        ref="imageUpload"
+                        :auto="false"
+                    >
+                    </FileUpload>
                     <small class="error" v-if="tabDataError?.images">{{
                         tabDataError?.price[0]
                     }}</small>
                 </div>
-                 
+
                 <div class="mb-3 flex justify-content-between">
                     <Button
                         label="Trở lại"
@@ -145,13 +154,12 @@
 import Api from '~/network/Api';
 import { useSelectionStore } from '~/stores/selectionStore';
 import type { Selection } from '~/types/selection';
-import ImageUploader from '~/components/General/ImageUploader.vue';
-import Avatar from '~/components/General/Avatar.vue';
 
 definePageMeta({
     layout: 'admin',
 });
 
+const imageUpload = ref<any>();
 const allUserAffiliate = ref([]);
 const toast = useToast();
 const selection = ref<Selection | null>();
@@ -178,10 +186,11 @@ const tabData = ref({
     user_id: null,
     price: null,
     category_id: null,
+    category_value: null,
     youtube_url: null,
-    images: null,
+    images: [],
     pdf: null,
-});
+} as any);
 const tabDataError = ref({
     name: [],
     author: [],
@@ -193,6 +202,34 @@ const tabDataError = ref({
     images: [],
     pdf: [],
 } as any);
+
+const save = async () => {
+    console.log(
+        'imageUpload.value.files.length',
+        imageUpload.value.files.length,
+    );
+
+    await imageUpload.value.upload();
+    if (imageUpload.value.files.length > 0) {
+        tabData.value.images = imageUpload.value.files;
+    } else {
+        console.log('Không có tệp nào để tải lên!');
+    }
+
+    tabData.value.category_id = tabData.value.category_value
+        ? parseInt(Object.keys(tabData.value.category_value)[0])
+        : null;
+    console.log('tabData.value', tabData.value);
+
+    await Api.tab
+        .adminStore(tabData.value)
+        .then((res: any) => {
+            console.log('res', res);
+        })
+        .catch((err: any) => {
+            console.log(err);
+        });
+};
 
 const back = () => {
     router.push('/admin/user');

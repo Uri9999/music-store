@@ -25,4 +25,8 @@ export default () => ({
     adminIndex(payload: any) {
         return BaseApi.setAuth().get('admin/tabs', payload);
     },
+
+    adminStore(payload: any) {
+        return BaseApi.setAuth().post('admin/tabs', payload);
+    }
 });
