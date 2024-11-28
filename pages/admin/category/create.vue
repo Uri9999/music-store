@@ -35,20 +35,13 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="category" class="block mb-1"
-                        >Thuộc về danh mục</label
-                    >
-                    <TreeSelect
-                        v-model="categoryData.parent"
+                    <TreeSelectCommon
+                        v-model="categoryData.parent_id"
                         :options="selection?.categories"
-                        dataKey="value"
-                        placeholder="Select an item"
-                        :selection-mode="'single'"
-                        id="category"
-                    />
-                    <small class="error" v-if="categoryDataError?.parent_id">{{
-                        categoryDataError?.parent_id[0]
-                    }}</small>
+                        name="category"
+                        :error="categoryDataError?.parent_id"
+                        label="Thuộc về danh mục"
+                    ></TreeSelectCommon>
                 </div>
                 <div class="mb-3 flex justify-content-between">
                     <Button label="Trở lại" severity="secondary" @click="back()"></Button>
@@ -62,7 +55,7 @@
 <script lang="ts" setup>
 import Api from '~/network/Api';
 import type { Selection } from '~/types/selection';
-import TreeSelect from 'primevue/treeselect';
+import TreeSelectCommon from '~/components/General/TreeSelectCommon.vue';
 
 definePageMeta({
     layout: 'admin',
@@ -71,7 +64,7 @@ definePageMeta({
 const categoryData = ref({
     name: '',
     description: '',
-    parent: null,
+    parent_id: null,
 });
 const categoryDataError = ref({
     name: [],
@@ -87,14 +80,8 @@ onMounted(async () => {
 });
 
 const save = async () => {
-    const payload = {
-        ...categoryData.value,
-        parent_id: categoryData.value.parent
-            ? parseInt(Object.keys(categoryData.value.parent)[0])
-            : null,
-    };
     Api.category
-        .store(payload)
+        .store(categoryData.value)
         .then((res: any) => {
             router.push('/admin/category')
             toast.add({

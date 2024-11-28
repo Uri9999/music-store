@@ -53,24 +53,14 @@
                     }}</small>
                 </div>
 
-                <!-- Danh mục -->
                 <div class="mb-3">
-                    <label for="category" class="block mb-1">
-                        Danh Mục <span class="error">*</span>
-                    </label>
-                    <div>
-                        <TreeSelect
-                            v-model="treeSelectValue"
-                            :options="selection?.categories"
-                            dataKey="value"
-                            placeholder="Chọn danh mục"
-                            selection-mode="single"
-                            id="category"
-                        />
-                    </div>
-                    <small class="error" v-if="tabErrors?.category_id">{{
-                        tabErrors?.category_id[0]
-                    }}</small>
+                    <TreeSelectCommon
+                        v-model="tabData.category_id"
+                        :options="selection?.categories"
+                        name="category"
+                        :error="tabErrors?.category_id"
+                        label="Danh Mục"
+                    ></TreeSelectCommon>
                 </div>
 
                 <!-- Người làm tab -->
@@ -190,6 +180,7 @@ import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useToast } from 'primevue/usetoast';
 import UploadMultipleFile from '~/components/General/UploadMultipleFile.vue';
+import TreeSelectCommon from '~/components/General/TreeSelectCommon.vue';
 
 definePageMeta({ layout: 'admin' });
 
@@ -209,8 +200,6 @@ const tabData = ref({
     user_id: null,
     price: null,
     category_id: null,
-    category_value: null,
-    category: {} as any,
     youtube_url: '',
     images: [] as File[],
     images_url: [] as any,
@@ -254,18 +243,6 @@ const getDetailTab = async () => {
     }
 };
 
-const treeSelectValue = computed({
-    get() {
-        return tabData.value.category?.id
-            ? { [tabData.value.category.id]: true }
-            : null;
-    },
-    set(value) {
-        tabData.value.category.id = value
-            ? parseInt(Object.keys(value)[0])
-            : null; // Lấy số từ {number: true}
-    },
-});
 const confirm = useConfirm();
 const confirmDelete = (mediaId: number) => {
     confirm.require({
@@ -318,13 +295,9 @@ const deleteImagesByIndex = (index: number) => {
 
 const update = async () => {
     try {
-        console.log('tabData.value', tabData.value);
         if (pdfUpload.value.files.length > 0) {
             tabData.value.pdf = pdfUpload.value.files[0];
         }
-        tabData.value.category_id = treeSelectValue.value
-            ? parseInt(Object.keys(treeSelectValue.value)[0])
-            : null;
         const resUpdate = (await Api.tab.adminUpdateTab(
             id,
             tabData.value,

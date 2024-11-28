@@ -37,20 +37,13 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="category" class="block mb-1"
-                        >Thuộc về danh mục</label
-                    >
-                    <TreeSelect
-                        v-model="treeSelectValue"
+                    <TreeSelectCommon
+                        v-model="categoryData.parent_id"
                         :options="selection?.categories"
-                        dataKey="value"
-                        placeholder="Select an item"
-                        :selection-mode="'single'"
-                        id="category"
-                    />
-                    <small class="error" v-if="categoryDataError?.parent_id">{{
-                        categoryDataError?.parent_id[0]
-                    }}</small>
+                        name="category"
+                        :error="categoryDataError?.parent_id"
+                        label="Thuộc về danh mục"
+                    ></TreeSelectCommon>
                 </div>
                 <div class="mb-3 flex justify-content-between">
                     <Button
@@ -68,7 +61,7 @@
 <script lang="ts" setup>
 import Api from '~/network/Api';
 import type { Selection } from '~/types/selection';
-import TreeSelect from 'primevue/treeselect';
+import TreeSelectCommon from '~/components/General/TreeSelectCommon.vue';
 
 definePageMeta({
     layout: 'admin',
@@ -95,18 +88,18 @@ onMounted(async () => {
     await getCategory();
 });
 
-const treeSelectValue = computed({
-    get() {
-        return categoryData.value.parent_id
-            ? { [categoryData.value.parent_id]: true } // Chuyển thành {number: true}
-            : null;
-    },
-    set(value) {
-        categoryData.value.parent_id = value
-            ? parseInt(Object.keys(value)[0])
-            : null; // Lấy số từ {number: true}
-    },
-});
+// const treeSelectValue = computed({
+//     get() {
+//         return categoryData.value.parent_id
+//             ? { [categoryData.value.parent_id]: true } // Chuyển thành {number: true}
+//             : null;
+//     },
+//     set(value) {
+//         categoryData.value.parent_id = value
+//             ? parseInt(Object.keys(value)[0])
+//             : null; // Lấy số từ {number: true}
+//     },
+// });
 
 const getCategory = async () => {
     Api.category

@@ -54,21 +54,15 @@
 
                 <!-- Danh mục -->
                 <div class="mb-3">
-                    <label for="category" class="block mb-1"> Danh Mục </label>
-                    <div>
-                        <TreeSelect
-                            disabled
-                            v-model="tabData.category_value"
-                            :options="selection?.categories"
-                            dataKey="value"
-                            placeholder="Danh mục trống"
-                            selection-mode="single"
-                            id="category"
-                        />
-                    </div>
-                    <small class="error" v-if="tabErrors?.category_id">{{
-                        tabErrors?.category_id[0]
-                    }}</small>
+                    <TreeSelectCommon
+                        v-model="tabData.category_id"
+                        :options="selection?.categories"
+                        :disabled="true"
+                        :error="tabErrors?.category_id"
+                        label="Danh Mục"
+                        name="category"
+                        :required="false"
+                    ></TreeSelectCommon>
                 </div>
 
                 <!-- Người làm tab -->
@@ -114,7 +108,10 @@
                 <!-- Tải ảnh -->
                 <div class="mb-3">
                     <label for="images" class="block mb-1"> Ảnh bài Tab </label>
-                    <div class="image-list" v-if="tabData.images_url.length > 0">
+                    <div
+                        class="image-list"
+                        v-if="tabData.images_url.length > 0"
+                    >
                         <div
                             class="image-item"
                             v-for="(img, index) in tabData.images_url"
@@ -179,6 +176,7 @@ import { useSelectionStore } from '~/stores/selectionStore';
 import type { Selection } from '~/types/selection';
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import TreeSelectCommon from '~/components/General/TreeSelectCommon.vue';
 
 definePageMeta({ layout: 'admin' });
 

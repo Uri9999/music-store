@@ -55,22 +55,15 @@
 
                 <!-- Danh mục -->
                 <div class="mb-3">
-                    <label for="category" class="block mb-1">
-                        Danh Mục <span class="error">*</span>
-                    </label>
-                    <div>
-                        <TreeSelect
-                            v-model="tabData.category_value"
-                            :options="selection?.categories"
-                            dataKey="value"
-                            placeholder="Chọn danh mục"
-                            selection-mode="single"
-                            id="category"
-                        />
-                    </div>
-                    <small class="error" v-if="tabErrors?.category_id">{{
-                        tabErrors?.category_id[0]
-                    }}</small>
+                    <TreeSelectCommon
+                        v-model="tabData.category_id"
+                        :options="selection?.categories"
+                        :disabled="false"
+                        :error="tabErrors?.category_id"
+                        label="Danh Mục"
+                        name="category"
+                        :required="true"
+                    ></TreeSelectCommon>
                 </div>
 
                 <!-- Người làm tab -->
@@ -189,6 +182,7 @@ import type { Selection } from '~/types/selection';
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useToast } from 'primevue/usetoast';
+import TreeSelectCommon from '~/components/General/TreeSelectCommon.vue';
 
 definePageMeta({ layout: 'admin' });
 
@@ -208,7 +202,6 @@ const tabData = ref({
     user_id: null,
     price: null,
     category_id: null,
-    category_value: null,
     youtube_url: '',
     images: [] as File[],
     pdf: null as File | null,
@@ -245,11 +238,6 @@ const saveTab = async () => {
         if (pdfUpload.value.files.length > 0) {
             tabData.value.pdf = pdfUpload.value.files[0];
         }
-
-        tabData.value.category_id = tabData.value.category_value
-            ? parseInt(Object.keys(tabData.value.category_value)[0])
-            : null;
-
         const response = (await Api.tab.adminStore(tabData.value)) as any;
         toast.add({
             severity: 'success',
