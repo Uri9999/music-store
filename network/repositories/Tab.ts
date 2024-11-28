@@ -37,4 +37,14 @@ export default () => ({
     adminDelete(id: number) {
         return BaseApi.setAuth().delete('admin/tabs/' + id);
     },
+
+    adminRemoveTabImage(tabId: number, mediaId: number) {
+        return BaseApi.setAuth().delete(
+            `admin/tabs/${tabId}/images/${mediaId}`,
+        );
+    },
+
+    adminUpdateTab(id: number, payload: any) {
+        return BaseApi.setAuth().post('admin/tabs/' + id, payload);
+    }
 });

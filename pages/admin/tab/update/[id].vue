@@ -109,27 +109,19 @@
             </div>
 
             <div class="attribute">
-                <!-- Tải ảnh -->
+                <!-- Sửa ảnh -->
                 <div class="mb-3">
                     <label for="images" class="block mb-1">
                         Ảnh bài Tab (Tối đa 5 ảnh)
                         <span class="error">*</span>
                     </label>
-                    <FileUpload
-                        ref="imageUpload"
-                        name="images[]"
-                        :multiple="true"
-                        :fileLimit="5"
-                        :maxFileSize="4194304"
-                        :showUploadButton="false"
-                        :showCancelButton="false"
-                        chooseLabel="Chọn ảnh"
-                        :auto="false"
-                    >
-                        <template #empty>
-                            <p>Tỉ lệ ảnh đề xuất là 1 : 2.</p>
-                        </template>
-                    </FileUpload>
+                    <UploadMultipleFile
+                        :imgs="tabData.images_url"
+                        :filesUpload="tabData.images"
+                        @deleteById="confirmDelete"
+                        @selectFiles="setSelectedFiles"
+                        @deleteUploadIndex="deleteImagesByIndex"
+                    ></UploadMultipleFile>
                     <small class="error" v-if="tabErrors?.images">{{
                         tabErrors?.images[0]
                     }}</small>
@@ -138,15 +130,23 @@
                 <!-- Tải PDF -->
                 <div class="mb-3">
                     <label for="pdf" class="block mb-1">
-                        Tải PDF (1 file pdf) <span class="error">*</span>
+                        Tải PDF <span class="error">*</span>
                     </label>
+                    <div class="mb-3" v-if="tabData.pdf">
+                        <Button
+                            label="Download PDF"
+                            v-if="tabData?.pdf"
+                            icon="pi pi-download"
+                            @click="downloadPdf(tabData?.pdf.url)"
+                        />
+                    </div>
                     <FileUpload
                         mode="basic"
                         ref="pdfUpload"
                         name="pdf"
                         :accept="'application/pdf'"
                         :maxFileSize="10485760"
-                        chooseLabel="Chọn PDF"
+                        chooseLabel="Cập nhật PDF"
                     />
                     <small class="error" v-if="tabErrors?.pdf">{{
                         tabErrors?.pdf[0]
@@ -175,7 +175,7 @@
                         severity="secondary"
                         @click="goBack"
                     />
-                    <Button label="Cập nhật" @click="updateTab" />
+                    <Button @click="update" label="Cập nhật" />
                 </div>
             </div>
         </div>
@@ -189,18 +189,19 @@ import type { Selection } from '~/types/selection';
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useToast } from 'primevue/usetoast';
+import UploadMultipleFile from '~/components/General/UploadMultipleFile.vue';
 
 definePageMeta({ layout: 'admin' });
 
 const toast = useToast();
 const router = useRouter();
 const pdfUpload = ref<any>();
-const imageUpload = ref<any>();
 const affiliateUsers = ref<any[]>([]);
 const selection = ref<Selection | null>(null);
 const selectionStore = useSelectionStore();
+const route = useRoute();
+const id = Number(route.params.id);
 
-// Data model
 const tabData = ref({
     name: '',
     author: '',
@@ -212,6 +213,7 @@ const tabData = ref({
     category: {} as any,
     youtube_url: '',
     images: [] as File[],
+    images_url: [] as any,
     pdf: null as File | null,
 } as any);
 
@@ -227,20 +229,30 @@ const tabErrors = ref({
     pdf: [],
 });
 
-const route = useRoute();
-const id = Number(route.params.id);
 onMounted(async () => {
     try {
         selection.value = await selectionStore.getData();
         const response = (await Api.user.getAllAffiliate({})) as any;
         affiliateUsers.value = response.data;
 
-        const resShow = (await Api.tab.adminShow(id)) as any;
-        tabData.value = resShow.data;
+        await getDetailTab();
     } catch (error) {
         console.error('Error loading data:', error);
     }
 });
+
+const getDetailTab = async () => {
+    try {
+        const resShow = (await Api.tab.adminShow(id)) as any;
+        tabData.value = resShow.data;
+        // Kiểm tra và khởi tạo lại images nếu cần
+        if (!Array.isArray(tabData.value.images)) {
+            tabData.value.images = [];
+        }
+    } catch (error: any) {
+        console.log(error);
+    }
+};
 
 const treeSelectValue = computed({
     get() {
@@ -254,8 +266,94 @@ const treeSelectValue = computed({
             : null; // Lấy số từ {number: true}
     },
 });
+const confirm = useConfirm();
+const confirmDelete = (mediaId: number) => {
+    confirm.require({
+        header: 'Xác nhận xóa ảnh',
+        message: 'Bạn có chắc chắn muốn xóa ảnh ?',
+        icon: 'pi pi-info-circle',
+        rejectLabel: 'Đóng',
+        acceptLabel: 'Xóa',
+        rejectClass: 'p-button-secondary p-button-outlined',
+        acceptClass: 'p-button-danger',
+        accept: async () => {
+            await deleteImage(mediaId);
+            tabData.value.images_url = tabData.value.images_url.filter(
+                (image: any) => image.id !== mediaId,
+            );
+        },
+        reject: () => {},
+    });
+};
+const deleteImage = async (mediaId: number) => {
+    try {
+        const resDelete = (await Api.tab.adminRemoveTabImage(
+            id,
+            mediaId,
+        )) as any;
+        toast.add({
+            severity: 'success',
+            summary: 'Thông báo',
+            detail: resDelete?.message,
+            life: 3000,
+        });
+    } catch (error: any) {
+        toast.add({
+            severity: 'error',
+            summary: 'Thông báo',
+            detail: error?.message,
+            life: 3000,
+        });
+    }
+};
+const setSelectedFiles = (files: File[]) => {
+    files.forEach((file: File) => {
+        tabData.value.images.push(file);
+    });
+};
 
-// Navigate back to previous page
+const deleteImagesByIndex = (index: number) => {
+    tabData.value.images.splice(index, 1);
+};
+
+const update = async () => {
+    try {
+        console.log('tabData.value', tabData.value);
+        if (pdfUpload.value.files.length > 0) {
+            tabData.value.pdf = pdfUpload.value.files[0];
+        }
+        tabData.value.category_id = treeSelectValue.value
+            ? parseInt(Object.keys(treeSelectValue.value)[0])
+            : null;
+        const resUpdate = (await Api.tab.adminUpdateTab(
+            id,
+            tabData.value,
+        )) as any;
+        router.push('/admin/tab/' + id);
+        toast.add({
+            severity: 'success',
+            summary: 'Thông báo',
+            detail: resUpdate?.message,
+            life: 3000,
+        });
+    } catch (error: any) {
+        toast.add({
+            severity: 'error',
+            summary: 'Thông báo',
+            detail: error?.message,
+            life: 3000,
+        });
+    }
+};
+
+const downloadPdf = (url: string) => {
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = tabData.value.name + '.pdf';
+    link.target = '_blank';
+    link.click();
+};
+
 const goBack = () => {
     router.go(-1);
 };
