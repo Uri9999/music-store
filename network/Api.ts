@@ -1,4 +1,5 @@
 import Auth from './repositories/Auth';
+import Banner from './repositories/Banner';
 import Cart from './repositories/Cart';
 import Category from './repositories/Category';
 import Order from './repositories/Order';
@@ -16,6 +17,7 @@ const Api = {
     order: Order(),
     user: User(),
     category: Category(),
+    banner: Banner(),
 };
 
 export default Api;

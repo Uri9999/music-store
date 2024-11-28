@@ -94,6 +94,7 @@ export default {
             {
                 label: 'Banner',
                 icon: 'image',
+                toRoute: '/admin/banner'
             },
         ],
     }),

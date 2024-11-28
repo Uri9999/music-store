@@ -11,40 +11,43 @@
                     <InputText
                         type="text"
                         class="w-full"
-                        v-model="categoryData.name"
+                        v-model="bannerData.name"
                         id="name"
                         fluid
                     />
-                    <small class="error" v-if="categoryDataError?.name">{{
-                        categoryDataError?.name[0]
+                    <small class="error" v-if="bannerDataError?.name">{{
+                        bannerDataError?.name[0]
                     }}</small>
                 </div>
 
                 <div class="mb-3">
                     <label for="description" class="block mb-1">Mô tả</label>
                     <Textarea
-                        v-model="categoryData.description"
+                        v-model="bannerData.description"
                         id="description"
                         class="w-full"
                         rows="5"
                         fluid
                     />
-                    <small
-                        class="error"
-                        v-if="categoryDataError?.description"
-                        >{{ categoryDataError?.description[0] }}</small
-                    >
+                    <small class="error" v-if="bannerDataError?.description">{{
+                        bannerDataError?.description[0]
+                    }}</small>
                 </div>
 
                 <div class="mb-3">
-                    <TreeSelectCommon
-                        v-model="categoryData.parent_id"
-                        :options="selection?.categories"
-                        name="category"
-                        :error="categoryDataError?.parent_id"
-                        label="Thuộc về danh mục"
-                    ></TreeSelectCommon>
+                    <label for="image" class="block mb-1">Ảnh</label>
+                    <UploadFile
+                        :imgs="bannerData.images_url"
+                        :filesUpload="bannerData.image"
+                        @selectFiles="setSelectedFiles"
+                        :visibleDelete="false"
+                        :multiple="false"
+                    ></UploadFile>
+                    <small class="error" v-if="bannerDataError?.description">{{
+                        bannerDataError?.description[0]
+                    }}</small>
                 </div>
+
                 <div class="mb-3 flex justify-content-between">
                     <Button
                         label="Trở lại"
@@ -60,48 +63,45 @@
 
 <script lang="ts" setup>
 import Api from '~/network/Api';
-import type { Selection } from '~/types/selection';
-import TreeSelectCommon from '~/components/General/TreeSelectCommon.vue';
+import UploadFile from '~/components/General/UploadFile.vue';
 
 definePageMeta({
     layout: 'admin',
 });
 
-const categoryData = ref({
+const bannerData = ref({
     name: '',
     description: '',
-    parent_id: null,
+    image: null,
+    images_url: '',
 } as any);
-const categoryDataError = ref({
+const bannerDataError = ref({
     name: [],
     description: [],
-    parent_id: [],
+    image: [],
 });
 const router = useRouter();
 const toast = useToast();
-const selection = ref<Selection | null>();
-const selectionStore = useSelectionStore();
 const route = useRoute();
 const id = Number(route.params.id);
 onMounted(async () => {
-    selection.value = await selectionStore.getData();
-    await getCategory();
+    await getBanner();
 });
 
-const getCategory = async () => {
-    Api.category
+const getBanner = async () => {
+    Api.banner
         .show(id)
         .then((res: any) => {
-            categoryData.value = res.data;
+            bannerData.value = res.data;
         })
         .catch((err: any) => console.log(err));
 };
 
 const update = async () => {
-    Api.category
-        .update(id, categoryData.value)
+    Api.banner
+        .update(id, bannerData.value)
         .then((res: any) => {
-            router.push('/admin/category');
+            router.push('/admin/banner/' + id);
             toast.add({
                 severity: 'success',
                 summary: 'Thông báo',
@@ -110,7 +110,6 @@ const update = async () => {
             });
         })
         .catch((err: any) => {
-            console.log(err);
             toast.add({
                 severity: 'error',
                 summary: 'Thông báo',
@@ -118,9 +117,15 @@ const update = async () => {
                 life: 3000,
             });
             if (err?.status == 422) {
-                categoryDataError.value = err.errors;
+                bannerDataError.value = err.errors;
             }
         });
+};
+
+const setSelectedFiles = (file: File) => {
+    console.log('file', file);
+    
+    bannerData.value.image = file;
 };
 
 const back = () => {
