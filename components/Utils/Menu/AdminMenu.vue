@@ -51,7 +51,7 @@ export default {
                 // ],
             },
             {
-                label: 'Quản lý user',
+                label: 'User',
                 icon: 'manage-account',
                 toRoute: '/admin/user'
                 // children: [
@@ -65,31 +65,35 @@ export default {
                 // ],
             },
             {
-                label: 'Quản lý tab',
+                label: 'Tab',
                 icon: 'library-music',
                 toRoute: '/admin/tab'
             },
             {
-                label: 'Quản lý đơn hàng',
+                label: 'Đơn hàng',
                 icon: 'list-alt-check',
             },
             {
-                label: 'Quản lý danh mục',
+                label: 'Danh mục',
                 icon: 'category',
                 toRoute: '/admin/category'
             },
             {
-                label: 'Quản lý Yêu cầu tab',
+                label: 'Yêu cầu Tab',
                 icon: 'clinical-notes',
                 toRoute: '/admin/request-tab'
             },
             {
-                label: 'Quản lý blog',
+                label: 'Blog',
                 icon: 'menu-book',
             },
             {
-                label: 'Quản lý doanh thu',
+                label: 'Doanh Thu',
                 icon: 'payments',
+            },
+            {
+                label: 'Banner',
+                icon: 'image',
             },
         ],
     }),
