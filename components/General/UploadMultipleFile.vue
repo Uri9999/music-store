@@ -18,6 +18,7 @@
                     rounded
                     severity="danger"
                     @click="emit('deleteById', image?.id)"
+                    v-if="!hidenDelete"
                 />
             </div>
 
@@ -37,6 +38,7 @@
                     rounded
                     severity="danger"
                     @click="emit('deleteUploadIndex', index)"
+                    v-if="!hidenDelete"
                 />
             </div>
         </div>
@@ -67,6 +69,10 @@ const props = defineProps({
         required: false,
         default: () => [] as File[],
     },
+    hidenDelete: {
+        type: Boolean,
+        default: false
+    },
 });
 
 const emit = defineEmits(['selectFiles', 'deleteById', 'deleteUploadIndex']);
@@ -75,9 +81,7 @@ const currentFiles = ref<any[]>([]);
 
 watch(
     () => props.filesUpload,
-    (files) => {
-        console.log('props.filesUpload', files);
-
+    (files: any) => {
         currentFiles.value = [];
         files.forEach((file: File) => {
             const reader = new FileReader();

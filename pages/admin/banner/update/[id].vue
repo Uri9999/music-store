@@ -36,13 +36,12 @@
 
                 <div class="mb-3">
                     <label for="image" class="block mb-1">Ảnh</label>
-                    <UploadFile
+                    <UploadMultipleFile
                         :imgs="bannerData.images_url"
-                        :filesUpload="bannerData.image"
+                        :filesUpload="bannerData.images"
                         @selectFiles="setSelectedFiles"
-                        :visibleDelete="false"
-                        :multiple="false"
-                    ></UploadFile>
+                        :hidenDelete="true"
+                    ></UploadMultipleFile>
                     <small class="error" v-if="bannerDataError?.description">{{
                         bannerDataError?.description[0]
                     }}</small>
@@ -63,7 +62,7 @@
 
 <script lang="ts" setup>
 import Api from '~/network/Api';
-import UploadFile from '~/components/General/UploadFile.vue';
+import UploadMultipleFile from '~/components/General/UploadMultipleFile.vue';
 
 definePageMeta({
     layout: 'admin',
@@ -73,7 +72,8 @@ const bannerData = ref({
     name: '',
     description: '',
     image: null,
-    images_url: '',
+    images: [],
+    images_url: [],
 } as any);
 const bannerDataError = ref({
     name: [],
@@ -93,15 +93,17 @@ const getBanner = async () => {
         .show(id)
         .then((res: any) => {
             bannerData.value = res.data;
+            bannerData.value.images = [];
         })
         .catch((err: any) => console.log(err));
 };
 
 const update = async () => {
+    bannerData.value.image = bannerData.value.images[0];
     Api.banner
         .update(id, bannerData.value)
         .then((res: any) => {
-            router.push('/admin/banner/' + id);
+            router.push('/admin/banner/');
             toast.add({
                 severity: 'success',
                 summary: 'Thông báo',
@@ -122,10 +124,10 @@ const update = async () => {
         });
 };
 
-const setSelectedFiles = (file: File) => {
-    console.log('file', file);
-    
-    bannerData.value.image = file;
+const setSelectedFiles = (files: File[]) => {
+    files.forEach((file: File) => {
+        bannerData.value.images[0] = file;
+    });
 };
 
 const back = () => {
