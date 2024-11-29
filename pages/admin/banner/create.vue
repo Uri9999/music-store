@@ -1,6 +1,6 @@
 <template>
     <div class="update-category">
-        <h1>Cập nhật Banner</h1>
+        <h1>Tạo Banner</h1>
 
         <div class="form mt-3">
             <div>
@@ -53,7 +53,7 @@
                         @click="back()"
                         severity="secondary"
                     ></Button>
-                    <Button label="Lưu" @click="update()"></Button>
+                    <Button label="Lưu" @click="create()"></Button>
                 </div>
             </div>
         </div>
@@ -82,26 +82,11 @@ const bannerDataError = ref({
 });
 const router = useRouter();
 const toast = useToast();
-const route = useRoute();
-const id = Number(route.params.id);
-onMounted(async () => {
-    await getBanner();
-});
 
-const getBanner = async () => {
-    Api.banner
-        .show(id)
-        .then((res: any) => {
-            bannerData.value = res.data;
-            bannerData.value.images = [];
-        })
-        .catch((err: any) => console.log(err));
-};
-
-const update = async () => {
+const create = async () => {
     bannerData.value.image = bannerData.value.images[0];
     Api.banner
-        .update(id, bannerData.value)
+        .store(bannerData.value)
         .then((res: any) => {
             router.push('/admin/banner/');
             toast.add({
