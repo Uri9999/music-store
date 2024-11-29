@@ -11,7 +11,12 @@
         <TableCommon ref="tableCommon" :apiFunction="fetchBanners">
             <Column field="name" header="Tên" style=""></Column>
             <Column field="description" header="Mô tả" style=""></Column>
-            <Column field="image" header="Ảnh" style=""></Column>
+            <Column field="image" header="Ảnh" style="">
+                <template #body="slotProps">
+                    <img class="img-banner" :src="slotProps.data?.images_url[0].url" alt="">
+                </template>
+                <!-- images_url -->
+            </Column>
             <Column
                 :exportable="false"
                 header="Hành động"
@@ -105,4 +110,8 @@ const gotoEditBanner = (id: number) => {
     router.push('/admin/banner/update/' + id);
 };
 </script>
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.img-banner {
+    width: 100px;
+}
+</style>

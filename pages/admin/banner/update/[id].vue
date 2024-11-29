@@ -42,8 +42,8 @@
                         @selectFiles="setSelectedFiles"
                         :hidenDelete="true"
                     ></UploadMultipleFile>
-                    <small class="error" v-if="bannerDataError?.description">{{
-                        bannerDataError?.description[0]
+                    <small class="error" v-if="bannerDataError?.image">{{
+                        bannerDataError?.image[0]
                     }}</small>
                 </div>
 
