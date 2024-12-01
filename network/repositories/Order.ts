@@ -12,4 +12,8 @@ export default () => ({
     getMyOrder() {
         return BaseApi.setAuth().get('orders/created-by-me');
     },
+
+    index(payload: any) {
+        return BaseApi.setAuth().get('admin/orders', payload);
+    },
 });

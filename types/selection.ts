@@ -4,6 +4,7 @@ type Selection = {
     user_role: Item[];
     user_gender: Item[];
     request_tab_status: Item[];
+    order_status: Item[];
 };
 
 type Item = {

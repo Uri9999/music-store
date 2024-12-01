@@ -72,6 +72,7 @@ export default {
             {
                 label: 'Đơn hàng',
                 icon: 'list-alt-check',
+                toRoute: '/admin/order'
             },
             {
                 label: 'Danh mục',
