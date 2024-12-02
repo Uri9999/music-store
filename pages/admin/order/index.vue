@@ -39,7 +39,7 @@
                 </div>
             </template>
 
-            <Column field="name" header="Tên khách hàng" style="">
+            <Column field="name" header="Khách hàng" style="">
                 <template #body="slotProps">
                     <span>{{ slotProps.data?.user?.name }}</span>
                 </template>
@@ -53,17 +53,21 @@
                 </template>
             </Column>
             <Column field="total_price" header="Tổng số tiền"></Column>
-            <Column field="count" header="Số lượng sản phẩm">
+            <Column field="count" header="Số lượng">
                 <template #body="slotProps">
                     <span>{{ slotProps.data?.order_items?.length }}</span>
                 </template>
             </Column>
             <Column field="bill" header="Bill">
                 <template #body="slotProps">
-                    <ImageComponent classes="w-[100px]" :src="slotProps.data?.media_bill?.url"></ImageComponent>
+                    <div class="order-bill">
+                        <ImageComponent
+                            :src="slotProps.data?.media_bill?.url"
+                        ></ImageComponent>
+                    </div>
                 </template>
             </Column>
-         
+            <Column field="note" header="Ghi chú"> </Column>
             <Column
                 :exportable="false"
                 header="Hành động"
@@ -78,7 +82,7 @@
                         @click="gotoEditCategory(slotProps.data.id)"
                     />
 
-                    <Button
+                    <!-- <Button
                         icon="pi pi-trash"
                         outlined
                         rounded
@@ -89,7 +93,7 @@
                             slotProps.data.status != 2 &&
                             slotProps.data.role_id != 1
                         "
-                    />
+                    /> -->
                 </template>
             </Column>
         </TableCommon>
@@ -122,44 +126,44 @@ const router = useRouter();
 const toast = useToast();
 const confirm = useConfirm();
 const tableCommon = ref<any>();
-const confirmDelete = (id: number) => {
-    confirm.require({
-        header: 'Xác nhận xóa danh mục',
-        message: 'Bạn có chắc chắn muốn xóa danh mục ?',
-        icon: 'pi pi-info-circle',
-        rejectLabel: 'Đóng',
-        acceptLabel: 'Xóa',
-        rejectClass: 'p-button-secondary p-button-outlined',
-        acceptClass: 'p-button-danger',
-        accept: async () => {
-            await deleteCategory(id);
-            tableCommon.value.refresh();
-        },
-        reject: () => {},
-    });
-};
+// const confirmDelete = (id: number) => {
+//     confirm.require({
+//         header: 'Xác nhận xóa danh mục',
+//         message: 'Bạn có chắc chắn muốn xóa danh mục ?',
+//         icon: 'pi pi-info-circle',
+//         rejectLabel: 'Đóng',
+//         acceptLabel: 'Xóa',
+//         rejectClass: 'p-button-secondary p-button-outlined',
+//         acceptClass: 'p-button-danger',
+//         accept: async () => {
+//             await deleteCategory(id);
+//             tableCommon.value.refresh();
+//         },
+//         reject: () => {},
+//     });
+// };
 
-const deleteCategory = async (id: number) => {
-    Api.category
-        .delete(id)
-        .then((res: any) => {
-            toast.add({
-                severity: 'success',
-                summary: 'Thông báo',
-                detail: res.message,
-                life: 3000,
-            });
-        })
-        .catch((err: any) => {
-            console.log(err);
-            toast.add({
-                severity: 'error',
-                summary: 'Thông báo',
-                detail: err.message,
-                life: 3000,
-            });
-        });
-};
+// const deleteCategory = async (id: number) => {
+//     Api.category
+//         .delete(id)
+//         .then((res: any) => {
+//             toast.add({
+//                 severity: 'success',
+//                 summary: 'Thông báo',
+//                 detail: res.message,
+//                 life: 3000,
+//             });
+//         })
+//         .catch((err: any) => {
+//             console.log(err);
+//             toast.add({
+//                 severity: 'error',
+//                 summary: 'Thông báo',
+//                 detail: err.message,
+//                 life: 3000,
+//             });
+//         });
+// };
 
 const clearFilter = async () => {
     filter.value.search = '';
@@ -186,10 +190,8 @@ const convertStatus = (status: number) => {
         return { label: 'Hoàn thành', class: 'status-complete' };
     } else {
         return { label: 'Thanh toán thất bại', class: 'status-fail' };
-
     }
 };
-
 </script>
 <style scoped lang="scss">
 .order-bill {
