@@ -67,7 +67,14 @@
                         class="mr-2"
                         @click="gotoEdit(slotProps.data.id)"
                     />
-
+                    <Button
+                        icon="pi pi-info-circle"
+                        outlined
+                        rounded
+                        severity="info"
+                        class="mr-2"
+                        @click="gotoDetail(slotProps.data?.id)"
+                    />
                     <Button
                         icon="pi pi-trash"
                         outlined
@@ -166,5 +173,9 @@ const gotoCreate = () => {
 const gotoEdit = (id: number) => {
     router.push('/admin/article/update/' + id);
 };
+const gotoDetail = (id: number) => {
+    router.push('/admin/article/' + id);
+};
+
 </script>
 <style scoped lang="scss"></style>
