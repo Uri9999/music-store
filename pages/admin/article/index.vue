@@ -65,7 +65,7 @@
                         outlined
                         rounded
                         class="mr-2"
-                        @click="gotoEditCategory(slotProps.data.id)"
+                        @click="gotoEdit(slotProps.data.id)"
                     />
 
                     <Button
@@ -160,10 +160,10 @@ const fetch = (payload: any) => {
 };
 
 const gotoCreate = () => {
-    router.push('/admin/category/create');
+    router.push('/admin/article/create');
 };
-const gotoEditCategory = (id: number) => {
-    router.push('/admin/category/update/' + id);
+const gotoEdit = (id: number) => {
+    router.push('/admin/article/update/' + id);
 };
 </script>
 <style scoped lang="scss"></style>
