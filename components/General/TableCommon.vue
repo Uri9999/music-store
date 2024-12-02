@@ -68,8 +68,8 @@ const onPageChange = (event: any) => {
     fetchData(props.payload);
 };
 
-onMounted(() => {
-    fetchData();
+onMounted(async () => {
+    await fetchData();
 });
 
 defineExpose({

@@ -87,6 +87,7 @@ export default {
             {
                 label: 'Blog',
                 icon: 'menu-book',
+                toRoute: '/admin/article'
             },
             {
                 label: 'Doanh Thu',

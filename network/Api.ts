@@ -1,3 +1,4 @@
+import Article from './repositories/Article';
 import Auth from './repositories/Auth';
 import Banner from './repositories/Banner';
 import Cart from './repositories/Cart';
@@ -18,6 +19,7 @@ const Api = {
     user: User(),
     category: Category(),
     banner: Banner(),
+    article: Article(),
 };
 
 export default Api;
