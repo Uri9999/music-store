@@ -11,7 +11,7 @@ export default () => ({
         return BaseApi.setAuth().post('admin/articles', payload);
     },
     update(id: number, payload: any) {
-        return BaseApi.setAuth().post('admin/articles/' + id, payload);
+        return BaseApi.setAuth().put('admin/articles/' + id, payload);
     },
     delete(id: number) {
         return BaseApi.setAuth().delete('admin/articles/' + id);

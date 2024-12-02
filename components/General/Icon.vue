@@ -26,7 +26,7 @@ export default {
         },
         classes: {
             type: [String, Object],
-            default: '',
+            default: 'flex align-items-center',
         },
     },
     methods: {},
