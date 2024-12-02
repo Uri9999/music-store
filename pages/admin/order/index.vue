@@ -79,21 +79,16 @@
                         outlined
                         rounded
                         class="mr-2"
-                        @click="gotoEditCategory(slotProps.data.id)"
+                        @click="gotoEdit(slotProps.data.id)"
                     />
-
-                    <!-- <Button
-                        icon="pi pi-trash"
+                    <Button
+                        icon="pi pi-info-circle"
                         outlined
                         rounded
+                        severity="info"
                         class="mr-2"
-                        severity="danger"
-                        @click="confirmDelete(slotProps.data.id)"
-                        v-if="
-                            slotProps.data.status != 2 &&
-                            slotProps.data.role_id != 1
-                        "
-                    /> -->
+                        @click="gotoDetail(slotProps.data?.id)"
+                    />
                 </template>
             </Column>
         </TableCommon>
@@ -126,45 +121,6 @@ const router = useRouter();
 const toast = useToast();
 const confirm = useConfirm();
 const tableCommon = ref<any>();
-// const confirmDelete = (id: number) => {
-//     confirm.require({
-//         header: 'Xác nhận xóa danh mục',
-//         message: 'Bạn có chắc chắn muốn xóa danh mục ?',
-//         icon: 'pi pi-info-circle',
-//         rejectLabel: 'Đóng',
-//         acceptLabel: 'Xóa',
-//         rejectClass: 'p-button-secondary p-button-outlined',
-//         acceptClass: 'p-button-danger',
-//         accept: async () => {
-//             await deleteCategory(id);
-//             tableCommon.value.refresh();
-//         },
-//         reject: () => {},
-//     });
-// };
-
-// const deleteCategory = async (id: number) => {
-//     Api.category
-//         .delete(id)
-//         .then((res: any) => {
-//             toast.add({
-//                 severity: 'success',
-//                 summary: 'Thông báo',
-//                 detail: res.message,
-//                 life: 3000,
-//             });
-//         })
-//         .catch((err: any) => {
-//             console.log(err);
-//             toast.add({
-//                 severity: 'error',
-//                 summary: 'Thông báo',
-//                 detail: err.message,
-//                 life: 3000,
-//             });
-//         });
-// };
-
 const clearFilter = async () => {
     filter.value.search = '';
     await search();
@@ -177,8 +133,11 @@ const fetchOrders = (payload: any) => {
     return Api.order.index(payload);
 };
 
-const gotoEditCategory = (id: number) => {
-    router.push('/admin/category/update/' + id);
+const gotoEdit = (id: number) => {
+    router.push('/admin/order/update/' + id);
+};
+const gotoDetail = (id: number) => {
+    router.push('/admin/order/' + id);
 };
 
 const convertStatus = (status: number) => {

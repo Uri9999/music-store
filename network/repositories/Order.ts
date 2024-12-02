@@ -16,4 +16,8 @@ export default () => ({
     index(payload: any) {
         return BaseApi.setAuth().get('admin/orders', payload);
     },
+
+    adminShow(id: number) {
+        return BaseApi.setAuth().get('admin/orders/', id);
+    }
 });
