@@ -1,5 +1,5 @@
 <template>
-    <div class="head-title">
+    <div class="head-title mb-3">
         <Icon @click="goBack()" class="mr-3 icon-back" name="arrow-back"></Icon>
         <h2>{{ title }}</h2>
     </div>

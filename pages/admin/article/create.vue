@@ -1,7 +1,6 @@
 <template>
     <div class="update-user">
-        <h1>Tạo bài viết</h1>
-
+        <HeaderPage title="Tạo bài viết"></HeaderPage>
         <div class="form mt-3">
             <div>
                 <div class="mb-3">
@@ -20,29 +19,36 @@
 
                 <div class="mb-3">
                     <Dropdown
-                    class="mr-3 mt-2"
-                    v-model="articleData.status"
-                    :options="selection?.article_status"
-                    optionLabel="label"
-                    optionValue="value"
-                    placeholder="Trạng thái"
-                />
+                        class="mr-3 mt-2"
+                        v-model="articleData.status"
+                        :options="selection?.article_status"
+                        optionLabel="label"
+                        optionValue="value"
+                        placeholder="Trạng thái"
+                    />
                     <small class="error" v-if="articleDataError?.title">{{
                         articleDataError?.title[0]
                     }}</small>
                 </div>
 
                 <div class="mb-3">
-                    <MDEditor v-model="articleData.content" :errors="articleDataError?.content" placeholder="Nội dung"></MDEditor>
-                    <small
-                        class="error"
-                        v-if="articleDataError?.content"
-                        >{{ articleDataError?.content[0] }}</small
-                    >
+                    <MDEditor
+                        v-model="articleData.content"
+                        :errors="articleDataError?.content"
+                        collection="article"
+                        placeholder="Nội dung"
+                    ></MDEditor>
+                    <small class="error" v-if="articleDataError?.content">{{
+                        articleDataError?.content[0]
+                    }}</small>
                 </div>
 
                 <div class="mb-3 flex justify-content-between">
-                    <Button label="Trở lại" severity="secondary" @click="back()"></Button>
+                    <Button
+                        label="Trở lại"
+                        severity="secondary"
+                        @click="back()"
+                    ></Button>
                     <Button label="Lưu" @click="save()"></Button>
                 </div>
             </div>
@@ -54,6 +60,7 @@
 import Api from '~/network/Api';
 import type { Selection } from '~/types/selection';
 import MDEditor from '~/components/Editor/MDEditor.vue';
+import HeaderPage from '~/components/General/HeaderPage.vue';
 
 definePageMeta({
     layout: 'admin',
@@ -81,7 +88,7 @@ const save = async () => {
     Api.article
         .store(articleData.value)
         .then((res: any) => {
-            router.push('/admin/article')
+            router.push('/admin/article');
             toast.add({
                 severity: 'success',
                 summary: 'Thông báo',
@@ -108,6 +115,4 @@ const back = () => {
 };
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

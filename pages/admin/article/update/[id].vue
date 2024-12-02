@@ -1,7 +1,6 @@
 <template>
     <div class="update-user">
-        <h2>Cập nhật bài viết</h2>
-
+        <HeaderPage title="Cập nhật bài viết"></HeaderPage>
         <div class="form mt-3">
             <div>
                 <div class="mb-3">
@@ -62,6 +61,7 @@
 import Api from '~/network/Api';
 import type { Selection } from '~/types/selection';
 import MDEditor from '~/components/Editor/MDEditor.vue';
+import HeaderPage from '~/components/General/HeaderPage.vue';
 
 definePageMeta({
     layout: 'admin',

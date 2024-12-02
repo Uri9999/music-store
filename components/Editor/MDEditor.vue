@@ -187,6 +187,10 @@ const props = defineProps({
     errors: {
         type: [Array],
         default: []
+    },
+    collection: {
+        type: String,
+        default: 'article'
     }
 })
 
@@ -224,15 +228,15 @@ const onUploadImg = async (files: File[], callback: any) => {
             return new Promise((rev, rej) => {
                 const form = new FormData()
                 form.append('file', file)
-                // Api.user
-                //     .upload('article-image', file, (progressEvent) => {
-                //         const percentCompleted = Math.round(
-                //             (progressEvent.loaded * 100) / progressEvent.total
-                //         )
-                //         console.log('percentCompleted: ', percentCompleted);
-                //     })
-                //     .then((res: any) => rev(res))
-                //     .catch((err: any) => rej(err))
+                Api.media
+                    .upload(props.collection, file, (progressEvent) => {
+                        const percentCompleted = Math.round(
+                            (progressEvent.loaded * 100) / progressEvent.total
+                        )
+                        console.log('percentCompleted: ', percentCompleted);
+                    })
+                    .then((res: any) => rev(res))
+                    .catch((err: any) => rej(err))
             })
         })
     )

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h2 class="mb-2">Danh sách bài viết</h2>
+        <HeaderPage title="Danh sách bài viết"></HeaderPage>
         <Button
             label="Tạo mới"
             icon="pi pi-plus"
@@ -89,6 +89,7 @@ import Api from '~/network/Api';
 import { useConfirm } from 'primevue/useconfirm';
 import { handleSelectedValue } from '~/utils/funciton';
 import type { Selection } from '~/types/selection';
+import HeaderPage from '~/components/General/HeaderPage.vue';
 
 definePageMeta({
     layout: 'admin',

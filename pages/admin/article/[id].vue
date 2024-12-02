@@ -27,8 +27,6 @@ const articleData = ref({
     status: 2,
 });
 
-const router = useRouter();
-const toast = useToast();
 const selection = ref<Selection | null>();
 const selectionStore = useSelectionStore();
 onMounted(async () => {

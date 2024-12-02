@@ -3,6 +3,7 @@ import Auth from './repositories/Auth';
 import Banner from './repositories/Banner';
 import Cart from './repositories/Cart';
 import Category from './repositories/Category';
+import Media from './repositories/Media';
 import Order from './repositories/Order';
 import RequestTab from './repositories/RequestTab';
 import Selection from './repositories/Selection';
@@ -20,6 +21,7 @@ const Api = {
     category: Category(),
     banner: Banner(),
     article: Article(),
+    media: Media(),
 };
 
 export default Api;
