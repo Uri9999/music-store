@@ -123,7 +123,7 @@ import type { Selection, Item } from '~/types/selection';
 import type { Profile, UserDataError } from '~/types/user';
 import ImageUploader from '~/components/General/ImageUploader.vue';
 import moment from 'moment';
-import Avatar from '~/components/General/Avatar.vue';
+import Avatar from '~/components/General/AvatarCommon.vue';
 
 definePageMeta({
     layout: 'admin',

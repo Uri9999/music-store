@@ -1,18 +1,14 @@
 <template>
-    <img
-        v-if="src"
-        :src="props.src"
-        class="rounded-full mx-1 block"
-        :class="classes"
-        alt="avatar"
-    />
-    <div
-        v-else
-        :class="classes"
-        class="avatar-placeholder rounded-full"
-        :style="{ backgroundColor: simpleColor }"
-    >
-        {{ firstLetterOfName }}
+    <div class="avatar-placeholder">
+        <img :src="src" v-if="src" :class="[classes, 'avatar']" alt="avatar" />
+        <div
+            v-else
+            :class="classes"
+            class="avatar-placeholder rounded-full"
+            :style="{ backgroundColor: simpleColor }"
+        >
+            {{ firstLetterOfName }}
+        </div>
     </div>
 </template>
 
@@ -21,7 +17,7 @@ import { computed } from 'vue';
 
 const props = defineProps({
     src: {
-        type: String,
+        type: [String, null],
         required: false,
     },
     name: {
@@ -62,5 +58,11 @@ const simpleColor = computed(() => {
     align-items: center;
     color: white;
     font-weight: bold;
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+}
+.avatar {
+    border-radius: 50%;
 }
 </style>

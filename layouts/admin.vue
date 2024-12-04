@@ -3,12 +3,11 @@
         <AdminMenu></AdminMenu>
         <div class="body">
             <div class="head">
-                <Avatar
-                    class="avatar-mobile"
-                    image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png"
-                    shape="circle"
+                <span class="mr-3">{{ profile?.name }}</span>
+                <AvatarCommon
+                    :name="profile?.name"
+                    :src="profile?.avatar?.url ?? null"
                 />
-                <span class="ml-3">Nguyễn Văn Nhất</span>
             </div>
             <div class="container">
                 <NuxtPage />
@@ -18,7 +17,10 @@
 </template>
 <script lang="ts" setup>
 import AdminMenu from '~/components/Utils/Menu/AdminMenu.vue';
+import AvatarCommon from '~/components/General/AvatarCommon.vue';
 
+const authStore = useAuthStore();
+const { profile } = storeToRefs(authStore);
 </script>
 
 <style lang="scss" scoped>
