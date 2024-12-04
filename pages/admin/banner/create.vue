@@ -1,60 +1,58 @@
 <template>
-    <div class="update-category">
-        <h1>Tạo Banner</h1>
+    <HeaderPage title="Tạo Banner"> </HeaderPage>
 
-        <div class="form mt-3">
-            <div>
-                <div class="mb-3">
-                    <label for="name" class="block mb-1"
-                        >Tên <span class="error">*</span></label
-                    >
-                    <InputText
-                        type="text"
-                        class="w-full"
-                        v-model="bannerData.name"
-                        id="name"
-                        fluid
-                    />
-                    <small class="error" v-if="bannerDataError?.name">{{
-                        bannerDataError?.name[0]
-                    }}</small>
-                </div>
+    <div class="form mt-3 max-width-600">
+        <div>
+            <div class="mb-3">
+                <label for="name" class="block mb-1"
+                    >Tên <span class="error">*</span></label
+                >
+                <InputText
+                    type="text"
+                    class="w-full"
+                    v-model="bannerData.name"
+                    id="name"
+                    fluid
+                />
+                <small class="error" v-if="bannerDataError?.name">{{
+                    bannerDataError?.name[0]
+                }}</small>
+            </div>
 
-                <div class="mb-3">
-                    <label for="description" class="block mb-1">Mô tả</label>
-                    <Textarea
-                        v-model="bannerData.description"
-                        id="description"
-                        class="w-full"
-                        rows="5"
-                        fluid
-                    />
-                    <small class="error" v-if="bannerDataError?.description">{{
-                        bannerDataError?.description[0]
-                    }}</small>
-                </div>
+            <div class="mb-3">
+                <label for="description" class="block mb-1">Mô tả</label>
+                <Textarea
+                    v-model="bannerData.description"
+                    id="description"
+                    class="w-full"
+                    rows="5"
+                    fluid
+                />
+                <small class="error" v-if="bannerDataError?.description">{{
+                    bannerDataError?.description[0]
+                }}</small>
+            </div>
 
-                <div class="mb-3">
-                    <label for="image" class="block mb-1">Ảnh</label>
-                    <UploadMultipleFile
-                        :imgs="bannerData.images_url"
-                        :filesUpload="bannerData.images"
-                        @selectFiles="setSelectedFiles"
-                        :hidenDelete="true"
-                    ></UploadMultipleFile>
-                    <small class="error" v-if="bannerDataError?.image">{{
-                        bannerDataError?.image[0]
-                    }}</small>
-                </div>
+            <div class="mb-3">
+                <label for="image" class="block">Ảnh</label>
+                <UploadMultipleFile
+                    :imgs="bannerData.images_url"
+                    :filesUpload="bannerData.images"
+                    @selectFiles="setSelectedFiles"
+                    :hidenDelete="true"
+                ></UploadMultipleFile>
+                <small class="error" v-if="bannerDataError?.image">{{
+                    bannerDataError?.image[0]
+                }}</small>
+            </div>
 
-                <div class="mb-3 flex justify-content-between">
-                    <Button
-                        label="Trở lại"
-                        @click="back()"
-                        severity="secondary"
-                    ></Button>
-                    <Button label="Lưu" @click="create()"></Button>
-                </div>
+            <div class="mt-3 flex justify-content-between">
+                <Button
+                    label="Trở lại"
+                    @click="back()"
+                    severity="secondary"
+                ></Button>
+                <Button label="Lưu" @click="create()"></Button>
             </div>
         </div>
     </div>
@@ -63,6 +61,7 @@
 <script lang="ts" setup>
 import Api from '~/network/Api';
 import UploadMultipleFile from '~/components/General/UploadMultipleFile.vue';
+import HeaderPage from '~/components/General/HeaderPage.vue';
 
 definePageMeta({
     layout: 'admin',
@@ -121,7 +120,7 @@ const back = () => {
 </script>
 
 <style lang="scss" scoped>
-.update-category {
+.max-width-600 {
     max-width: 600px;
 }
 </style>

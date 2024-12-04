@@ -1,13 +1,16 @@
 <template>
     <div>
-        <h2 class="mb-2">Danh sách bài tab</h2>
-        <Button
-            label="Tạo mới"
-            icon="pi pi-plus"
-            severity="success"
-            @click="goCreateTab()"
-            class="ml-3"
-        />
+        <HeaderPage title="Danh sách bài Tab">
+            <template v-slot:head-right>
+                <Button
+                    label="Tạo mới"
+                    icon="pi pi-plus"
+                    severity="success"
+                    @click="goCreateTab()"
+                />
+            </template>
+        </HeaderPage>
+
         <TableCommon
             ref="tableCommon"
             :payload="filter"
@@ -77,7 +80,13 @@
                 style="min-width: 12rem"
             >
                 <template #body="slotProps">
-                    <Button icon="pi pi-pencil" @click="gotoUpdateTab(slotProps.data?.id)" outlined rounded class="mr-2" />
+                    <Button
+                        icon="pi pi-pencil"
+                        @click="gotoUpdateTab(slotProps.data?.id)"
+                        outlined
+                        rounded
+                        class="mr-2"
+                    />
                     <Button
                         icon="pi pi-info-circle"
                         outlined
@@ -102,6 +111,7 @@
 <script setup lang="ts">
 import TableCommon from '~/components/General/TableCommon.vue';
 import Api from '~/network/Api';
+import HeaderPage from '~/components/General/HeaderPage.vue';
 
 definePageMeta({
     layout: 'admin',

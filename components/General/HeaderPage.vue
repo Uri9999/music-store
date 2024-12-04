@@ -1,7 +1,16 @@
 <template>
-    <div class="head-title mb-3">
-        <Icon @click="goBack()" class="mr-3 icon-back" name="arrow-back"></Icon>
-        <h2>{{ title }}</h2>
+    <div class="flex justify-content-between align-items-center">
+        <div class="head-title">
+            <Icon
+                @click="goBack()"
+                class="mr-3 icon-back"
+                name="arrow-back"
+            ></Icon>
+            <h2>{{ title }}</h2>
+        </div>
+        <div>
+            <slot name="head-right" />
+        </div>
     </div>
 </template>
 
@@ -17,7 +26,7 @@ const props = defineProps({
 const router = useRouter();
 const goBack = () => {
     router.go(-1);
-}
+};
 </script>
 
 <style lang="scss" scoped>

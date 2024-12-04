@@ -1,93 +1,99 @@
 <template>
-    <div>
-        <HeaderPage title="Danh sách bài viết"></HeaderPage>
-        <Button
-            label="Tạo mới"
-            icon="pi pi-plus"
-            severity="success"
-            @click="gotoCreate()"
-            class="ml-3"
-        />
-        <TableCommon ref="tableCommon" :apiFunction="fetch">
-            <template #header>
-                <div
-                    class="flex flex-wrap gap-2 align-items-end justify-content-between"
-                >
-                    <div>
-                        <Button
-                            type="button"
-                            icon="pi pi-filter-slash"
-                            label="Reset bộ lọc"
-                            outlined
-                            @click="clearFilter()"
-                        />
-                    </div>
-                    <div class="flex gap-2">
-                        <IconField>
-                            <InputIcon>
-                                <i class="pi pi-search" />
-                            </InputIcon>
-                            <InputText
-                                placeholder="Tìm kiếm tiêu đề"
-                                v-model="filter.search"
-                            />
-                        </IconField>
-                        <Button @click="search()">Tìm kiếm</Button>
-                    </div>
-                </div>
-            </template>
-
-            <Column field="title" header="Tiêu đề" style=""></Column>
-            <Column field="status" header="Trạng thái" style="">
-                <template #body="slotProps">
-                    <span>{{ handleSelectedValue(slotProps.data.status, selection.article_status) }}</span>
-                </template>
-            </Column>
-            <Column field="type" header="Loại" style="">
-                <template #body="slotProps">
-                    <span>{{ handleSelectedValue(slotProps.data.type, selection.article_types) }}</span>
-                </template>
-            </Column>
-            <Column field="user" header="Người viết" style="">
-                <template #body="slotProps">
-                    <span>{{ slotProps.data?.user?.name }}</span>
-                </template>
-            </Column>
-
-            <Column
-                :exportable="false"
-                header="Hành động"
-                style="min-width: 12rem"
+    <HeaderPage title="Danh sách bài viết">
+        <template v-slot:head-right>
+            <Button
+                label="Tạo mới"
+                icon="pi pi-plus"
+                severity="success"
+                @click="gotoCreate()"
+            />
+        </template>
+    </HeaderPage>
+    <TableCommon ref="tableCommon" :apiFunction="fetch">
+        <template #header>
+            <div
+                class="flex flex-wrap gap-2 align-items-end justify-content-between"
             >
-                <template #body="slotProps">
+                <div>
                     <Button
-                        icon="pi pi-pencil"
+                        type="button"
+                        icon="pi pi-filter-slash"
+                        label="Reset bộ lọc"
                         outlined
-                        rounded
-                        class="mr-2"
-                        @click="gotoEdit(slotProps.data.id)"
+                        @click="clearFilter()"
                     />
-                    <Button
-                        icon="pi pi-info-circle"
-                        outlined
-                        rounded
-                        severity="info"
-                        class="mr-2"
-                        @click="gotoDetail(slotProps.data?.id)"
-                    />
-                    <Button
-                        icon="pi pi-trash"
-                        outlined
-                        rounded
-                        class="mr-2"
-                        severity="danger"
-                        @click="confirmDelete(slotProps.data.id)"
-                        v-if="slotProps.data.type == 1"
-                    />
-                </template>
-            </Column>
-        </TableCommon>
-    </div>
+                </div>
+                <div class="flex gap-2">
+                    <IconField>
+                        <InputIcon>
+                            <i class="pi pi-search" />
+                        </InputIcon>
+                        <InputText
+                            placeholder="Tìm kiếm tiêu đề"
+                            v-model="filter.search"
+                        />
+                    </IconField>
+                    <Button @click="search()">Tìm kiếm</Button>
+                </div>
+            </div>
+        </template>
+
+        <Column field="title" header="Tiêu đề" style=""></Column>
+        <Column field="status" header="Trạng thái" style="">
+            <template #body="slotProps">
+                <span>{{
+                    handleSelectedValue(
+                        slotProps.data.status,
+                        selection.article_status,
+                    )
+                }}</span>
+            </template>
+        </Column>
+        <Column field="type" header="Loại" style="">
+            <template #body="slotProps">
+                <span>{{
+                    handleSelectedValue(
+                        slotProps.data.type,
+                        selection.article_types,
+                    )
+                }}</span>
+            </template>
+        </Column>
+        <Column field="user" header="Người viết" style="">
+            <template #body="slotProps">
+                <span>{{ slotProps.data?.user?.name }}</span>
+            </template>
+        </Column>
+
+        <Column :exportable="false" header="Hành động" style="min-width: 12rem">
+            <template #body="slotProps">
+                <Button
+                    icon="pi pi-pencil"
+                    outlined
+                    rounded
+                    class="mr-2"
+                    @click="gotoEdit(slotProps.data.id)"
+                />
+                <Button
+                    icon="pi pi-info-circle"
+                    outlined
+                    rounded
+                    severity="info"
+                    class="mr-2"
+                    @click="gotoDetail(slotProps.data?.id)"
+                />
+                <Button
+                    icon="pi pi-trash"
+                    outlined
+                    rounded
+                    class="mr-2"
+                    severity="danger"
+                    @click="confirmDelete(slotProps.data.id)"
+                    v-if="slotProps.data.type == 1"
+                />
+            </template>
+        </Column>
+    </TableCommon>
 </template>
 
 <script setup lang="ts">
@@ -107,7 +113,6 @@ const selectionStore = useSelectionStore();
 onBeforeMount(async () => {
     selection.value = await selectionStore.getData();
 });
-
 
 const filter = ref({
     search: '',
@@ -176,6 +181,5 @@ const gotoEdit = (id: number) => {
 const gotoDetail = (id: number) => {
     router.push('/admin/article/' + id);
 };
-
 </script>
 <style scoped lang="scss"></style>

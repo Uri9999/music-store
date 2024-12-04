@@ -1,19 +1,26 @@
 <template>
     <div>
-        <h2 class="mb-2">Danh sách Banner</h2>
-        <Button
-            label="Tạo mới"
-            icon="pi pi-plus"
-            severity="success"
-            @click="gotoCreate()"
-            class="ml-3"
-        />
+        <HeaderPage title="Danh sách Banner">
+            <template v-slot:head-right>
+                <Button
+                    label="Tạo mới"
+                    icon="pi pi-plus"
+                    severity="success"
+                    @click="gotoCreate()"
+                />
+            </template>
+        </HeaderPage>
+
         <TableCommon ref="tableCommon" :apiFunction="fetchBanners">
             <Column field="name" header="Tên" style=""></Column>
             <Column field="description" header="Mô tả" style=""></Column>
             <Column field="image" header="Ảnh" style="">
                 <template #body="slotProps">
-                    <img class="img-banner" :src="slotProps.data?.images_url[0].url" alt="">
+                    <img
+                        class="img-banner"
+                        :src="slotProps.data?.images_url[0].url"
+                        alt=""
+                    />
                 </template>
                 <!-- images_url -->
             </Column>
@@ -49,6 +56,7 @@
 import TableCommon from '~/components/General/TableCommon.vue';
 import Api from '~/network/Api';
 import { useConfirm } from 'primevue/useconfirm';
+import HeaderPage from '~/components/General/HeaderPage.vue';
 
 definePageMeta({
     layout: 'admin',

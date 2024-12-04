@@ -1,85 +1,82 @@
 <template>
-    <div>
-        <h2 class="mb-2">Danh sách danh mục</h2>
-        <Button
-            label="Tạo mới"
-            icon="pi pi-plus"
-            severity="success"
-            @click="gotoCreate()"
-            class="ml-3"
-        />
-        <TableCommon ref="tableCommon" :apiFunction="fetchUsers">
-            <template #header>
-                <div
-                    class="flex flex-wrap gap-2 align-items-end justify-content-between"
-                >
-                    <div>
-                        <Button
-                            type="button"
-                            icon="pi pi-filter-slash"
-                            label="Reset bộ lọc"
-                            outlined
-                            @click="clearFilter()"
-                        />
-                    </div>
-                    <div class="flex gap-2">
-                        <IconField>
-                            <InputIcon>
-                                <i class="pi pi-search" />
-                            </InputIcon>
-                            <InputText
-                                placeholder="Tìm kiếm..."
-                                v-model="filter.name"
-                            />
-                        </IconField>
-                        <Button @click="search()">Tìm kiếm</Button>
-                    </div>
-                </div>
-            </template>
-
-            <Column field="name" header="Tên" style=""></Column>
-            <Column field="description" header="Mô tả" style=""></Column>
-            <Column field="parent" header="Danh mục cha" style="">
-                <template #body="slotProps">
-                    <span>{{ slotProps.data?.parent?.name }}</span>
-                </template>
-            </Column>
-            <Column
-                :exportable="false"
-                header="Hành động"
-                style="min-width: 12rem"
+    <HeaderPage title="Danh sách danh mục">
+        <template v-slot:head-right>
+            <Button
+                label="Tạo mới"
+                icon="pi pi-plus"
+                severity="success"
+                @click="gotoCreate()"
+            />
+        </template>
+    </HeaderPage>
+    <TableCommon ref="tableCommon" :apiFunction="fetchUsers">
+        <template #header>
+            <div
+                class="flex flex-wrap gap-2 align-items-end justify-content-between"
             >
-                <template #body="slotProps">
+                <div>
                     <Button
-                        icon="pi pi-pencil"
+                        type="button"
+                        icon="pi pi-filter-slash"
+                        label="Reset bộ lọc"
                         outlined
-                        rounded
-                        class="mr-2"
-                        @click="gotoEditCategory(slotProps.data.id)"
+                        @click="clearFilter()"
                     />
+                </div>
+                <div class="flex gap-2">
+                    <IconField>
+                        <InputIcon>
+                            <i class="pi pi-search" />
+                        </InputIcon>
+                        <InputText
+                            placeholder="Tìm kiếm..."
+                            v-model="filter.name"
+                        />
+                    </IconField>
+                    <Button @click="search()">Tìm kiếm</Button>
+                </div>
+            </div>
+        </template>
 
-                    <Button
-                        icon="pi pi-trash"
-                        outlined
-                        rounded
-                        class="mr-2"
-                        severity="danger"
-                        @click="confirmDelete(slotProps.data.id)"
-                        v-if="
-                            slotProps.data.status != 2 &&
-                            slotProps.data.role_id != 1
-                        "
-                    />
-                </template>
-            </Column>
-        </TableCommon>
-    </div>
+        <Column field="name" header="Tên" style=""></Column>
+        <Column field="description" header="Mô tả" style=""></Column>
+        <Column field="parent" header="Danh mục cha" style="">
+            <template #body="slotProps">
+                <span>{{ slotProps.data?.parent?.name }}</span>
+            </template>
+        </Column>
+        <Column :exportable="false" header="Hành động" style="min-width: 12rem">
+            <template #body="slotProps">
+                <Button
+                    icon="pi pi-pencil"
+                    outlined
+                    rounded
+                    class="mr-2"
+                    @click="gotoEditCategory(slotProps.data.id)"
+                />
+
+                <Button
+                    icon="pi pi-trash"
+                    outlined
+                    rounded
+                    class="mr-2"
+                    severity="danger"
+                    @click="confirmDelete(slotProps.data.id)"
+                    v-if="
+                        slotProps.data.status != 2 &&
+                        slotProps.data.role_id != 1
+                    "
+                />
+            </template>
+        </Column>
+    </TableCommon>
 </template>
 
 <script setup lang="ts">
 import TableCommon from '~/components/General/TableCommon.vue';
 import Api from '~/network/Api';
 import { useConfirm } from 'primevue/useconfirm';
+import HeaderPage from '~/components/General/HeaderPage.vue';
 
 definePageMeta({
     layout: 'admin',

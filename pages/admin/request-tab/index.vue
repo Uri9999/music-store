@@ -1,119 +1,109 @@
 <template>
-    <div>
-        <h2 class="mb-2">Danh sách yêu cầu</h2>
-        <TableCommon
-            ref="tableCommon"
-            :payload="filter"
-            :apiFunction="fetchRequests"
-        >
-            <template #header>
-                <div
-                    class="flex flex-wrap gap-2 align-items-end justify-content-between"
-                >
-                    <div class="flex gap-2 mt-2">
-                        <Button
-                            type="button"
-                            icon="pi pi-filter-slash"
-                            label="Reset bộ lọc"
-                            outlined
-                            @click="clearFilter()"
-                        />
-                        <MultiSelect
-                            v-model="filter.status"
-                            :options="selection?.request_tab_status"
-                            optionLabel="label"
-                            optionValue="value"
-                            filter
-                            placeholder="Trạng thái"
-                            :maxSelectedLabels="3"
-                        />
-                    </div>
-                    <div class="flex gap-2">
-                        <IconField>
-                            <InputIcon>
-                                <i class="pi pi-search" />
-                            </InputIcon>
-                            <InputText
-                                placeholder="Tìm kiếm..."
-                                v-model="filter.search"
-                            />
-                        </IconField>
-                        <Button @click="search()">Tìm kiếm</Button>
-                    </div>
-                </div>
-            </template>
-
-            <Column field="name" header="Tên" style=""></Column>
-            <Column field="author" header="Tác giả" style=""></Column>
-            <Column field="status" header="Trạng thái" style="">
-                <template #body="slotProps">
-                    <span
-                        :class="convertStatus(slotProps.data?.status).class"
-                        >{{ convertStatus(slotProps.data?.status).label }}</span
-                    >
-                </template>
-            </Column>
-            <Column field="user" header="Khách hàng yêu cầu" style="">
-                <template #body="slotProps">
-                    <span>{{ slotProps.data?.user?.name }}</span>
-                </template>
-            </Column>
-            <Column field="receiver" header="Nhân viên thực hiện" style="">
-                <template #body="slotProps">
-                    <div
-                        v-if="
-                            visibleSelect &&
-                            originReiverId == slotProps.data?.id
-                        "
-                        class="flex gap-2"
-                    >
-                        <Dropdown
-                            v-model="selectedReiverId"
-                            :options="allUserAffiliate"
-                            filter
-                            optionLabel="name"
-                            optionValue="id"
-                            placeholder="Select a Affiliate"
-                            class="w-full md:w-14rem"
-                        >
-                        </Dropdown>
-                        <Button
-                            label="Lưu"
-                            @click="updateReceiver(slotProps.data.id)"
-                        ></Button>
-                        <Button
-                            label="Đóng"
-                            severity="secondary"
-                            @click="closeEdit()"
-                        ></Button>
-                    </div>
-                    <span v-else>{{ slotProps.data?.receiver?.name }}</span>
-                </template>
-            </Column>
-            <Column
-                :exportable="false"
-                header="Hành động"
-                style="min-width: 12rem"
+    <HeaderPage title="Danh sách yêu cầu"> </HeaderPage>
+    <TableCommon
+        ref="tableCommon"
+        :payload="filter"
+        :apiFunction="fetchRequests"
+    >
+        <template #header>
+            <div
+                class="flex flex-wrap gap-2 align-items-end justify-content-between"
             >
-                <template #body="slotProps">
+                <div class="flex gap-2 mt-2">
                     <Button
-                        icon="pi pi-pencil"
+                        type="button"
+                        icon="pi pi-filter-slash"
+                        label="Reset bộ lọc"
                         outlined
-                        rounded
-                        class="mr-2"
-                        @click="editRequestTab(slotProps.data)"
+                        @click="clearFilter()"
                     />
+                    <MultiSelect
+                        v-model="filter.status"
+                        :options="selection?.request_tab_status"
+                        optionLabel="label"
+                        optionValue="value"
+                        filter
+                        placeholder="Trạng thái"
+                        :maxSelectedLabels="3"
+                    />
+                </div>
+                <div class="flex gap-2">
+                    <IconField>
+                        <InputIcon>
+                            <i class="pi pi-search" />
+                        </InputIcon>
+                        <InputText
+                            placeholder="Tìm kiếm..."
+                            v-model="filter.search"
+                        />
+                    </IconField>
+                    <Button @click="search()">Tìm kiếm</Button>
+                </div>
+            </div>
+        </template>
+
+        <Column field="name" header="Tên" style=""></Column>
+        <Column field="author" header="Tác giả" style=""></Column>
+        <Column field="status" header="Trạng thái" style="">
+            <template #body="slotProps">
+                <span :class="convertStatus(slotProps.data?.status).class">{{
+                    convertStatus(slotProps.data?.status).label
+                }}</span>
+            </template>
+        </Column>
+        <Column field="user" header="Khách hàng yêu cầu" style="">
+            <template #body="slotProps">
+                <span>{{ slotProps.data?.user?.name }}</span>
+            </template>
+        </Column>
+        <Column field="receiver" header="Nhân viên thực hiện" style="">
+            <template #body="slotProps">
+                <div
+                    v-if="visibleSelect && originReiverId == slotProps.data?.id"
+                    class="flex gap-2"
+                >
+                    <Dropdown
+                        v-model="selectedReiverId"
+                        :options="allUserAffiliate"
+                        filter
+                        optionLabel="name"
+                        optionValue="id"
+                        placeholder="Select a Affiliate"
+                        class="w-full md:w-14rem"
+                    >
+                    </Dropdown>
                     <Button
-                        icon="pi pi-times"
-                        outlined
-                        rounded
-                        severity="danger"
-                        @click="confirmDelete(slotProps.data?.id)"
-                    />
-                </template>
-            </Column>
-        </TableCommon>
-    </div>
+                        label="Lưu"
+                        @click="updateReceiver(slotProps.data.id)"
+                    ></Button>
+                    <Button
+                        label="Đóng"
+                        severity="secondary"
+                        @click="closeEdit()"
+                    ></Button>
+                </div>
+                <span v-else>{{ slotProps.data?.receiver?.name }}</span>
+            </template>
+        </Column>
+        <Column :exportable="false" header="Hành động" style="min-width: 12rem">
+            <template #body="slotProps">
+                <Button
+                    icon="pi pi-pencil"
+                    outlined
+                    rounded
+                    class="mr-2"
+                    @click="editRequestTab(slotProps.data)"
+                />
+                <Button
+                    icon="pi pi-times"
+                    outlined
+                    rounded
+                    severity="danger"
+                    @click="confirmDelete(slotProps.data?.id)"
+                />
+            </template>
+        </Column>
+    </TableCommon>
 </template>
 
 <script setup lang="ts">
@@ -121,6 +111,7 @@ import TableCommon from '~/components/General/TableCommon.vue';
 import Api from '~/network/Api';
 import { useSelectionStore } from '~/stores/selectionStore';
 import type { Selection } from '~/types/selection';
+import HeaderPage from '~/components/General/HeaderPage.vue';
 
 definePageMeta({
     layout: 'admin',
