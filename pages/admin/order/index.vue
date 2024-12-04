@@ -61,9 +61,9 @@
             <Column field="bill" header="Bill">
                 <template #body="slotProps">
                     <div class="order-bill">
-                        <ImageComponent
+                        <ImageCommon
                             :src="slotProps.data?.media_bill?.url"
-                        ></ImageComponent>
+                        ></ImageCommon>
                     </div>
                 </template>
             </Column>
@@ -101,7 +101,7 @@ import Api from '~/network/Api';
 import { useConfirm } from 'primevue/useconfirm';
 import { useSelectionStore } from '~/stores/selectionStore';
 import type { Selection, Item } from '~/types/selection';
-import ImageComponent from '~/components/General/ImageComponent.vue';
+import ImageCommon from '~/components/General/ImageCommon.vue';
 
 definePageMeta({
     layout: 'admin',

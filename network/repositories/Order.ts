@@ -5,10 +5,6 @@ export default () => ({
         return BaseApi.setAuth().post('orders', payload);
     },
 
-    show(id: number) {
-        return BaseApi.setAuth().get('orders/', id);
-    },
-
     getMyOrder() {
         return BaseApi.setAuth().get('orders/created-by-me');
     },
@@ -18,6 +14,6 @@ export default () => ({
     },
 
     adminShow(id: number) {
-        return BaseApi.setAuth().get('admin/orders/', id);
-    }
+        return BaseApi.setAuth().get('admin/orders/' + id);
+    },
 });
