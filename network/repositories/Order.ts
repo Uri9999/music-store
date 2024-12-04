@@ -16,4 +16,12 @@ export default () => ({
     adminShow(id: number) {
         return BaseApi.setAuth().get('admin/orders/' + id);
     },
+
+    adminApproval(id: number) {
+        return BaseApi.setAuth().post('admin/orders/approval/' + id);
+    },
+
+    adminCancel(id: number) {
+        return BaseApi.setAuth().post('admin/orders/cancel/' + id);
+    },
 });

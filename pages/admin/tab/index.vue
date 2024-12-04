@@ -112,6 +112,7 @@
 import TableCommon from '~/components/General/TableCommon.vue';
 import Api from '~/network/Api';
 import HeaderPage from '~/components/General/HeaderPage.vue';
+import { truncateDescription } from '~/utils/funciton';
 
 definePageMeta({
     layout: 'admin',
@@ -185,11 +186,6 @@ const deleteTab = async (id: number) => {
             life: 3000,
         });
     }
-};
-
-const truncateDescription = (str: string | null, length = 20) => {
-    if (str == null) return;
-    return str.length > length ? str.substring(0, length) + '...' : str;
 };
 
 const gotoDetailTab = (id: number) => {

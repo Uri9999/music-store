@@ -29,7 +29,7 @@
                             <i class="pi pi-search" />
                         </InputIcon>
                         <InputText
-                            placeholder="Tìm kiếm..."
+                            placeholder="Tên khách hàng"
                             v-model="filter.search"
                         />
                     </IconField>
@@ -50,7 +50,13 @@
                 }}</span>
             </template>
         </Column>
-        <Column field="total_price" header="Tổng số tiền"></Column>
+        <Column field="total_price" header="Tổng số tiền">
+            <template #body="slotProps">
+                <span>{{
+                    formatNumberWithCommas(slotProps.data.total_price)
+                }}</span>
+            </template>
+        </Column>
         <Column field="count" header="Số lượng">
             <template #body="slotProps">
                 <span>{{ slotProps.data?.order_items?.length }}</span>
@@ -60,21 +66,32 @@
             <template #body="slotProps">
                 <div class="order-bill">
                     <ImageCommon
+                        v-if="slotProps.data?.media_bill?.url"
                         :src="slotProps.data?.media_bill?.url"
                     ></ImageCommon>
                 </div>
             </template>
         </Column>
-        <Column field="note" header="Ghi chú"> </Column>
-        <Column :exportable="false" header="Hành động" style="min-width: 12rem">
+        <Column field="note" header="Ghi chú">
             <template #body="slotProps">
-                <Button
-                    icon="pi pi-pencil"
-                    outlined
-                    rounded
-                    class="mr-2"
-                    @click="gotoEdit(slotProps.data.id)"
-                />
+                <span>{{ truncateDescription(slotProps.data.note) }}</span>
+            </template>
+        </Column>
+        <Column field="note" header="Chi tiết">
+            <template #body="slotProps">
+                <div v-if="slotProps.data?.approver">
+                    Người phê duyệt: {{ slotProps.data?.approver?.name }}
+                </div>
+                <div v-if="slotProps.data?.approval_date">
+                    Ngày phê duyệt: {{ slotProps.data?.approval_date }}
+                </div>
+                <div v-if="slotProps.data?.canceller?.name">
+                    Người hủy: {{ slotProps.data?.canceller?.name }}
+                </div>
+            </template>
+        </Column>
+        <Column :exportable="false" header="Hành động">
+            <template #body="slotProps">
                 <Button
                     icon="pi pi-info-circle"
                     outlined
@@ -82,6 +99,25 @@
                     severity="info"
                     class="mr-2"
                     @click="gotoDetail(slotProps.data?.id)"
+                    v-tooltip="'Thông tin'"
+                />
+                <Button
+                    outlined
+                    rounded
+                    icon="pi pi-check-circle"
+                    class="mr-2"
+                    @click="confirmApproval(slotProps.data?.id)"
+                    v-tooltip="'Phê duyệt'"
+                    v-if="slotProps.data.status == 1"
+                />
+                <Button
+                    outlined
+                    rounded
+                    icon="pi pi-times-circle"
+                    severity="danger"
+                    @click="confirmCancel(slotProps.data?.id)"
+                    v-tooltip="'Hủy'"
+                    v-if="slotProps.data.status == 1"
                 />
             </template>
         </Column>
@@ -96,6 +132,8 @@ import { useSelectionStore } from '~/stores/selectionStore';
 import type { Selection, Item } from '~/types/selection';
 import ImageCommon from '~/components/General/ImageCommon.vue';
 import HeaderPage from '~/components/General/HeaderPage.vue';
+import { formatNumberWithCommas } from '~/utils/funciton';
+import { truncateDescription } from '~/utils/funciton';
 
 definePageMeta({
     layout: 'admin',
@@ -126,10 +164,81 @@ const search = async () => {
 const fetchOrders = (payload: any) => {
     return Api.order.index(payload);
 };
-
-const gotoEdit = (id: number) => {
-    router.push('/admin/order/update/' + id);
+const confirmApproval = (id: number) => {
+    confirm.require({
+        header: 'Xác nhận hoàn thành đơn hàng',
+        message:
+            'Bạn đã kiểm tra bill chuyển khoản và muốn chuyển đơn hàng sang trạng thái hoàn thành ?',
+        icon: 'pi pi-info-circle',
+        rejectLabel: 'Đóng',
+        acceptLabel: 'OK',
+        rejectClass: 'p-button-secondary p-button-outlined',
+        acceptClass: 'p-button-danger',
+        accept: async () => {
+            await approvalOrder(id);
+            tableCommon.value.refresh(filter.value);
+        },
+        reject: () => {},
+    });
 };
+const approvalOrder = async (id: number) => {
+    await Api.order
+        .adminApproval(id)
+        .then((res: any) => {
+            toast.add({
+                severity: 'success',
+                summary: 'Thông báo',
+                detail: res?.message,
+                life: 3000,
+            });
+        })
+        .catch((err: any) => {
+            toast.add({
+                severity: 'error',
+                summary: 'Thông báo',
+                detail: err?.message,
+                life: 3000,
+            });
+        });
+};
+
+const confirmCancel = (id: number) => {
+    confirm.require({
+        header: 'Xác nhận Hủy đơn hàng',
+        message: 'Bạn có muốn hủy đơn hàng không ?',
+        icon: 'pi pi-info-circle',
+        rejectLabel: 'Đóng',
+        acceptLabel: 'Hủy',
+        rejectClass: 'p-button-secondary p-button-outlined',
+        acceptClass: 'p-button-danger',
+        accept: async () => {
+            await cancelOrder(id);
+            tableCommon.value.refresh(filter.value);
+        },
+        reject: () => {},
+    });
+};
+const cancelOrder = async (id: number) => {
+    await Api.order
+        .adminCancel(id)
+        .then((res: any) => {
+            toast.add({
+                severity: 'success',
+                summary: 'Thông báo',
+                detail: res?.message,
+                life: 3000,
+            });
+        })
+        .catch((err: any) => {
+            toast.add({
+                severity: 'error',
+                summary: 'Thông báo',
+                detail: err?.message,
+                life: 3000,
+            });
+        });
+};
+
 const gotoDetail = (id: number) => {
     router.push('/admin/order/' + id);
 };
@@ -142,7 +251,7 @@ const convertStatus = (status: number) => {
     } else if (status == 3) {
         return { label: 'Hoàn thành', class: 'status-complete' };
     } else {
-        return { label: 'Thanh toán thất bại', class: 'status-fail' };
+        return { label: 'Đã Hủy', class: 'status-fail' };
     }
 };
 </script>

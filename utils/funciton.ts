@@ -21,7 +21,7 @@ export function formatNumberWithCommas(number: number | null): string {
         return '';
     }
     return number.toLocaleString('it-IT'); // 'it-IT' là mã ngôn ngữ của Ý, sử dụng dấu chấm làm phân cách hàng nghìn
-  }
+}
 
 export function extractFirstImageUrl(markdownContent: string): string | null {
     // Regular Expression để tìm URL của ảnh trong cú pháp Markdown
@@ -32,4 +32,10 @@ export function extractFirstImageUrl(markdownContent: string): string | null {
 
     // Trả về URL ảnh đầu tiên nếu có
     return matches.length > 0 ? matches[0][1] : null;
+}
+
+export function truncateDescription(str: string | null, length = 20) {
+    if (str == null) return;
+
+    return str.length > length ? str.substring(0, length) + '...' : str;
 }

@@ -1,7 +1,6 @@
 <template>
     <div class="update-user">
-        <h2>Chỉnh sửa thông tin user</h2>
-
+        <HeaderPage title="Chỉnh sửa thông tin user"> </HeaderPage>
         <div class="form mt-3">
             <div>
                 <div class="mb-3">
@@ -124,6 +123,7 @@ import type { Profile, UserDataError } from '~/types/user';
 import ImageUploader from '~/components/General/ImageUploader.vue';
 import moment from 'moment';
 import Avatar from '~/components/General/AvatarCommon.vue';
+import HeaderPage from '~/components/General/HeaderPage.vue';
 
 definePageMeta({
     layout: 'admin',
