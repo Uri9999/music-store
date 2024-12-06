@@ -3,8 +3,10 @@ type Profile = {
     name: string;
     email: string;
     status: number;
-    dob: Date|null;
+    dob: Date | null;
     gender: number;
+    commission_rate: number;
+    referral_code: string;
     role_id: number;
     avatar: Avatar;
     media_avatar: File;
@@ -16,13 +18,14 @@ type Avatar = {
 };
 
 type UserDataError = {
-    name: [string],
-    email: [string],
-    dob: [string],
-    status: [string],
-    gender: [string],
-    role_id: [string],
-    media_avatar: [string],
-}
+    name: [string];
+    email: [string];
+    dob: [string];
+    status: [string];
+    gender: [string];
+    role_id: [string];
+    media_avatar: [string];
+    commission_rate: [string];
+};
 
 export type { Profile, UserDataError };

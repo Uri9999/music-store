@@ -106,8 +106,30 @@
                     }}</small>
                 </div>
 
+                <div class="mb-3">
+                    <label for="commission-rate" class="block mb-1"
+                        >Phần trăm hoa hồng</label
+                    >
+                    <InputNumber
+                        v-model="userData.commission_rate"
+                        id="commission-rate"
+                        fluid
+                        :min="0"
+                        :max="100"
+                    />
+                    <small
+                        class="error"
+                        v-if="userDataError?.commission_rate"
+                        >{{ userDataError?.commission_rate[0] }}</small
+                    >
+                </div>
+
                 <div class="mb-3 flex justify-content-between">
-                    <Button label="Trở lại" severity="secondary" @click="back()"></Button>
+                    <Button
+                        label="Trở lại"
+                        severity="secondary"
+                        @click="back()"
+                    ></Button>
                     <Button label="Lưu" @click="save()"></Button>
                 </div>
             </div>
@@ -191,8 +213,8 @@ const handleUpload = (file: any) => {
 };
 
 const back = () => {
-    router.push('/admin/user')
-}
+    router.push('/admin/user');
+};
 </script>
 
 <style lang="scss" scoped>

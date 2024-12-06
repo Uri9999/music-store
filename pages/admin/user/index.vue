@@ -96,6 +96,8 @@
             </template>
         </Column>
         <Column field="dob" header="Ngày sinh"></Column>
+        <Column field="commission_rate" header="Hoa hồng (%)"></Column>
+        <Column field="referral_code" header="Mã giới thiệu"></Column>
         <Column :exportable="false" header="Hành động" style="min-width: 12rem">
             <template #body="slotProps">
                 <Button
