@@ -7,6 +7,7 @@ type Selection = {
     order_status: Item[];
     article_status: Item[];
     article_types: Item[];
+    user_subscription_status: Item[],
 };
 
 type Item = {

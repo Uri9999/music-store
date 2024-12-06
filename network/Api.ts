@@ -9,6 +9,7 @@ import RequestTab from './repositories/RequestTab';
 import Selection from './repositories/Selection';
 import Tab from './repositories/Tab';
 import User from './repositories/User';
+import UserSubscription from './repositories/UserSubscription';
 
 const Api = {
     auth: Auth(),
@@ -22,6 +23,7 @@ const Api = {
     banner: Banner(),
     article: Article(),
     media: Media(),
+    userSubscription: UserSubscription(),
 };
 
 export default Api;

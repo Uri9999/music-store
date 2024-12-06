@@ -75,6 +75,11 @@ export default {
                 toRoute: '/admin/order'
             },
             {
+                label: 'Subscription',
+                icon: 'subscriptions',
+                toRoute: '/admin/user-subscription'
+            },
+            {
                 label: 'Danh mục',
                 icon: 'category',
                 toRoute: '/admin/category'
