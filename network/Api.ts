@@ -6,6 +6,7 @@ import Category from './repositories/Category';
 import Media from './repositories/Media';
 import Order from './repositories/Order';
 import RequestTab from './repositories/RequestTab';
+import Revenue from './repositories/Revenue';
 import Selection from './repositories/Selection';
 import Tab from './repositories/Tab';
 import User from './repositories/User';
@@ -24,6 +25,7 @@ const Api = {
     article: Article(),
     media: Media(),
     userSubscription: UserSubscription(),
+    revenue: Revenue(),
 };
 
 export default Api;

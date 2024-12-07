@@ -97,6 +97,7 @@ export default {
             {
                 label: 'Doanh Thu',
                 icon: 'payments',
+                toRoute: '/admin/revenue'
             },
             {
                 label: 'Banner',
