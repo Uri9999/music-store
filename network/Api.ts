@@ -3,6 +3,7 @@ import Auth from './repositories/Auth';
 import Banner from './repositories/Banner';
 import Cart from './repositories/Cart';
 import Category from './repositories/Category';
+import Dashboard from './repositories/Dashboard';
 import Media from './repositories/Media';
 import Order from './repositories/Order';
 import RequestTab from './repositories/RequestTab';
@@ -26,6 +27,7 @@ const Api = {
     media: Media(),
     userSubscription: UserSubscription(),
     revenue: Revenue(),
+    dashboard: Dashboard(),
 };
 
 export default Api;
