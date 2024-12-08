@@ -46,7 +46,7 @@
         </Column>
         <Column field="commission_rate" header="% Hoa hồng" style=""></Column>
         <Column
-            field="user_subscriptions_sum_price"
+            field="referral_commissions_sum_price"
             header="Subscription (Vnd)"
         >
             <template #body="slotProps">
@@ -168,9 +168,9 @@ const gotoDetail = (id: number) => {
 };
 
 const calcSumPriceSubscription = (item: any) => {
-    if (item.user_subscriptions_sum_price) {
+    if (item.referral_commissions_sum_price) {
         var total = String(
-            (item.user_subscriptions_sum_price * item.commission_rate) / 100,
+            (item.referral_commissions_sum_price * item.commission_rate) / 100,
         );
 
         return parseInt(total);
