@@ -37,4 +37,8 @@ export default defineNuxtConfig({
       },
     },
   },
+  plugins: [
+    // Đăng ký plugin Chart.js
+    { src: '~/plugins/chartjs.js', mode: 'client' }
+  ],
 });
