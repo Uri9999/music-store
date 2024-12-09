@@ -6,14 +6,14 @@
         }"
     >
         <div class="md:w-10rem relative">
-            <!-- <img
-                class="block xl:block mx-auto border-round w-full"
-                :src="item.image"
-                :alt="item.name"
-            /> -->
+            <ImageCommon
+                v-if="item?.images_url[0]?.url"
+                :src="item.images_url[0].url"
+            ></ImageCommon>
             <img
-                class="block xl:block mx-auto border-round w-full"
-                src="https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg"
+                v-else
+                class="border-round w-full"
+                src="https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg"
             />
         </div>
         <div
@@ -52,6 +52,7 @@
 <script setup lang="ts">
 import DisplayRateStars from './DisplayRateStars.vue';
 import { useRouter } from 'vue-router';
+import ImageCommon from './ImageCommon.vue';
 
 const props = defineProps({
     classes: {

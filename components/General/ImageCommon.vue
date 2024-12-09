@@ -49,7 +49,7 @@ const props = defineProps({
 });
 
 const visible = ref(false);
-const scale = ref(false);
+const scale = ref(true);
 
 const download = () => {
     const filename = props.src.split('/').pop() || 'image.jpg';

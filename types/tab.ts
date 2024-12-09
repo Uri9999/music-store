@@ -7,6 +7,7 @@ type Tab = {
     price: number;
     category_id: number;
     youtobe_url: string;
+    images_url: Image[];
     user: User;
 };
 
@@ -14,6 +15,10 @@ type User = {
     id: number;
     name: string;
 };
+type Image = {
+    id: number,
+    url: string,
+}
 
 type FilterIndex = {
     orderPrice: string,

@@ -1,9 +1,17 @@
 <template>
     <div class="tags">
-        <div class="item" v-for="(item, index) in tabs" @click="gotoDetail(item.id)">
+        <div
+            class="item"
+            v-for="(item, index) in tabs"
+            @click="gotoDetail(item.id)"
+        >
             <div class="image">
-                <!-- <img :src="item.image" /> -->
                 <img
+                    v-if="item?.images_url[0]?.url"
+                    :src="item?.images_url[0]?.url"
+                />
+                <img
+                    v-else
                     src="https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg"
                 />
                 <div class="pl-3">
@@ -58,6 +66,7 @@ onMounted(async () => {
 }
 .image img {
     width: 56px;
+    height: 40px;
     border-radius: 5px;
 }
 </style>

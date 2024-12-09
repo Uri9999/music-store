@@ -2,24 +2,20 @@
     <a
         class="tag border-1 surface-border surface-card border-round flex flex-column"
     >
-        <div class="surface-50 flex justify-content-center border-round">
-            <!-- <img
-                class="border-round w-full"
-                :src="item.image"
-                :alt="item.name"
-            /> -->
-            <img
+        <div class="surface-50 flex justify-content-center border-round tab-image">
+            <ImageCommon v-if="item?.images_url[0]?.url" :src="item.images_url[0].url"></ImageCommon>
+            <img v-else
                 class="border-round w-full"
                 src="https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg"
             />
         </div>
-        <div class="pt-2 gap-1 flex flex-column">
+        <div class="pt-2 gap-1 flex flex-column tab-content">
             <div>
                 <div class="text-lg font-medium text-900 mt-1">
                     {{ item.name }}
                 </div>
             </div>
-            <div>Người soạn: {{ item?.user?.name }}</div>
+            <div>({{ item?.user?.name }})</div>
             <div class="flex flex-column gap-2">
                 <span class="font-semibold text-700"
                     >Giá: {{ item.price }} Vnd</span
@@ -41,6 +37,7 @@
 <script setup lang="ts">
 import DisplayRateStars from './DisplayRateStars.vue';
 import { useRouter } from 'vue-router';
+import ImageCommon from './ImageCommon.vue';
 
 const props = defineProps({
     classes: {
@@ -60,12 +57,17 @@ const gotoDetail = async (id: number) => {
 </script>
 
 <style scoped>
-.tag {
+.tab-content {
     padding: 10px;
 }
 .detail {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.tab-image {
+    max-height: 250px;
+    overflow: hidden;
 }
 </style>
