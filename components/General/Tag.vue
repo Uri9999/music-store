@@ -2,12 +2,15 @@
     <a
         class="tag border-1 surface-border surface-card border-round flex flex-column"
     >
-        <div class="surface-50 flex justify-content-center border-round tab-image">
-            <ImageCommon v-if="item?.images_url[0]?.url" :src="item.images_url[0].url"></ImageCommon>
-            <img v-else
-                class="border-round w-full"
-                src="https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg"
-            />
+        <div
+            class="surface-50 flex justify-content-center border-round tab-image"
+        >
+            <ImageCommon
+                :src="
+                    item?.images_url?.[0]?.url ||
+                    'https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg'
+                "
+            ></ImageCommon>
         </div>
         <div class="pt-2 gap-1 flex flex-column tab-content">
             <div>

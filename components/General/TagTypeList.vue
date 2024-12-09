@@ -5,16 +5,13 @@
             'border-top-1 surface-border': true,
         }"
     >
-        <div class="md:w-10rem relative">
+        <div class="md:w-10rem relative tab-image">
             <ImageCommon
-                v-if="item?.images_url[0]?.url"
-                :src="item.images_url[0].url"
+                :src="
+                    item?.images_url?.[0]?.url ||
+                    'https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg'
+                "
             ></ImageCommon>
-            <img
-                v-else
-                class="border-round w-full"
-                src="https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg"
-            />
         </div>
         <div
             class="flex flex-column md:flex-row justify-content-between md:align-items-center flex-1 gap-4"
@@ -71,4 +68,10 @@ const gotoDetail = async (id: number) => {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.tab-image {
+    max-height: 200px;
+    max-width: 300px;
+    overflow: hidden;
+}
+</style>
