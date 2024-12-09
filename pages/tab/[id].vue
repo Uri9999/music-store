@@ -1,42 +1,26 @@
 <template>
     <div class="pb-5">
-        <h2 class="py-5">Tên bài hát: Chúc bé ngủ ngon</h2>
+        <h2 class="py-5">Tên bài hát: {{ tab.name }}</h2>
         <div class="card grid">
             <!-- card left -->
             <div class="col-12 md:col-6">
-                <div>
-                    <div class="image-main w-full">
-                        <img
-                            src="https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg"
-                            class="inline-block w-full"
-                            alt=""
-                        />
+                <div class="grid">
+                    <div class="col-3">
+                        <div
+                            class="item-img col-3"
+                            v-for="(image, index) in tab.images_url"
+                            :key="image?.id"
+                            @click="toggleFirstImg(image.url)"
+                        >
+                            <img
+                                :src="image.url"
+                                alt=""
+                                class="inline-block w-full"
+                            />
+                        </div>
                     </div>
-                    <div class="list-img grid">
-                        <div class="item-img col-3">
-                            <img
-                                src="https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg"
-                                alt=""
-                            />
-                        </div>
-                        <div class="item-img col-3">
-                            <img
-                                src="https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg"
-                                alt=""
-                            />
-                        </div>
-                        <div class="item-img col-3">
-                            <img
-                                src="https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg"
-                                alt=""
-                            />
-                        </div>
-                        <div class="item-img col-3">
-                            <img
-                                src="https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg"
-                                alt=""
-                            />
-                        </div>
+                    <div class="image-main col-9">
+                        <ImageCommon :src="imgFirst"></ImageCommon>
                     </div>
                 </div>
             </div>
@@ -79,10 +63,10 @@
                             </div>
                         </div>
 
-                        <div class="product-info">
+                        <!-- <div class="product-info">
                             <div class="product-info__title">Số trang:</div>
                             <div>3</div>
-                        </div>
+                        </div> -->
                         <div class="product-info">
                             <div class="product-info__title">
                                 Định dạng tệp:
@@ -91,20 +75,24 @@
                         </div>
                         <div class="product-info">
                             <div class="product-info__title">Giá:</div>
-                            <div class="price-value">{{ tab.price }} VND</div>
+                            <div class="price-value">
+                                {{ formatNumberWithCommas(tab.price) }} VND
+                            </div>
                         </div>
                         <div class="mt-5">
-                            <Button
-                                icon="pi-shopping-bag pi"
-                                label="Mua ngay"
-                                class="custom mr-3 mt-2"
-                            ></Button>
                             <Button
                                 icon="pi pi-shopping-cart"
                                 label="Thêm vào giỏ hàng"
                                 class="custom mt-2"
                                 @click="addToCart()"
+                                v-if="!tab.pdf"
                             ></Button>
+                            <Button
+                                label="Download PDF"
+                                v-if="tab.pdf"
+                                icon="pi pi-download"
+                                @click="downloadPdf"
+                            />
                         </div>
                     </TabPanel>
                     <TabPanel header="Mô tả">
@@ -141,12 +129,15 @@ import Carousel from '~/components/General/Carousel.vue';
 import { useRoute, useRouter } from 'vue-router';
 import Api from '~/network/Api';
 import { useToast } from 'primevue/usetoast';
+import { formatNumberWithCommas } from '#build/imports';
+import ImageCommon from '~/components/General/ImageCommon.vue';
 
 const toast = useToast();
 const route = useRoute();
 const router = useRouter();
 const id = Number(route.params.id);
 const tab = ref({} as any);
+const imgFirst = ref();
 onMounted(async () => {
     await getDetailTab(id);
 });
@@ -180,6 +171,7 @@ const getDetailTab = async (id: number) => {
         .then((res: any) => {
             console.log(res);
             tab.value = res.data;
+            imgFirst.value = tab.value?.images_url[0].url;
         })
         .catch((err: any) => {
             console.log(err);
@@ -207,6 +199,16 @@ const addToCart = async () => {
                 life: 3000,
             });
         });
+};
+const toggleFirstImg = (url: string) => {
+    imgFirst.value = url;
+};
+const downloadPdf = () => {
+    const link = document.createElement('a');
+    link.href = tab.value.pdf.url;
+    link.download = tab.value.name + '.pdf';
+    link.target = '_blank';
+    link.click();
 };
 </script>
 
@@ -238,5 +240,11 @@ const addToCart = async () => {
 
 .price-value {
     font-size: 1.5rem;
+}
+.item-img {
+    width: 100%;
+    height: 20%;
+    overflow: hidden;
+    cursor: pointer;
 }
 </style>

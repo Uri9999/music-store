@@ -62,7 +62,7 @@
                     </span>
                     <span class="menu-icon ml-2" @click="gotoCartView()">
                         <i class="pi pi-shopping-cart"></i>
-                        <span class="badge">{{ countCartItem }}</span>
+                        <span class="badge" v-if="countCartItem > 0">{{ countCartItem }}</span>
                     </span>
                     <Avatar
                         v-if="!isMobile && isAuthenticated"
