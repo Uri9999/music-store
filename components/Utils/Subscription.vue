@@ -1,15 +1,17 @@
 <template>
     <div class="pricing-container">
         <!-- Basic Plan -->
-        <div class="card">
-            <h2 class="plan-title">Basic</h2>
+        <div class="card" v-for="(sub, index) in subscriptions" :key="index">
+            <h2 class="plan-title">{{ sub.name }}</h2>
             <p class="description">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                {{ sub.description }}
             </p>
             <hr />
             <div class="price">
-                <span class="amount">$9</span>
-                <span class="per-month">per month</span>
+                <span class="amount"
+                    >{{ formatNumberWithCommas(sub.price) }} Vnd</span
+                >
+                <span class="per-month">{{ sub.duration_in_days }} Ngày</span>
             </div>
             <hr />
             <ul class="features">
@@ -36,7 +38,7 @@
         </div>
 
         <!-- Premium Plan -->
-        <div class="card">
+        <!-- <div class="card">
             <h2 class="plan-title">Premium</h2>
             <p class="description">
                 Lorem ipsum dolor sit, amet consectetur adipisicing elit.
@@ -74,10 +76,10 @@
                 </li>
             </ul>
             <Button label="Đăng Ký" class="btn custom px-5 py-3" />
-        </div>
+        </div> -->
 
         <!-- Enterprise Plan -->
-        <div class="card">
+        <!-- <div class="card">
             <div class="plan">
                 <h2 class="plan-title">Enterprise</h2>
                 <div class="sale">🎉 Save 20%</div>
@@ -130,10 +132,27 @@
                 </li>
             </ul>
             <Button label="Đăng Ký" class="btn custom px-5 py-3" />
-        </div>
+        </div> -->
     </div>
 </template>
-<script setup></script>
+<script setup lang="ts">
+import Api from '~/network/Api';
+import type { SubscriptionType } from '~/types/Subscription';
+import { formatNumberWithCommas } from '#build/imports';
+onMounted(async () => {
+    await getSubscriptions();
+});
+
+const subscriptions = ref([] as SubscriptionType[]);
+const getSubscriptions = async () => {
+    await Api.subscription
+        .index()
+        .then((res: any) => {
+            subscriptions.value = res.data;
+        })
+        .catch((err: any) => {});
+};
+</script>
 <style scoped>
 .container {
     text-align: center;

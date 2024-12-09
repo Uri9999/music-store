@@ -9,6 +9,7 @@ import Order from './repositories/Order';
 import RequestTab from './repositories/RequestTab';
 import Revenue from './repositories/Revenue';
 import Selection from './repositories/Selection';
+import Subscription from './repositories/Subscription';
 import Tab from './repositories/Tab';
 import User from './repositories/User';
 import UserSubscription from './repositories/UserSubscription';
@@ -28,6 +29,7 @@ const Api = {
     userSubscription: UserSubscription(),
     revenue: Revenue(),
     dashboard: Dashboard(),
+    subscription: Subscription(),
 };
 
 export default Api;
