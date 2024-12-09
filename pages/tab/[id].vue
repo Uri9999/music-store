@@ -197,7 +197,9 @@ const addToCart = async () => {
             });
         })
         .catch((err: any) => {
-            console.log(err);
+            if (err?.status == 401) {
+                router.push('/login');
+            }
             toast.add({
                 severity: 'error',
                 summary: 'Thông báo',

@@ -93,7 +93,9 @@ const getCart = async () => {
             items.value = res.data;
         })
         .catch((err: any) => {
-            console.log(err);
+            if (err?.status == 401) {
+                router.push('/login');
+            }
         });
 };
 

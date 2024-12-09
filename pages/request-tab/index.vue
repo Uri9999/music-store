@@ -150,6 +150,7 @@ import { useConfirm } from 'primevue/useconfirm';
 const confirm = useConfirm();
 const toast = useToast();
 const tabs = ref([]);
+const router = useRouter()
 onMounted(async () => {
     await getTab();
 });
@@ -162,7 +163,9 @@ const getTab = async () => {
             tabs.value = res.data;
         })
         .catch((err) => {
-            console.log(err);
+            if (err?.status == 401) {
+                router.push('/login')
+            }
         });
 };
 
