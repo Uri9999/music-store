@@ -100,7 +100,9 @@ class BaseApi {
                             resolve(data);
                             break
                         case 401:
-                            // LocalStorageService.clearAuthInfo()
+                            localStorage.removeItem('access_token');
+                            localStorage.removeItem('user');
+                            break
                         case 403:
                         //TODO: handle permission
 
