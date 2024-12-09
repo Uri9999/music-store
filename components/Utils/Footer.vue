@@ -13,11 +13,25 @@
             <div class="footer-section links">
                 <h3>Quick Links</h3>
                 <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Services</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li @click.prevent="router.push('/')">
+                        <a href="#">Trang chủ</a>
+                    </li>
+                    <li @click.prevent="router.push('tab')">
+                        <a href="#">Bài tab</a>
+                    </li>
+                    <li @click.prevent="router.push('request-tab')">
+                        <a href="#">Yêu cầu</a>
+                    </li>
+                    <li @click.prevent="router.push('privacy-policy')">
+                        <a href="#">Blog</a>
+                    </li>
+                    <li><a href="#">Shopee</a></li>
+                    <li @click.prevent="router.push('privacy-policy')">
+                        <a href="#">Điều khoản</a>
+                    </li>
+                    <li @click.prevent="router.push('tutorial')">
+                        <a href="#">Hướng dẫn thanh toán</a>
+                    </li>
                 </ul>
             </div>
 
@@ -47,7 +61,11 @@
         </div>
     </footer>
 </template>
-<script setup></script>
+
+<script setup>
+const router = useRouter();
+</script>
+
 <style scoped>
 /* Thiết lập tổng quát cho footer */
 .footer {

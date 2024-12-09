@@ -16,4 +16,10 @@ export default () => ({
     delete(id: number) {
         return BaseApi.setAuth().delete('admin/articles/' + id);
     },
+    policy() {
+        return BaseApi.get('/policy');
+    },
+    tutorial() {
+        return BaseApi.get('/tutorial');
+    },
 });
