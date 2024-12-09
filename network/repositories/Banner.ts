@@ -16,4 +16,7 @@ export default () => ({
     delete(id: number) {
         return BaseApi.setAuth().delete('admin/banners/' + id);
     },
+    list() {
+        return BaseApi.get('banners/list');
+    },
 });

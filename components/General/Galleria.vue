@@ -30,8 +30,9 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue';
+import Api from '~/network/Api';
 
 const images = ref([
     {
@@ -51,6 +52,21 @@ const images = ref([
         alt: 'Image 4',
     },
 ]);
+
+onMounted(async () => {
+    await Api.banner
+        .list()
+        .then((res: any) => {
+            images.value = res.data.map((item: any) => {
+                return {
+                    src: item?.images_url[0].url,
+                    alt: '',
+                };
+            });
+        })
+        .catch((err: any) => {});
+});
+
 const inside = ref(true);
 </script>
 
