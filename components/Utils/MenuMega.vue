@@ -53,9 +53,10 @@
                             <img src="~/public/images/logo.jpg" />
                         </div>
                     </div>
-                    <span class="menu-icon ml-2">
-                        <i class="pi pi-search"></i
-                    ></span>
+                    <!-- <span class="menu-icon ml-2"> -->
+                        <!-- <i class="pi pi-search"></i> -->
+                        <Search></Search>
+                    <!-- </span> -->
                     <span class="menu-icon ml-2">
                         <i class="pi pi-bell"></i>
                         <span class="badge">+9</span>
@@ -94,6 +95,7 @@ import { useSelectionStore } from '~/stores/selectionStore';
 import type { MenuType } from '~/types/menu';
 import Api from '~/network/Api';
 import { useAuthStore } from '~/stores/authStore';
+import Search from '../General/Search.vue';
 
 const items = ref<[]>([]);
 const selectionStore = useSelectionStore();
