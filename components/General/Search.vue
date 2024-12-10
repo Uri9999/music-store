@@ -38,7 +38,7 @@
                     >
                         Xem thêm...
                     </div>
-                    <div v-show="isShowNoResult">Không tìm thấy !</div>
+                    <small v-show="isShowNoResult">Không tìm thấy !</small>
                 </div>
             </div>
         </PopupCommon>

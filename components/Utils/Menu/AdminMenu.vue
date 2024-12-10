@@ -104,6 +104,11 @@ export default {
                 icon: 'image',
                 toRoute: '/admin/banner'
             },
+            {
+                label: 'Đánh giá Tab',
+                icon: 'reviews',
+                toRoute: '/admin/review-tab'
+            },
         ],
     }),
     components: {

@@ -8,6 +8,7 @@ import Media from './repositories/Media';
 import Order from './repositories/Order';
 import RequestTab from './repositories/RequestTab';
 import Revenue from './repositories/Revenue';
+import ReviewTab from './repositories/ReviewTab';
 import Selection from './repositories/Selection';
 import Subscription from './repositories/Subscription';
 import Tab from './repositories/Tab';
@@ -30,6 +31,7 @@ const Api = {
     revenue: Revenue(),
     dashboard: Dashboard(),
     subscription: Subscription(),
+    reviewTab: ReviewTab(),
 };
 
 export default Api;
