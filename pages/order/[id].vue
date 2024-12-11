@@ -26,7 +26,9 @@
                     <div>
                         Tổng số tiền cần chuyển khoản là: {{ totalPrice }} Vnd
                     </div>
-                    <div>Click để xem chi tiết hướng dẫn thanh toán</div>
+                    <div class="tutorial-link" @click="gotoTutorial()">
+                        Click để xem chi tiết hướng dẫn thanh toán
+                    </div>
                 </div>
 
                 <div class="footer">
@@ -44,7 +46,7 @@
                                     />
                                 </div>
                                 <ImageUploader
-                                label="Tải ảnh bill chuyển khoản"
+                                    label="Tải ảnh bill chuyển khoản"
                                     collection="avatar"
                                     @upload="handleUpload"
                                 ></ImageUploader>
@@ -124,6 +126,10 @@ const createOrder = async () => {
             console.log(err);
         });
 };
+
+const gotoTutorial = () => {
+    window.open('/tutorial', '_blank');
+};
 </script>
 
 <style scoped lang="scss">
@@ -134,5 +140,9 @@ const createOrder = async () => {
 }
 .cart {
     min-height: 70vh;
+}
+.tutorial-link {
+    border-bottom: 1px solid black;
+    cursor: pointer;
 }
 </style>

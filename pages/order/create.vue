@@ -26,7 +26,9 @@
                     <div>
                         Tổng số tiền cần chuyển khoản là: {{ totalPrice }} Vnd
                     </div>
-                    <div>Click để xem chi tiết hướng dẫn thanh toán</div>
+                    <div class="tutorial-link" @click="gotoTutorial()">
+                        Click để xem chi tiết hướng dẫn thanh toán
+                    </div>
                 </div>
 
                 <div class="footer">
@@ -91,7 +93,7 @@ import Api from '~/network/Api';
 import { useToast } from 'primevue/usetoast';
 import ImageUploader from '~/components/General/ImageUploader.vue';
 
-const btnDisable = ref(false)
+const btnDisable = ref(false);
 const toast = useToast();
 const totalPrice = ref(0);
 const route = useRoute();
@@ -100,7 +102,6 @@ if (typeof ids == 'string') {
     ids = [ids];
 }
 const imageUrl = ref();
-const note = ref('');
 const bill = ref();
 const orderData = ref({
     bill: null,
@@ -112,7 +113,7 @@ const orderDataError = ref({
     note: [],
     tab_ids: [],
 });
-
+const router = useRouter();
 const items = ref([]);
 onMounted(async () => {
     await getTabs();
@@ -138,20 +139,39 @@ const getTabs = async () => {
 };
 
 const createOrder = async () => {
-    btnDisable.value = true
+    btnDisable.value = true;
+    console.log('orderData.value', orderData.value);
     await Api.order
         .store(orderData.value)
         .then((res: any) => {
             console.log('res', res);
+            toast.add({
+                severity: 'success',
+                summary: 'Thông báo',
+                detail: res.message,
+                life: 3000,
+            });
+            router.push('/order')
         })
         .catch((err: any) => {
             console.log(err);
+            toast.add({
+                severity: 'error',
+                summary: 'Thông báo',
+                detail: err.message,
+                life: 3000,
+            });
             if (err.status == 422) {
                 orderDataError.value = err.errors;
             }
-        }).finally(() => {
-            btnDisable.value = false
+        })
+        .finally(() => {
+            btnDisable.value = false;
         });
+};
+
+const gotoTutorial = () => {
+    window.open('/tutorial', '_blank');
 };
 </script>
 
@@ -163,5 +183,10 @@ const createOrder = async () => {
 }
 .cart {
     min-height: 70vh;
+}
+.tutorial-link {
+    border-bottom: 1px solid #334155;
+    cursor: pointer;
+    display: inline-block;
 }
 </style>
