@@ -10,6 +10,11 @@ type ArticleType = {
 type User = {
     id: number;
     name: string;
+    avatar: Avatar | null;
+};
+type Avatar = {
+    id: number;
+    url: string;
 };
 
 export type { ArticleType };

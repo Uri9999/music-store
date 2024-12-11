@@ -23,7 +23,7 @@ export default () => ({
         return BaseApi.get('/tutorial');
     },
 
-    getArticle() {
-        return BaseApi.get('/articles');
+    getArticle(payload: any) {
+        return BaseApi.get('/articles', payload);
     },
 });
