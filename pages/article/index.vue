@@ -8,6 +8,7 @@
         >
             <div
                 class="article-img"
+                @click="gotoDetail(article.id)"
                 :style="{
                     backgroundImage:
                         'url(' + extractFirstImageUrl(article.content) + ')',
@@ -21,7 +22,9 @@
                     />
                     <span class="ml-3">{{ article.user.name }}</span>
                 </div>
-                <div class="title">{{ article.title }}</div>
+                <div class="title" @click="gotoDetail(article.id)">
+                    {{ article.title }}
+                </div>
             </div>
         </div>
     </div>
@@ -48,6 +51,7 @@ const paginator = ref();
 onMounted(async () => {
     await getArticle();
 });
+const router = useRouter();
 const getArticle = async () => {
     await Api.article
         .getArticle({ page: currentPage.value })
@@ -60,6 +64,9 @@ const getArticle = async () => {
 const onPageChange = (event: any) => {
     currentPage.value = event.page + 1;
     getArticle();
+};
+const gotoDetail = (id: number) => {
+    router.push('/article/' + id);
 };
 </script>
 
@@ -79,6 +86,7 @@ const onPageChange = (event: any) => {
 .article-info {
     .title {
         font-size: 1.3rem;
+        cursor: pointer;
     }
 }
 
