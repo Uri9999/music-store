@@ -23,7 +23,7 @@ export function formatNumberWithCommas(number: number | null): string {
     return number.toLocaleString('it-IT'); // 'it-IT' là mã ngôn ngữ của Ý, sử dụng dấu chấm làm phân cách hàng nghìn
 }
 
-export function extractFirstImageUrl(markdownContent: string): string | null {
+export function extractFirstImageUrl(markdownContent: string): string {
     // Regular Expression để tìm URL của ảnh trong cú pháp Markdown
     const regex = /!\[.*?\]\((.*?)\)/g;
 
@@ -31,7 +31,7 @@ export function extractFirstImageUrl(markdownContent: string): string | null {
     const matches = [...markdownContent.matchAll(regex)];
 
     // Trả về URL ảnh đầu tiên nếu có
-    return matches.length > 0 ? matches[0][1] : null;
+    return matches.length > 0 ? matches[0][1] : '';
 }
 
 export function truncateDescription(str: string | null, length = 20) {

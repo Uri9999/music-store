@@ -117,9 +117,9 @@ import Api from '~/network/Api';
 import type { Selection } from '~/types/selection';
 import HeaderPage from '~/components/General/HeaderPage.vue';
 import type { Order } from '~/types/order';
-import { handleSelectedValue } from '~/utils/funciton';
+import { handleSelectedValue } from '~/utils/function';
 import ImageCommon from '~/components/General/ImageCommon.vue';
-import { formatNumberWithCommas } from '~/utils/funciton';
+import { formatNumberWithCommas } from '~/utils/function';
 
 definePageMeta({
     layout: 'admin',

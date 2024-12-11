@@ -132,8 +132,8 @@ import { useSelectionStore } from '~/stores/selectionStore';
 import type { Selection, Item } from '~/types/selection';
 import ImageCommon from '~/components/General/ImageCommon.vue';
 import HeaderPage from '~/components/General/HeaderPage.vue';
-import { formatNumberWithCommas } from '~/utils/funciton';
-import { truncateDescription } from '~/utils/funciton';
+import { formatNumberWithCommas } from '~/utils/function';
+import { truncateDescription } from '~/utils/function';
 
 definePageMeta({
     layout: 'admin',

@@ -112,7 +112,7 @@
 import TableCommon from '~/components/General/TableCommon.vue';
 import Api from '~/network/Api';
 import HeaderPage from '~/components/General/HeaderPage.vue';
-import { truncateDescription } from '~/utils/funciton';
+import { truncateDescription } from '~/utils/function';
 
 definePageMeta({
     layout: 'admin',

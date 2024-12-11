@@ -100,7 +100,7 @@
 import TableCommon from '~/components/General/TableCommon.vue';
 import Api from '~/network/Api';
 import { useConfirm } from 'primevue/useconfirm';
-import { handleSelectedValue } from '~/utils/funciton';
+import { handleSelectedValue } from '~/utils/function';
 import type { Selection } from '~/types/selection';
 import HeaderPage from '~/components/General/HeaderPage.vue';
 

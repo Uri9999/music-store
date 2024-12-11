@@ -69,7 +69,7 @@ onMounted(async () => {
         {
             label: 'Blog',
             icon: 'pi pi-book',
-            toRoute: '/blog',
+            toRoute: '/article',
         },
         {
             label: 'Shopee',

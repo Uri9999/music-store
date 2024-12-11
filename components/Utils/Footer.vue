@@ -22,7 +22,7 @@
                     <li @click.prevent="router.push('request-tab')">
                         <a href="#">Yêu cầu</a>
                     </li>
-                    <li @click.prevent="router.push('privacy-policy')">
+                    <li @click.prevent="router.push('article')">
                         <a href="#">Blog</a>
                     </li>
                     <li><a href="#">Shopee</a></li>

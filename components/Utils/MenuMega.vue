@@ -157,7 +157,7 @@ onMounted(async () => {
         {
             label: 'Blog',
             icon: 'pi pi-book',
-            toRoute: '/blog',
+            toRoute: '/article',
             command: (event: any) => handleNavigation(event.item.toRoute),
         },
         {
