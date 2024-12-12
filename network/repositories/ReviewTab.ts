@@ -12,4 +12,8 @@ export default () => ({
     enable(id: number) {
         return BaseApi.setAuth().get('admin/review-tab/enable/' + id);
     },
+
+    store(payload: any) {
+        return BaseApi.setAuth().post('/tab/' + payload.tab_id + '/review', payload);
+    },
 });

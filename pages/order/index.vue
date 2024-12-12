@@ -1,6 +1,6 @@
 <template>
     <div class="cart my-5 pb-5">
-        <h2>Danh sách đơn hàng</h2>
+        <HeaderPage title="Đơn hàng"> </HeaderPage>
         <DataTable
             @rowExpand="onRowExpand"
             @rowCollapse="onRowCollapse"
@@ -9,26 +9,10 @@
             dataKey="id"
             tableStyle="min-width: 50rem"
         >
-            <template #header>
-                <div class="flex flex-wrap justify-content-end gap-2">
-                    <Button
-                        text
-                        icon="pi pi-plus"
-                        label="Expand All"
-                        @click="expandAll"
-                    />
-                    <Button
-                        text
-                        icon="pi pi-minus"
-                        label="Collapse All"
-                        @click="collapseAll"
-                    />
-                </div>
-            </template>
             <Column expander style="width: 5rem" />
             <Column field="name" header="Ngày đặt hàng">
                 <template #body="slotProps">
-                    {{ slotProps.data.created_at }}
+                    {{ moment(slotProps.data.created_at).format('D-M-Y') }}
                 </template>
             </Column>
             <Column field="status" header="Trạng thái">
@@ -46,15 +30,9 @@
             </Column>
             <Column field="total_price" header="Tổng số tiền">
                 <template #body="slotProps">
-                    {{ slotProps.data.total_price }} VND
+                    {{ formatNumberWithCommas(slotProps.data.total_price) }}
                 </template>
             </Column>
-            <Column field="action" header="Hành động">
-                <template #body="slotProps">
-                    <div class="flex gap-2">
-                        <Button label="Chi tiết" severity="success" />
-                    </div> </template
-            ></Column>
 
             <template #expansion="slotProps">
                 <div class="p-4">
@@ -66,7 +44,44 @@
                         </Column>
                         <Column field="price" header="Giá" sortable>
                             <template #body="slotProps">
-                                {{ slotProps.data.meta.price }}
+                                {{
+                                    formatNumberWithCommas(
+                                        slotProps.data.meta.price,
+                                    )
+                                }}
+                            </template>
+                        </Column>
+                        <Column field="rating" header="Đánh giá" sortable>
+                            <template #body="slotProps">
+                                {{ slotProps.data?.tab.reviewTabs[0]?.rating }}
+                            </template>
+                        </Column>
+                        <Column
+                            field="rating-content"
+                            header="Nội dung đánh giá"
+                            sortable
+                        >
+                            <template #body="slotProps">
+                                {{ slotProps.data?.tab.reviewTabs[0]?.comment }}
+                            </template>
+                        </Column>
+
+                        <Column
+                            :exportable="false"
+                            header="Hành động"
+                            style="min-width: 12rem"
+                        >
+                            <template #body="slotProps">
+                                <Button
+                                    icon="pi pi-pencil"
+                                    outlined
+                                    rounded
+                                    class="mr-2"
+                                    v-tooltip="'Viết đánh giá'"
+                                    @click="
+                                        openReviewTab(slotProps.data.tab_id)
+                                    "
+                                />
                             </template>
                         </Column>
                     </DataTable>
@@ -85,26 +100,104 @@
             </template>
         </DataTable>
     </div>
+
+    <Dialog v-model:visible="visibleReviewTab" header="Đánh giá Tab" :style="{ width: '30rem' }">
+        <div class="mb-2 flex justify-content-center">
+            <Rating
+                class="custom-rating mb-2"
+                v-model="reviewTab.rating"
+                aria-label="Rating"
+                :cancel="false"
+            />
+            <small class="error" v-if="reviewTabError?.rating">{{
+                reviewTabError?.rating[0]
+            }}</small>
+        </div>
+        <div class="mb-2">
+            <label for="description" class="font-semibold w-24 block mb-1"
+                >Nội dung đánh giá</label
+            >
+            <Textarea
+                v-model="reviewTab.comment"
+                id="description"
+                class="flex-auto w-full"
+                rows="5"
+            />
+            <small class="error" v-if="reviewTabError?.comment">{{
+                reviewTabError?.comment[0]
+            }}</small>
+        </div>
+        <div class="flex justify-end gap-2">
+            <Button
+                type="button"
+                label="Đóng"
+                severity="secondary"
+                @click="visibleReviewTab = false"
+            ></Button>
+            <Button type="button" label="Tạo" @click="createReviewTab"></Button>
+        </div>
+    </Dialog>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import HeaderPage from '~/components/General/HeaderPage.vue';
+import { formatNumberWithCommas } from '#build/imports';
 import Api from '~/network/Api';
+import moment from 'moment';
 
+const reviewTab = ref({
+    rating: 0,
+    comment: '',
+    tab_id: null,
+} as {
+    rating: number;
+    comment: string;
+    tab_id: number | null;
+});
+const reviewTabError = ref({
+    rating: [],
+    comment: [],
+});
+const visibleReviewTab = ref(false);
+const toast = useToast();
 const expandedRows = ref([]);
-const onRowExpand = (event) => {
+const onRowExpand = (event: any) => {
     console.log('Row expanded: ', event.data);
 };
 
-const onRowCollapse = (event) => {
+const onRowCollapse = (event: any) => {
     console.log('Row collapsed: ', event.data);
 };
-const expandAll = () => {
-    // expandedRows.value = products.value.reduce((acc, p) => (acc[p.id] = true) && acc, {});
+
+const openReviewTab = (id: number) => {
+    reviewTab.value.tab_id = id;
+    visibleReviewTab.value = true;
 };
-const collapseAll = () => {
-    // expandedRows.value = null;
+const createReviewTab = async () => {
+    await Api.reviewTab
+        .store(reviewTab.value)
+        .then((res: any) => {
+            toast.add({
+                severity: 'success',
+                summary: 'Thông báo',
+                detail: res.message,
+                life: 3000,
+            });
+        })
+        .catch((err: any) => {
+            toast.add({
+                severity: 'error',
+                summary: 'Thông báo',
+                detail: err.message,
+                life: 3000,
+            });
+            if (err?.status == 422) {
+                reviewTabError.value = err.errors;
+            }
+        });
 };
+
 const router = useRouter();
 const items = ref([]);
 onMounted(async () => {
@@ -123,7 +216,7 @@ const getTabs = async () => {
 
 const convertStatus = (status: number) => {
     if (status == 1) {
-        return { label: 'Khởi tạo', class: 'status-create' };
+        return { label: 'Chờ phê duyệt', class: 'status-create' };
     } else if (status == 2) {
         return { label: 'Thanh toán thành công', class: 'status-process' };
     } else if (status == 3) {
