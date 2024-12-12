@@ -166,6 +166,12 @@ onMounted(async () => {
             command: (event: any) =>
                 window.open('https://shope.ee/8UZ8lUUeWM', '_blank'),
         },
+        {
+            label: 'Đơn hàng',
+            icon: 'pi pi-shopping-bag',
+            toRoute: '/order',
+            command: (event: any) => handleNavigation(event.item.toRoute),
+        },
     ] as any;
 
     // count cart items

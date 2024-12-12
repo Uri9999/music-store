@@ -74,10 +74,14 @@ onMounted(async () => {
         {
             label: 'Shopee',
             icon: 'pi pi-shop',
-            newView: 'https://shope.ee/8UZ8lUUeWM'
+            newView: 'https://shope.ee/8UZ8lUUeWM',
+        },
+        {
+            label: 'Đơn hàng',
+            icon: 'pi pi-shopping-bag',
+            toRoute: '/order',
         },
     ] as any;
-
 });
 
 // const menuTree = ref([

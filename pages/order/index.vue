@@ -1,5 +1,5 @@
 <template>
-    <div class="cart my-5 pb-5">
+    <div class="cart my-3 pb-5">
         <HeaderPage title="Đơn hàng"> </HeaderPage>
         <DataTable
             @rowExpand="onRowExpand"
@@ -53,7 +53,16 @@
                         </Column>
                         <Column field="rating" header="Đánh giá" sortable>
                             <template #body="slotProps">
-                                {{ slotProps.data?.tab.reviewTabs[0]?.rating }}
+                                <DisplayRateStars
+                                    v-if="
+                                        slotProps.data?.tab.reviewTabs[0]
+                                            ?.rating > 0
+                                    "
+                                    :stars="
+                                        slotProps.data?.tab.reviewTabs[0]
+                                            ?.rating
+                                    "
+                                ></DisplayRateStars>
                             </template>
                         </Column>
                         <Column
@@ -78,6 +87,7 @@
                                     rounded
                                     class="mr-2"
                                     v-tooltip="'Viết đánh giá'"
+                                    v-if="!slotProps.data?.tab.reviewTabs[0]"
                                     @click="
                                         openReviewTab(slotProps.data.tab_id)
                                     "
@@ -101,7 +111,11 @@
         </DataTable>
     </div>
 
-    <Dialog v-model:visible="visibleReviewTab" header="Đánh giá Tab" :style="{ width: '30rem' }">
+    <Dialog
+        v-model:visible="visibleReviewTab"
+        header="Đánh giá Tab"
+        :style="{ width: '30rem' }"
+    >
         <div class="mb-2 flex justify-content-center">
             <Rating
                 class="custom-rating mb-2"
@@ -145,6 +159,7 @@ import HeaderPage from '~/components/General/HeaderPage.vue';
 import { formatNumberWithCommas } from '#build/imports';
 import Api from '~/network/Api';
 import moment from 'moment';
+import DisplayRateStars from '~/components/General/DisplayRateStars.vue';
 
 const reviewTab = ref({
     rating: 0,
@@ -177,13 +192,15 @@ const openReviewTab = (id: number) => {
 const createReviewTab = async () => {
     await Api.reviewTab
         .store(reviewTab.value)
-        .then((res: any) => {
+        .then(async (res: any) => {
             toast.add({
                 severity: 'success',
                 summary: 'Thông báo',
                 detail: res.message,
                 life: 3000,
             });
+            visibleReviewTab.value = false;
+            await getMyOrder();
         })
         .catch((err: any) => {
             toast.add({
@@ -201,9 +218,9 @@ const createReviewTab = async () => {
 const router = useRouter();
 const items = ref([]);
 onMounted(async () => {
-    await getTabs();
+    await getMyOrder();
 });
-const getTabs = async () => {
+const getMyOrder = async () => {
     await Api.order
         .getMyOrder()
         .then((res: any) => {
