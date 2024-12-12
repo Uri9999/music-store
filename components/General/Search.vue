@@ -136,9 +136,6 @@ const textFocus = (el: any) => {
     justify-content: center;
     transition: all 0.3s ease-in-out;
     position: relative;
-    // &:hover {
-    //     background-color: var(--border-color-primary);
-    // }
 
     .search-body {
         z-index: 10;
@@ -163,9 +160,11 @@ const textFocus = (el: any) => {
     }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 550px) {
     .search-body {
-        width: 100vw !important;
+        position: fixed !important;
+        left: 5vw;
+        width: 90vw !important;
         max-height: 50%;
     }
 }

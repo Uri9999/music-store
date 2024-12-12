@@ -47,11 +47,6 @@ onMounted(async () => {
 
     menuTree.value = [
         {
-            label: 'Trang chủ',
-            icon: 'pi pi-home',
-            toRoute: '/',
-        },
-        {
             label: 'Chuyên mục',
             icon: 'pi pi-box',
             items: itemsCategory,

@@ -6,7 +6,7 @@
             class="custom-menu"
         >
             <template #start>
-                <div class="logo" v-if="!isMobile">
+                <div class="logo" v-if="!isMobile" @click="gotoHome()">
                     <img src="~/public/images/logo.jpg" />
                 </div>
             </template>
@@ -49,14 +49,11 @@
             <template #end>
                 <div class="menu-end">
                     <div class="responsive-items" v-if="isMobile">
-                        <div class="logo">
+                        <div class="logo" @click="gotoHome">
                             <img src="~/public/images/logo.jpg" />
                         </div>
                     </div>
-                    <!-- <span class="menu-icon ml-2"> -->
-                        <!-- <i class="pi pi-search"></i> -->
-                        <Search></Search>
-                    <!-- </span> -->
+                    <Search></Search>
                     <span class="menu-icon ml-2">
                         <i class="pi pi-bell"></i>
                         <span class="badge">+9</span>
@@ -132,12 +129,6 @@ onMounted(async () => {
 
     items.value = [
         {
-            label: 'Trang chủ',
-            icon: 'pi pi-home',
-            toRoute: '/',
-            command: (event: any) => handleNavigation(event.item.toRoute),
-        },
-        {
             label: 'Chuyên mục',
             icon: 'pi pi-box',
             items: itemsCategory,
@@ -199,6 +190,10 @@ const getCountCartItem = async () => {
             console.log(err);
         });
 };
+
+const gotoHome = () => {
+    router.push('/');
+};
 </script>
 
 <style scoped lang="scss">
@@ -227,6 +222,7 @@ const getCountCartItem = async () => {
 }
 
 .logo {
+    cursor: pointer;
     height: 25px;
     width: 83px;
     margin-right: 15px;
