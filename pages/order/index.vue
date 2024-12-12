@@ -1,7 +1,31 @@
 <template>
     <div class="cart my-5 pb-5">
         <h2>Danh sách đơn hàng</h2>
-        <DataTable :value="items" dataKey="id" tableStyle="min-width: 50rem">
+        <DataTable
+            @rowExpand="onRowExpand"
+            @rowCollapse="onRowCollapse"
+            v-model:expandedRows="expandedRows"
+            :value="items"
+            dataKey="id"
+            tableStyle="min-width: 50rem"
+        >
+            <template #header>
+                <div class="flex flex-wrap justify-content-end gap-2">
+                    <Button
+                        text
+                        icon="pi pi-plus"
+                        label="Expand All"
+                        @click="expandAll"
+                    />
+                    <Button
+                        text
+                        icon="pi pi-minus"
+                        label="Collapse All"
+                        @click="collapseAll"
+                    />
+                </div>
+            </template>
+            <Column expander style="width: 5rem" />
             <Column field="name" header="Ngày đặt hàng">
                 <template #body="slotProps">
                     {{ slotProps.data.created_at }}
@@ -32,6 +56,23 @@
                     </div> </template
             ></Column>
 
+            <template #expansion="slotProps">
+                <div class="p-4">
+                    <DataTable :value="slotProps.data.order_items">
+                        <Column field="name" header="Tên tab" sortable>
+                            <template #body="slotProps">
+                                {{ slotProps.data.meta.name }}
+                            </template>
+                        </Column>
+                        <Column field="price" header="Giá" sortable>
+                            <template #body="slotProps">
+                                {{ slotProps.data.meta.price }}
+                            </template>
+                        </Column>
+                    </DataTable>
+                </div>
+            </template>
+
             <template #footer>
                 <div class="footer">
                     <div class="quantity">
@@ -50,6 +91,20 @@
 import { ref } from 'vue';
 import Api from '~/network/Api';
 
+const expandedRows = ref([]);
+const onRowExpand = (event) => {
+    console.log('Row expanded: ', event.data);
+};
+
+const onRowCollapse = (event) => {
+    console.log('Row collapsed: ', event.data);
+};
+const expandAll = () => {
+    // expandedRows.value = products.value.reduce((acc, p) => (acc[p.id] = true) && acc, {});
+};
+const collapseAll = () => {
+    // expandedRows.value = null;
+};
 const router = useRouter();
 const items = ref([]);
 onMounted(async () => {
