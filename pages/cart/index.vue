@@ -139,8 +139,9 @@ const confirmDelete = (id: number) => {
 
 const checkout = () => {
     const ids = selectedItems.value.map((item: any) => {
-        return item.id;
+        return item.tab_id;
     });
+
     router.push({ path: '/order/create', query: { ids: ids } });
 };
 </script>

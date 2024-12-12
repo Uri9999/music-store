@@ -12,4 +12,8 @@ export default () => ({
     reject(id: number) {
         return BaseApi.setAuth().post('admin/user-subscriptions/reject/' + id);
     },
+
+    getMyUserSubscription() {
+        return BaseApi.setAuth().get('user-subscriptions');
+    },
 });

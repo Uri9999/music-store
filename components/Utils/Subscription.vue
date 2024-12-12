@@ -34,7 +34,11 @@
                     Morbi tincidunt augue
                 </li>
             </ul>
-            <Button label="Đăng Ký" class="btn custom px-5 py-3" />
+            <Button
+                label="Đăng Ký"
+                @click="router.push({ path: '/subscription', query: { subscription_id: sub?.id } });"
+                class="btn custom px-5 py-3"
+            />
         </div>
 
         <!-- Premium Plan -->
@@ -142,7 +146,7 @@ import { formatNumberWithCommas } from '#build/imports';
 onMounted(async () => {
     await getSubscriptions();
 });
-
+const router = useRouter();
 const subscriptions = ref([] as SubscriptionType[]);
 const getSubscriptions = async () => {
     await Api.subscription

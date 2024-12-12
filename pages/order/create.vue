@@ -24,7 +24,8 @@
             <template #footer>
                 <div class="mb-3">
                     <div>
-                        Tổng số tiền cần chuyển khoản là: {{ totalPrice }} Vnd
+                        Tổng số tiền cần chuyển khoản là:
+                        {{ formatNumberWithCommas(totalPrice) }} Vnd
                     </div>
                     <div class="tutorial-link" @click="gotoTutorial()">
                         Click để xem chi tiết hướng dẫn thanh toán
@@ -91,6 +92,7 @@
 import { ref } from 'vue';
 import Api from '~/network/Api';
 import { useToast } from 'primevue/usetoast';
+import { formatNumberWithCommas } from '#build/imports';
 import ImageUploader from '~/components/General/ImageUploader.vue';
 
 const btnDisable = ref(false);
@@ -151,7 +153,7 @@ const createOrder = async () => {
                 detail: res.message,
                 life: 3000,
             });
-            router.push('/order')
+            router.push('/order');
         })
         .catch((err: any) => {
             console.log(err);
