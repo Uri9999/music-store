@@ -9,7 +9,6 @@ export default defineNuxtRouteMiddleware((to, from) => {
         const accessToken = localStorage.getItem('access_token');
         if (user) {
             authStore.setProfile(JSON.parse(user));
-            console.log('authStore', authStore.profile);
         }
         if (accessToken) {
             authStore.setAuthenticated();

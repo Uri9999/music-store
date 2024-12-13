@@ -24,4 +24,12 @@ export default () => ({
     resetPassword(payload: any) {
         return BaseApi.post('reset-password', payload);
     },
+
+    getInfo() {
+        return BaseApi.setAuth().get('auth/info');
+    },
+
+    updateInfo(payload: any) {
+        return BaseApi.setAuth().post('auth/update/info', payload);
+    },
 });

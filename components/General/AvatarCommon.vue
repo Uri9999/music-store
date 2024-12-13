@@ -58,9 +58,9 @@ const simpleColor = computed(() => {
     align-items: center;
     color: white;
     font-weight: bold;
-    width: 30px;
-    height: 30px;
-    border-radius: 15px;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
 }
 .avatar {
     border-radius: 50%;

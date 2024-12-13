@@ -92,6 +92,9 @@
                 <span class="gender-male" v-if="slotProps.data.gender == 1"
                     >Nam</span
                 >
+                <span class="gender-male" v-if="slotProps.data.gender == 2"
+                    >Khác</span
+                >
                 <span class="gender-female" v-else>Nữ</span>
             </template>
         </Column>
