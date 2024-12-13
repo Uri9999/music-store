@@ -30,11 +30,12 @@
                     <TabPanel header="Thông tin">
                         <div class="product-info">
                             <div class="product-avatar">
-                                <Avatar
-                                    class="avatar-mobile"
-                                    image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png"
-                                    shape="circle"
-                                />
+                                <div class="avatar">
+                                    <AvatarCommon
+                                        :name="tab?.user?.name"
+                                        :src="tab?.user?.avatar?.url"
+                                    />
+                                </div>
                                 <span class="ml-3">{{ tab?.user?.name }}</span>
                             </div>
                         </div>
@@ -55,18 +56,16 @@
                             <div>
                                 <span class="flex">
                                     <Rating
-                                        v-model="tag.rate"
+                                        v-model="tab.reviewTabsAvg"
                                         :cancel="false"
                                         class="mr-3"
-                                    />3.7(21)</span
+                                    />{{ tab.reviewTabsAvg }} ({{
+                                        tab.reviewTabsCount
+                                    }})</span
                                 >
                             </div>
                         </div>
 
-                        <!-- <div class="product-info">
-                            <div class="product-info__title">Số trang:</div>
-                            <div>3</div>
-                        </div> -->
                         <div class="product-info">
                             <div class="product-info__title">
                                 Định dạng tệp:
@@ -131,6 +130,7 @@ import Api from '~/network/Api';
 import { useToast } from 'primevue/usetoast';
 import { formatNumberWithCommas } from '#build/imports';
 import ImageCommon from '~/components/General/ImageCommon.vue';
+import AvatarCommon from '~/components/General/AvatarCommon.vue';
 
 const toast = useToast();
 const route = useRoute();
@@ -224,6 +224,7 @@ const downloadPdf = () => {
 }
 
 .product-info {
+    pointer-events: none;
     display: flex;
     align-items: center;
     margin-bottom: 15px;
@@ -234,6 +235,9 @@ const downloadPdf = () => {
 }
 
 .product-avatar {
+    .avatar {
+        width: 32px;
+    }
     display: flex;
     align-items: center;
 }

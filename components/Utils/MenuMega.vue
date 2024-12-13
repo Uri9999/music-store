@@ -216,7 +216,9 @@ const dropdownItems = ref([
     {
         label: 'Cài đặt',
         icon: 'pi pi-cog',
-        command: () => {},
+        command: () => {
+            router.push('/setting/profile');
+        },
     },
     {
         label: 'Đăng xuất',
