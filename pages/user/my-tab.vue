@@ -58,7 +58,9 @@
     <div class="products mb-3">
         <AllTag :tabs="tabs">
             <template #filter>
-                <h3 class="h-full flex align-items-end">Sản phẩm tạo bởi user</h3>
+                <h3 class="h-full flex align-items-end">
+                    Sản phẩm tạo bởi user
+                </h3>
             </template>
         </AllTag>
         <Paginate></Paginate>

@@ -25,12 +25,15 @@
                         <div class="menu-content">
                             <div class="menu-header">
                                 <div class="menu-header__info">
-                                    <Avatar
-                                        class="avatar-mobile"
-                                        image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png"
-                                        shape="circle"
-                                    />
-                                    <span class="ml-3">Nguyễn Văn Nhất</span>
+                                    <div class="avatar-mobile">
+                                        <AvatarCommon
+                                            :name="profile?.name"
+                                            :src="profile?.avatar?.url"
+                                        />
+                                    </div>
+                                    <span class="ml-3">{{
+                                        profile?.name
+                                    }}</span>
                                 </div>
                                 <i
                                     class="icon-close pi pi-times"
@@ -64,13 +67,16 @@
                             countCartItem
                         }}</span>
                     </span>
-                    <Avatar
+                    <div
                         v-if="!isMobile && isAuthenticated"
                         class="avatar"
-                        image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png"
-                        shape="circle"
                         @click="toggle"
-                    />
+                    >
+                        <AvatarCommon
+                            :name="profile?.name"
+                            :src="profile?.avatar?.url"
+                        />
+                    </div>
                     <Menu
                         ref="menu"
                         id="overlay_menu"
@@ -101,6 +107,7 @@ import Api from '~/network/Api';
 import { useAuthStore } from '~/stores/authStore';
 import Search from '../General/Search.vue';
 import Menu from 'primevue/menu';
+import AvatarCommon from '../General/AvatarCommon.vue';
 
 const items = ref<[]>([]);
 const selectionStore = useSelectionStore();
@@ -112,7 +119,8 @@ const isMobile = computed(() => {
     return width.value <= pointisMobile.value;
 });
 const authStore = useAuthStore();
-const { isAuthenticated } = storeToRefs(authStore);
+const { isAuthenticated, profile } = storeToRefs(authStore);
+const confirm = useConfirm();
 
 onMounted(async () => {
     const selection = await selectionStore.getData();
@@ -213,13 +221,29 @@ const dropdownItems = ref([
     {
         label: 'Đăng xuất',
         icon: 'pi pi-sign-out',
-        command: async () => {
-            await logout();
+        command: () => {
+            confirmDelete();
         },
     },
 ]);
 const toggle = (event: Event) => {
     menu.value.toggle(event);
+};
+
+const confirmDelete = () => {
+    confirm.require({
+        header: 'Xác nhận đăng xuất',
+        message: 'Bạn có chắc chắn muốn đăng xuất ?',
+        icon: 'pi pi-info-circle',
+        rejectLabel: 'Đóng',
+        acceptLabel: 'Đăng xuất',
+        rejectClass: 'p-button-secondary p-button-outlined',
+        acceptClass: 'p-button-danger',
+        accept: async () => {
+            await logout();
+        },
+        reject: () => {},
+    });
 };
 
 const logout = async () => {
