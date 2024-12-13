@@ -37,10 +37,10 @@
                                     @click="showMenuMobile = false"
                                 ></i>
                             </div>
-                            <Menu
+                            <CustomMenu
                                 @closeMegaMenu="showMenuMobile = false"
                                 :menuTree="items"
-                            ></Menu>
+                            ></CustomMenu>
                         </div>
                     </div>
                 </div>
@@ -69,6 +69,13 @@
                         class="avatar"
                         image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png"
                         shape="circle"
+                        @click="toggle"
+                    />
+                    <Menu
+                        ref="menu"
+                        id="overlay_menu"
+                        :model="dropdownItems"
+                        :popup="true"
                     />
                     <Button
                         label="Login"
@@ -86,13 +93,14 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import { useWindowSize } from 'vue-window-size';
-import Menu from './Menu/Menu.vue';
+import CustomMenu from './Menu/CustomMenu.vue';
 import { useRouter } from 'vue-router';
 import { useSelectionStore } from '~/stores/selectionStore';
 import type { MenuType } from '~/types/menu';
 import Api from '~/network/Api';
 import { useAuthStore } from '~/stores/authStore';
 import Search from '../General/Search.vue';
+import Menu from 'primevue/menu';
 
 const items = ref<[]>([]);
 const selectionStore = useSelectionStore();
@@ -194,6 +202,35 @@ const getCountCartItem = async () => {
 const gotoHome = () => {
     router.push('/');
 };
+
+const menu = ref();
+const dropdownItems = ref([
+    {
+        label: 'Cài đặt',
+        icon: 'pi pi-cog',
+        command: () => {},
+    },
+    {
+        label: 'Đăng xuất',
+        icon: 'pi pi-sign-out',
+        command: async () => {
+            await logout();
+        },
+    },
+]);
+const toggle = (event: Event) => {
+    menu.value.toggle(event);
+};
+
+const logout = async () => {
+    await Api.auth
+        .logout()
+        .then((res: any) => {
+            router.push('/');
+            authStore.logout();
+        })
+        .catch();
+};
 </script>
 
 <style scoped lang="scss">
@@ -212,6 +249,7 @@ const gotoHome = () => {
 }
 
 .avatar {
+    cursor: pointer;
     width: 30px;
     height: 30px;
     margin-left: 10px;

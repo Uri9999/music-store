@@ -79,50 +79,6 @@ onMounted(async () => {
     ] as any;
 });
 
-// const menuTree = ref([
-//     {
-//         label: 'Projects',
-//         icon: 'pi pi-clock',
-//         children: [
-//             {
-//                 label: 'Football',
-//                 children: [
-//                     { label: 'Kits' },
-//                     { label: 'Shoes' },
-//                     { label: 'Shorts' },
-//                     { label: 'Training' },
-//                 ],
-//             },
-//             {
-//                 label: 'Running',
-//                 children: [
-//                     { label: 'Accessories' },
-//                     { label: 'Shoes' },
-//                     { label: 'T-Shirts' },
-//                     { label: 'Shorts' },
-//                 ],
-//             },
-//             {
-//                 label: 'Swimming',
-//                 children: [
-//                     { label: 'Kickboard' },
-//                     { label: 'Nose Clip' },
-//                     { label: 'Swimsuits' },
-//                     { label: 'Paddles' },
-//                 ],
-//             },
-//             {
-//                 label: 'Tennis',
-//                 children: [
-//                     { label: 'Balls' },
-//                     { label: 'Rackets' },
-//                     { label: 'Shoes' },
-//                     { label: 'Training' },
-//                 ],
-//             },
-//         ],
-//     },
-// ]);
 const emit = defineEmits(['closeMegaMenu']);
 const closeMegaMenu = () => {
     emit('closeMegaMenu');
@@ -136,10 +92,7 @@ const closeMegaMenu = () => {
     position: relative;
 
     .menu-item {
-        // overflow-y: scroll;
-        // overflow-x: hidden;
         height: calc(100% - 50px);
-        // scrollbar-color: rgba(0, 0, 0, 0) transparent;
     }
 
     .bottom-panel {
