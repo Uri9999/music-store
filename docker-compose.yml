@@ -6,3 +6,21 @@ services:
       - "3000:3000"
     environment:
       - NODE_ENV=production
+    networks:
+      - app-network
+    container_name: nuxt-app
+
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./dist:/usr/share/nginx/html
+    ports:
+      - "8080:80"
+    networks:
+      - app-network
+    depends_on:
+      - nuxt
+networks:
+  app-network:
+    driver: bridge
