@@ -142,29 +142,6 @@ onMounted(async () => {
     await getDetailTab(id);
 });
 
-const tag = ref({
-    rate: 3,
-});
-
-const images = ref([
-    {
-        src: 'https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg',
-        alt: 'Image 1',
-    },
-    {
-        src: 'https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg',
-        alt: 'Image 2',
-    },
-    {
-        src: 'https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg',
-        alt: 'Image 3',
-    },
-    {
-        src: 'https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg',
-        alt: 'Image 4',
-    },
-]);
-
 const getDetailTab = async (id: number) => {
     await Api.tab
         .show(id)
