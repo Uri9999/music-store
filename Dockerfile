@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Build ứng dụng Nuxt3
-RUN npm run build
+# RUN npm run build
 
 # Expose cổng 3000
 EXPOSE 3000
