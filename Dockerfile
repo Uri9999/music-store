@@ -20,4 +20,5 @@ COPY . .
 EXPOSE 3000
 
 # Chạy ứng dụng Nuxt3 (preview trong môi trường production)
-CMD ["npm", "run", "preview"]
+# CMD ["npm", "run", "preview"]
+CMD ["npm", "run", "dev"]
