@@ -24,11 +24,14 @@ jobs:
       - name: Build application
         run: npm run build
 
+      - name: Add VPS to known_hosts
+        run: ssh-keyscan -H 116.118.50.110 >> ~/.ssh/known_hosts
+
       - name: Deploy to VPS
         env:
           SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
         run: |
           echo "$SSH_KEY" > /tmp/ssh_key
           chmod 600 /tmp/ssh_key
-          scp -i /tmp/ssh_key -r .output/ user@116.118.50.110:/root/projects/music-store
+          scp -i /tmp/ssh_key -r .output/ root@116.118.50.110:/root/projects/music-store
           ssh -i /tmp/ssh_key root@116.118.50.110 "cd /root/projects/music-store && pm2 restart nuxt-app"
