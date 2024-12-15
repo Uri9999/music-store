@@ -37,4 +37,4 @@ jobs:
           echo "$SSH_KEY" > /tmp/ssh_key
           chmod 600 /tmp/ssh_key
           scp -i /tmp/ssh_key -r .output/ root@116.118.50.110:/root/projects/music-store
-          ssh -i /tmp/ssh_key root@116.118.50.110 "cd /root/projects/music-store && /usr/local/bin/pm2 restart nuxt-app"
+          ssh -i /tmp/ssh_key root@116.118.50.110 "cd /root/projects/music-store && pm2 restart nuxt-app"
