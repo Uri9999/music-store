@@ -24,8 +24,11 @@ jobs:
       - name: Build application
         run: npm run build
 
-      - name: Add VPS to known_hosts
-        run: ssh-keyscan -H 116.118.50.110 >> ~/.ssh/known_hosts
+      - name: Prepare SSH environment
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          ssh-keyscan -H 116.118.50.110 >> ~/.ssh/known_hosts
 
       - name: Deploy to VPS
         env:
