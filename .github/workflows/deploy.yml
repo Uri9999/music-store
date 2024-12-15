@@ -36,5 +36,18 @@ jobs:
         run: |
           echo "$SSH_KEY" > /tmp/ssh_key
           chmod 600 /tmp/ssh_key
+
+          ssh -i /tmp/ssh_key root@116.118.50.110 "
+              cd /root/projects/music-store &&
+              git pull origin main
+          "
+
           scp -i /tmp/ssh_key -r .output/ root@116.118.50.110:/root/projects/music-store
-          ssh -i /tmp/ssh_key root@116.118.50.110 "cd /root/projects/music-store && pm2 restart nuxt-app"
+
+          ssh -i /tmp/ssh_key root@116.118.50.110 "
+            sudo systemctl stop nginx
+            cd /root/projects/nuxt-app &&
+            docker-compose down &&
+            docker-compose up -d --build
+            sudo systemctl start nginx
+          "
