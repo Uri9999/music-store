@@ -37,13 +37,16 @@ jobs:
           echo "$SSH_KEY" > /tmp/ssh_key
           chmod 600 /tmp/ssh_key
 
+          # Xóa thư mục .output hiện tại trên VPS
           ssh -i /tmp/ssh_key root@116.118.50.110 "
               cd /root/projects/music-store &&
+              rm -rf .output &&
               git pull origin main
           "
-
+          # Sao chép thư mục .output từ GitHub Actions lên VPS
           scp -i /tmp/ssh_key -r .output/ root@116.118.50.110:/root/projects/music-store
 
+          # Restart Docker container để áp dụng các thay đổi
           ssh -i /tmp/ssh_key root@116.118.50.110 "
             sudo systemctl stop nginx
             cd /root/projects/nuxt-app &&
