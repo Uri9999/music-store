@@ -102,11 +102,11 @@ import { useWindowSize } from 'vue-window-size';
 import CustomMenu from './Menu/CustomMenu.vue';
 import { useRouter } from 'vue-router';
 import { useSelectionStore } from '~/stores/selectionStore';
-import type { MenuType } from '~/types/menu';
 import Api from '~/network/Api';
 import { useAuthStore } from '~/stores/authStore';
 import Search from '../General/Search.vue';
 import Menu from 'primevue/menu';
+import authService from '~/services/AuthService';
 import AvatarCommon from '../General/AvatarCommon.vue';
 
 const items = ref<[]>([]);
@@ -118,9 +118,9 @@ const { width, height } = useWindowSize();
 const isMobile = computed(() => {
     return width.value <= pointisMobile.value;
 });
+const { confirmDelete } = authService();
 const authStore = useAuthStore();
 const { isAuthenticated, profile } = storeToRefs(authStore);
-const confirm = useConfirm();
 
 onMounted(async () => {
     const selection = await selectionStore.getData();
@@ -230,32 +230,6 @@ const dropdownItems = ref([
 ]);
 const toggle = (event: Event) => {
     menu.value.toggle(event);
-};
-
-const confirmDelete = () => {
-    confirm.require({
-        header: 'Xác nhận đăng xuất',
-        message: 'Bạn có chắc chắn muốn đăng xuất ?',
-        icon: 'pi pi-info-circle',
-        rejectLabel: 'Đóng',
-        acceptLabel: 'Đăng xuất',
-        rejectClass: 'p-button-secondary p-button-outlined',
-        acceptClass: 'p-button-danger',
-        accept: async () => {
-            await logout();
-        },
-        reject: () => {},
-    });
-};
-
-const logout = async () => {
-    await Api.auth
-        .logout()
-        .then((res: any) => {
-            router.push('/');
-            authStore.logout();
-        })
-        .catch();
 };
 </script>
 
