@@ -20,13 +20,13 @@
             </div>
             <div>({{ item?.user?.name }})</div>
             <div class="flex flex-column gap-2">
-                <span class="font-semibold text-700"
-                    >Giá: {{ item.price }} Vnd</span
+                <span class="font-semibold text-700 price"
+                    >Giá: {{ formatNumberWithCommas(item.price) }} Vnd</span
                 >
                 <div class="flex justify-content-end gap-2">
                     <Button
-                        icon="pi pi-info-circle"
-                        label="Chi tiết"
+                        icon="pi pi-arrow-right"
+                        label="Xem thêm"
                         class="custom"
                         @click="gotoDetail(item.id)"
                     ></Button>
@@ -38,7 +38,7 @@
 </template>
 
 <script setup lang="ts">
-import DisplayRateStars from './DisplayRateStars.vue';
+import { formatNumberWithCommas } from '#build/imports';
 import { useRouter } from 'vue-router';
 import ImageCommon from './ImageCommon.vue';
 

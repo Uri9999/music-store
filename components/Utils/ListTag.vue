@@ -16,10 +16,10 @@
                 />
                 <div class="pl-3">
                     <div>{{ item.name }}</div>
+                    <div class="price text-700 font-semibold">Giá: {{ formatNumberWithCommas(item.price) }} Vnd</div>
                     <div>Người soạn: {{ item.user.name }}</div>
                 </div>
             </div>
-            <!-- <div>{{ item.price }} Vnd</div> -->
         </div>
     </div>
 </template>
@@ -29,6 +29,7 @@ import { ref } from 'vue';
 import Api from '~/network/Api';
 import type { Tab } from '~/types/tab';
 import { useRouter } from 'vue-router';
+import { formatNumberWithCommas } from '#build/imports';
 
 const router = useRouter();
 const gotoDetail = async (id: number) => {
@@ -45,7 +46,7 @@ onMounted(async () => {
 });
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .tags {
     border-radius: 5px;
     border: 1px solid rgb(236, 236, 236);

@@ -28,15 +28,15 @@
                 <!-- <DisplayRateStars :stars="item?.rating"></DisplayRateStars> -->
             </div>
             <div class="flex flex-column md:align-items-end gap-3">
-                <span class="text-xl font-semibold text-900"
-                    >Giá: {{ item.price }} Vnd</span
+                <span class="text-xl font-semibold text-900 price"
+                    >Giá: {{ formatNumberWithCommas(item.price) }} Vnd</span
                 >
                 <div class="flex flex-row-reverse md:flex-row gap-2">
                     <!-- <Button icon="pi pi-heart" outlined></Button> -->
                     <!-- <DisplayRateStars :stars="item?.rating"></DisplayRateStars> -->
                     <Button
-                        icon="pi pi-info-circle"
-                        label="Chi tiết"
+                        icon="pi pi-arrow-right"
+                        label="Xem thêm"
                         class="custom flex-auto md:flex-initial white-space-nowrap"
                         @click="gotoDetail(item.id)"
                     ></Button>
@@ -47,7 +47,7 @@
 </template>
 
 <script setup lang="ts">
-import DisplayRateStars from './DisplayRateStars.vue';
+import { formatNumberWithCommas } from '#build/imports';
 import { useRouter } from 'vue-router';
 import ImageCommon from './ImageCommon.vue';
 
