@@ -9,7 +9,7 @@
         <DataTable :value="tabs" tableStyle="min-width: 50rem">
             <Column field="name" header="Tên"></Column>
             <Column field="author" header="Tác giả"> </Column>
-            <Column field="status" header="Trạng thái">
+            <Column field="status" header="Trạng thái" style="min-width: 12rem">
                 <template #body="slotProps">
                     {{ getStatus(slotProps.data.status) }}
                 </template>
@@ -150,7 +150,7 @@ import { useConfirm } from 'primevue/useconfirm';
 const confirm = useConfirm();
 const toast = useToast();
 const tabs = ref([]);
-const router = useRouter()
+const router = useRouter();
 onMounted(async () => {
     await getTab();
 });
@@ -164,7 +164,7 @@ const getTab = async () => {
         })
         .catch((err) => {
             if (err?.status == 401) {
-                router.push('/login')
+                router.push('/login');
             }
         });
 };
@@ -210,7 +210,6 @@ const closeCreateTab = () => {
     visibleCreate.value = false;
 };
 const saveTab = async () => {
-
     Api.requestTab
         .store(tabData.value)
         .then(async (res: any) => {

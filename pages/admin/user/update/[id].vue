@@ -2,136 +2,134 @@
     <div class="update-user">
         <HeaderPage title="Chỉnh sửa thông tin user"> </HeaderPage>
         <div class="form mt-3">
-            <div>
-                <div class="mb-3">
-                    <Avatar
-                        classes="avatar mb-3"
-                        :name="userData.name"
-                        :src="avatarUrl ?? userData?.avatar?.url"
-                    ></Avatar>
-                    <ImageUploader
-                        label="Cập nhật ảnh đại diện cho user"
-                        collection="avatar"
-                        :aspectRatio="1 / 1"
-                        @upload="handleUpload"
-                    ></ImageUploader>
+            <div class="grid">
+                <div class="col-12 md:col-6">
+                    <div class="mb-3">
+                        <Avatar
+                            classes="avatar mb-3"
+                            :name="userData.name"
+                            :src="avatarUrl ?? userData?.avatar?.url"
+                        ></Avatar>
+                        <ImageUploader
+                            label="Cập nhật ảnh đại diện cho user"
+                            collection="avatar"
+                            :aspectRatio="1 / 1"
+                            @upload="handleUpload"
+                        ></ImageUploader>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="name" class="block mb-1">Tên</label>
+                        <InputText
+                            type="text"
+                            placeholder="Name"
+                            class="w-full"
+                            v-model="userData.name"
+                            id="name"
+                            fluid
+                        />
+                        <small class="error" v-if="userDataError?.name">{{
+                            userDataError?.name[0]
+                        }}</small>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="block mb-1">Email</label>
+                        <InputText
+                            type="text"
+                            placeholder="Email"
+                            class="w-full"
+                            v-model="userData.email"
+                            id="email"
+                            fluid
+                            disabled
+                        />
+                        <small class="error" v-if="userDataError?.email">{{
+                            userDataError?.email[0]
+                        }}</small>
+                    </div>
                 </div>
 
-                <div class="mb-3">
-                    <label for="name" class="block mb-1">Tên</label>
-                    <InputText
-                        type="text"
-                        placeholder="Name"
-                        class="w-full"
-                        v-model="userData.name"
-                        id="name"
-                        fluid
-                    />
-                    <small class="error" v-if="userDataError?.name">{{
-                        userDataError?.name[0]
-                    }}</small>
-                </div>
+                <div class="col-12 md:col-6">
+                    <div class="mb-3">
+                        <label for="email" class="block mb-1">Chức vụ</label>
+                        <Dropdown
+                            v-model="userData.role_id"
+                            :options="selection?.user_role"
+                            optionLabel="label"
+                            optionValue="value"
+                            placeholder="Select a role"
+                            class="w-full md:w-56"
+                            :disabled="userData.role_id == 1"
+                        />
+                        <small class="error" v-if="userDataError?.role_id">{{
+                            userDataError?.role_id[0]
+                        }}</small>
+                    </div>
 
-                <div class="mb-3">
-                    <label for="email" class="block mb-1">Email</label>
-                    <InputText
-                        type="text"
-                        placeholder="Email"
-                        class="w-full"
-                        v-model="userData.email"
-                        id="email"
-                        fluid
-                        disabled
-                    />
-                    <small class="error" v-if="userDataError?.email">{{
-                        userDataError?.email[0]
-                    }}</small>
-                </div>
+                    <div class="mb-3">
+                        <label for="email" class="block mb-1">Giới tính</label>
+                        <Dropdown
+                            v-model="userData.gender"
+                            :options="selection?.user_gender"
+                            optionLabel="label"
+                            optionValue="value"
+                            placeholder="Select a role"
+                            class="w-full md:w-56"
+                        />
+                        <small class="error" v-if="userDataError?.gender">{{
+                            userDataError?.gender[0]
+                        }}</small>
+                    </div>
 
-                <div class="mb-3">
-                    <label for="email" class="block mb-1">Chức vụ</label>
-                    <Dropdown
-                        v-model="userData.role_id"
-                        :options="selection?.user_role"
-                        optionLabel="label"
-                        optionValue="value"
-                        placeholder="Select a role"
-                        class="w-full md:w-56"
-                        :disabled="userData.role_id == 1"
-                    />
-                    <small class="error" v-if="userDataError?.role_id">{{
-                        userDataError?.role_id[0]
-                    }}</small>
-                </div>
+                    <div class="mb-3">
+                        <label for="email" class="block mb-1">Trạng thái</label>
+                        <Dropdown
+                            v-model="userData.status"
+                            :options="selection?.user_status"
+                            optionLabel="label"
+                            optionValue="value"
+                            placeholder="Select a status"
+                            class="w-full md:w-56"
+                        />
+                        <small class="error" v-if="userDataError?.status">{{
+                            userDataError?.status[0]
+                        }}</small>
+                    </div>
 
-                <div class="mb-3">
-                    <label for="email" class="block mb-1">Giới tính</label>
-                    <Dropdown
-                        v-model="userData.gender"
-                        :options="selection?.user_gender"
-                        optionLabel="label"
-                        optionValue="value"
-                        placeholder="Select a role"
-                        class="w-full md:w-56"
-                    />
-                    <small class="error" v-if="userDataError?.gender">{{
-                        userDataError?.gender[0]
-                    }}</small>
-                </div>
+                    <div class="mb-3">
+                        <label for="email" class="block mb-1">Ngày sinh</label>
+                        <Calendar
+                            v-model="userData.dob"
+                            dateFormat="yy-mm-dd"
+                            placeholder="YYYY-MM-DD"
+                        />
+                        <small class="error" v-if="userDataError?.dob">{{
+                            userDataError?.dob[0]
+                        }}</small>
+                    </div>
 
-                <div class="mb-3">
-                    <label for="email" class="block mb-1">Trạng thái</label>
-                    <Dropdown
-                        v-model="userData.status"
-                        :options="selection?.user_status"
-                        optionLabel="label"
-                        optionValue="value"
-                        placeholder="Select a status"
-                        class="w-full md:w-56"
-                    />
-                    <small class="error" v-if="userDataError?.status">{{
-                        userDataError?.status[0]
-                    }}</small>
+                    <div class="mb-3">
+                        <label for="commission-rate" class="block mb-1"
+                            >Phần trăm hoa hồng</label
+                        >
+                        <InputNumber
+                            v-model="userData.commission_rate"
+                            id="commission-rate"
+                            fluid
+                            :min="0"
+                            :max="100"
+                        />
+                        <small
+                            class="error"
+                            v-if="userDataError?.commission_rate"
+                            >{{ userDataError?.commission_rate[0] }}</small
+                        >
+                    </div>
                 </div>
-
-                <div class="mb-3">
-                    <label for="email" class="block mb-1">Ngày sinh</label>
-                    <Calendar
-                        v-model="userData.dob"
-                        dateFormat="yy-mm-dd"
-                        placeholder="YYYY-MM-DD"
-                    />
-                    <small class="error" v-if="userDataError?.dob">{{
-                        userDataError?.dob[0]
-                    }}</small>
-                </div>
-
-                <div class="mb-3">
-                    <label for="commission-rate" class="block mb-1"
-                        >Phần trăm hoa hồng</label
-                    >
-                    <InputNumber
-                        v-model="userData.commission_rate"
-                        id="commission-rate"
-                        fluid
-                        :min="0"
-                        :max="100"
-                    />
-                    <small
-                        class="error"
-                        v-if="userDataError?.commission_rate"
-                        >{{ userDataError?.commission_rate[0] }}</small
-                    >
-                </div>
-
-                <div class="mb-3 flex justify-content-between">
-                    <Button
-                        label="Trở lại"
-                        severity="secondary"
-                        @click="back()"
-                    ></Button>
-                    <Button label="Lưu" @click="save()"></Button>
-                </div>
+            </div>
+            <div class="mb-3">
+                <Button label="Lưu" @click="save()"></Button>
             </div>
         </div>
     </div>
@@ -225,6 +223,6 @@ const back = () => {
 }
 
 .update-user {
-    max-width: 600px;
+    // max-width: 600px;
 }
 </style>

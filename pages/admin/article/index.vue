@@ -39,7 +39,7 @@
         </template>
 
         <Column field="title" header="Tiêu đề" style=""></Column>
-        <Column field="status" header="Trạng thái" style="">
+        <Column field="status" header="Trạng thái" style="min-width: 12rem">
             <template #body="slotProps">
                 <span>{{
                     handleSelectedValue(

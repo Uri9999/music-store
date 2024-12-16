@@ -58,7 +58,7 @@
 
         <Column field="name" header="Tên" style="min-width: 12rem"></Column>
         <Column field="email" header="Email" style="min-width: 12rem"></Column>
-        <Column field="status" header="Trạng thái">
+        <Column field="status" header="Trạng thái" style="min-width: 12rem">
             <template #body="slotProps">
                 <span class="status-unactive" v-if="slotProps.data.status == 0"
                     >Chưa kích hoạt</span
@@ -87,18 +87,6 @@
                 <span class="role-user" v-else>Khách hàng</span>
             </template>
         </Column>
-        <Column field="gender" header="Giới tính">
-            <template #body="slotProps">
-                <span class="gender-male" v-if="slotProps.data.gender == 1"
-                    >Nam</span
-                >
-                <span class="gender-male" v-if="slotProps.data.gender == 2"
-                    >Khác</span
-                >
-                <span class="gender-female" v-else>Nữ</span>
-            </template>
-        </Column>
-        <Column field="dob" header="Ngày sinh"></Column>
         <Column field="commission_rate" header="Hoa hồng (%)"></Column>
         <Column field="referral_code" header="Mã giới thiệu"></Column>
         <Column :exportable="false" header="Hành động" style="min-width: 12rem">

@@ -51,7 +51,7 @@
                 ></DisplayRateStars>
             </template>
         </Column>
-        <Column field="status" header="Trạng thái">
+        <Column field="status" header="Trạng thái" style="min-width: 12rem">
             <template #body="slotProps">
                 <span :class="convertStatus(slotProps.data?.status).class">{{
                     convertStatus(slotProps.data?.status).label

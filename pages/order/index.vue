@@ -15,7 +15,7 @@
                     {{ moment(slotProps.data.created_at).format('D-M-Y') }}
                 </template>
             </Column>
-            <Column field="status" header="Trạng thái">
+            <Column field="status" header="Trạng thái" style="min-width: 12rem">
                 <template #body="slotProps">
                     <span
                         :class="convertStatus(slotProps.data?.status).class"
