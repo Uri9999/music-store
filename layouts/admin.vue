@@ -3,7 +3,7 @@
         <AdminMenu></AdminMenu>
         <div class="body">
             <div class="head">
-                <span class="mr-3">{{ profile?.name }}</span>
+                <span class="mr-3 profile-name">{{ profile?.name }}</span>
                 <div class="avatar" @click="toggle">
                     <AvatarCommon
                         :name="profile?.name"
@@ -76,6 +76,10 @@ const toggle = (event: Event) => {
     .avatar {
         width: 30px;
         height: 30px;
+    }
+
+    .profile-name {
+        color: var(--color-2);
     }
 }
 
