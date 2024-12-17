@@ -16,11 +16,13 @@
             ></div>
             <div class="article-info mt-2">
                 <div class="flex align-items-center my-2 article-author">
-                    <AvatarCommon
-                        :name="article.user.name"
-                        :src="article.user.avatar?.url"
-                    />
-                    <span class="ml-3">{{ article.user.name }}</span>
+                    <div class="avatar-info">
+                        <AvatarCommon
+                            :name="article.user.name"
+                            :src="article.user.avatar?.url"
+                        />
+                    </div>
+                        <div class="ml-2">{{ article.user.name }}</div>
                 </div>
                 <div class="title" @click="gotoDetail(article.id)">
                     {{ article.title }}
@@ -92,5 +94,9 @@ const gotoDetail = (id: number) => {
 
 .article-item {
     // height: 250px;
+}
+.avatar-info {
+    width: 30px;
+    height: 30px;
 }
 </style>
