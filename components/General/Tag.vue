@@ -18,19 +18,27 @@
                     {{ item.name }}
                 </div>
             </div>
-            <div>({{ item?.user?.name }})</div>
             <div class="flex flex-column gap-2">
-                <span class="font-semibold text-700 price"
-                    >Giá: {{ formatNumberWithCommas(item.price) }} Vnd</span
-                >
-                <div class="flex justify-content-end gap-2">
+                <div class="flex align-items-center justify-content-between">
+                    <DisplayRateStars :stars="item?.rating"></DisplayRateStars>
+                    <span class="font-semibold text-700 price"
+                        >Giá: {{ formatNumberWithCommas(item.price) }} Vnd</span
+                    >
+                </div>
+                <div class="flex justify-content-between gap-2 align-items-center">
+                    <div class="avatar-info">
+                        <AvatarCommon
+                            v-tooltip="item.user.name"
+                            :name="item.user.name"
+                            :src="item.user?.avatar?.url"
+                        />
+                    </div>
                     <Button
                         icon="pi pi-arrow-right"
                         label="Xem thêm"
                         class="custom"
                         @click="gotoDetail(item.id)"
                     ></Button>
-                    <!-- <DisplayRateStars :stars="item?.rating"></DisplayRateStars> -->
                 </div>
             </div>
         </div>
@@ -41,6 +49,8 @@
 import { formatNumberWithCommas } from '#build/imports';
 import { useRouter } from 'vue-router';
 import ImageCommon from './ImageCommon.vue';
+import AvatarCommon from './AvatarCommon.vue';
+import DisplayRateStars from './DisplayRateStars.vue';
 
 const props = defineProps({
     classes: {
@@ -59,7 +69,7 @@ const gotoDetail = async (id: number) => {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .tab-content {
     padding: 10px;
 }
@@ -72,5 +82,14 @@ const gotoDetail = async (id: number) => {
 .tab-image {
     max-height: 250px;
     overflow: hidden;
+}
+
+.avatar-info {
+    width: 30px;
+    height: 30px;
+}
+
+.price {
+    color: var(--color-2);
 }
 </style>

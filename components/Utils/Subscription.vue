@@ -14,7 +14,7 @@
                 <span class="per-month">{{ sub.duration_in_days }} Ngày</span>
             </div>
             <hr />
-            <ul class="features">
+            <!-- <ul class="features">
                 <li>
                     <span
                         ><i class="pi pi-check-circle text-green-500 text-lg"
@@ -33,7 +33,7 @@
                     /></span>
                     Morbi tincidunt augue
                 </li>
-            </ul>
+            </ul> -->
             <Button
                 label="Đăng Ký"
                 @click="router.push({ path: '/subscription', query: { subscription_id: sub?.id } });"
@@ -157,7 +157,7 @@ const getSubscriptions = async () => {
         .catch((err: any) => {});
 };
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .container {
     text-align: center;
     padding: 20px;
@@ -190,7 +190,7 @@ const getSubscriptions = async () => {
     width: 300px;
     display: flex;
     flex-direction: column;
-    min-height: 500px; /* Đảm bảo chiều cao tối thiểu */
+    /* min-height: 500px; Đảm bảo chiều cao tối thiểu */
 }
 
 .plan {
@@ -210,10 +210,10 @@ const getSubscriptions = async () => {
 }
 
 .plan-title {
+    color: var(--color-2);
     font-size: 1.3rem;
     font-weight: bold;
     margin-bottom: 10px;
-    color: #464646;
     margin-bottom: 20px;
 }
 
@@ -232,7 +232,7 @@ const getSubscriptions = async () => {
 
 .amount {
     font-weight: bold;
-    color: #333333;
+    color: var(--color-2);
 }
 
 .per-month {

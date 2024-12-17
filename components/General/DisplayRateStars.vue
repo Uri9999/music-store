@@ -20,9 +20,8 @@ const props = defineProps({
 .rate {
     display: flex;
     align-items: center;
-    // border: 1px solid rgb(187, 112, 15);
+    border: 1px solid rgb(187, 112, 15);
     border-radius: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
+    padding: 3px;
 }
 </style>

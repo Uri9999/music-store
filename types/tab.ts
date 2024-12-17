@@ -14,14 +14,19 @@ type Tab = {
 type User = {
     id: number;
     name: string;
+    avatar: null | Avatar;
+};
+type Avatar = {
+    id: number;
+    url: string;
 };
 type Image = {
-    id: number,
-    url: string,
-}
+    id: number;
+    url: string;
+};
 
 type FilterIndex = {
-    orderPrice: string,
-}
+    orderPrice: string;
+};
 
 export type { Tab, FilterIndex };

@@ -14,10 +14,18 @@
                     v-else
                     src="https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg"
                 />
-                <div class="pl-3">
+                <div class="pl-3 info">
                     <div>{{ item.name }}</div>
-                    <div class="price text-700 font-semibold">Giá: {{ formatNumberWithCommas(item.price) }} Vnd</div>
-                    <div>Người soạn: {{ item.user.name }}</div>
+                    <div class="price text-700 font-semibold flex justify-content-between gap-2 align-items-center">
+                        <div class="avatar-info">
+                            <AvatarCommon
+                                v-tooltip="item.user.name"
+                                :name="item.user.name"
+                                :src="item.user?.avatar?.url"
+                            />
+                        </div>
+                        <div class="price">Giá: {{ formatNumberWithCommas(item.price) }} Vnd</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -30,6 +38,7 @@ import Api from '~/network/Api';
 import type { Tab } from '~/types/tab';
 import { useRouter } from 'vue-router';
 import { formatNumberWithCommas } from '#build/imports';
+import AvatarCommon from '../General/AvatarCommon.vue';
 
 const router = useRouter();
 const gotoDetail = async (id: number) => {
@@ -62,6 +71,7 @@ onMounted(async () => {
     background-color: rgb(245, 245, 245);
 }
 .image {
+    width: 100%;
     display: flex;
     align-items: center;
 }
@@ -69,5 +79,16 @@ onMounted(async () => {
     width: 56px;
     height: 40px;
     border-radius: 5px;
+}
+
+.avatar-info {
+    width: 26px;
+    height: 26px;
+}
+.info {
+    width: 100%;
+}
+.price {
+    // color: var(--color-2);
 }
 </style>
