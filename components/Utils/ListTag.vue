@@ -6,17 +6,19 @@
             @click="gotoDetail(item.id)"
         >
             <div class="image">
-                <img
-                    v-if="item?.images_url[0]?.url"
-                    :src="item?.images_url[0]?.url"
-                />
-                <img
-                    v-else
-                    src="https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg"
-                />
+                <div class="tab-img">
+                    <BackgroundImageCommon
+                        :src="
+                            item?.images_url?.[0]?.url ||
+                            'https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg'
+                        "
+                    ></BackgroundImageCommon>
+                </div>
                 <div class="pl-3 info">
                     <div>{{ item.name }}</div>
-                    <div class="price text-700 font-semibold flex justify-content-between gap-2 align-items-center">
+                    <div
+                        class="price text-700 font-semibold flex justify-content-between gap-2 align-items-center"
+                    >
                         <div class="avatar-info">
                             <AvatarCommon
                                 v-tooltip="item.user.name"
@@ -24,7 +26,9 @@
                                 :src="item.user?.avatar?.url"
                             />
                         </div>
-                        <div class="price">Giá: {{ formatNumberWithCommas(item.price) }} Vnd</div>
+                        <div class="price">
+                            Giá: {{ formatNumberWithCommas(item.price) }} Vnd
+                        </div>
                     </div>
                 </div>
             </div>
@@ -39,6 +43,7 @@ import type { Tab } from '~/types/tab';
 import { useRouter } from 'vue-router';
 import { formatNumberWithCommas } from '#build/imports';
 import AvatarCommon from '../General/AvatarCommon.vue';
+import BackgroundImageCommon from '../General/BackgroundImageCommon.vue';
 
 const router = useRouter();
 const gotoDetail = async (id: number) => {
@@ -57,7 +62,7 @@ onMounted(async () => {
 
 <style lang="scss" scoped>
 .tags {
-    border-radius: 5px;
+    border-radius: 3px;
     border: 1px solid rgb(236, 236, 236);
 }
 .item {
@@ -74,6 +79,10 @@ onMounted(async () => {
     width: 100%;
     display: flex;
     align-items: center;
+    .tab-img {
+        width: 80px;
+        border-radius: 3px;
+    }
 }
 .image img {
     width: 56px;
