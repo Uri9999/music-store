@@ -1,20 +1,16 @@
 <template>
-    <a
-        class="tag border-1 surface-border surface-card border-round flex flex-column"
-    >
-        <div
-            class="surface-50 flex justify-content-center border-round tab-image"
-        >
-            <ImageCommon
+    <a class="tab border-1 surface-border surface-card flex flex-column">
+        <div class="surface-50 flex justify-content-center tab-image">
+            <BackgroundImageCommon
                 :src="
                     item?.images_url?.[0]?.url ||
                     'https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg'
                 "
-            ></ImageCommon>
+            ></BackgroundImageCommon>
         </div>
         <div class="pt-2 gap-1 flex flex-column tab-content">
             <div>
-                <div class="text-lg font-medium text-900 mt-1">
+                <div class="text-lg font-medium text-900">
                     {{ item.name }}
                 </div>
             </div>
@@ -25,7 +21,9 @@
                         >Giá: {{ formatNumberWithCommas(item.price) }} Vnd</span
                     >
                 </div>
-                <div class="flex justify-content-between gap-2 align-items-center">
+                <div
+                    class="flex justify-content-between gap-2 align-items-center"
+                >
                     <div class="avatar-info">
                         <AvatarCommon
                             v-tooltip="item.user.name"
@@ -36,7 +34,7 @@
                     <Button
                         icon="pi pi-arrow-right"
                         label="Xem thêm"
-                        class="custom"
+                        class="custom p-1"
                         @click="gotoDetail(item.id)"
                     ></Button>
                 </div>
@@ -48,9 +46,9 @@
 <script setup lang="ts">
 import { formatNumberWithCommas } from '#build/imports';
 import { useRouter } from 'vue-router';
-import ImageCommon from './ImageCommon.vue';
 import AvatarCommon from './AvatarCommon.vue';
 import DisplayRateStars from './DisplayRateStars.vue';
+import BackgroundImageCommon from './BackgroundImageCommon.vue';
 
 const props = defineProps({
     classes: {
@@ -79,9 +77,13 @@ const gotoDetail = async (id: number) => {
     align-items: center;
 }
 
+.tab {
+    border-radius: 3px;
+}
 .tab-image {
     max-height: 250px;
     overflow: hidden;
+    border-radius: 3px 3px 0px 0px;
 }
 
 .avatar-info {

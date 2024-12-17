@@ -6,12 +6,12 @@
         }"
     >
         <div class="md:w-10rem relative tab-image">
-            <ImageCommon
+            <BackgroundImageCommon
                 :src="
                     item?.images_url?.[0]?.url ||
                     'https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg'
                 "
-            ></ImageCommon>
+            ></BackgroundImageCommon>
         </div>
         <div
             class="flex flex-column md:flex-row justify-content-between md:align-items-center flex-1 gap-4"
@@ -20,20 +20,27 @@
                 class="flex flex-row md:flex-column justify-content-between align-items-start gap-2"
             >
                 <div>
-                    <div class="text-lg font-medium text-900 mt-2">
+                    <div class="text-lg font-medium text-900">
                         {{ item.name }}
                     </div>
-                    <div>Người soạn: {{ item?.user?.name }}</div>
+                    <div class="flex align-items-center mt-2">
+                        <div class="avatar-info">
+                            <AvatarCommon
+                                v-tooltip="item.user.name"
+                                :name="item.user.name"
+                                :src="item.user?.avatar?.url"
+                            />
+                        </div>
+                        <div class="ml-2">{{ item.user.name }}</div>
+                    </div>
                 </div>
-                <!-- <DisplayRateStars :stars="item?.rating"></DisplayRateStars> -->
             </div>
             <div class="flex flex-column md:align-items-end gap-3">
                 <span class="text-xl font-semibold text-900 price"
                     >Giá: {{ formatNumberWithCommas(item.price) }} Vnd</span
                 >
                 <div class="flex flex-row-reverse md:flex-row gap-2">
-                    <!-- <Button icon="pi pi-heart" outlined></Button> -->
-                    <!-- <DisplayRateStars :stars="item?.rating"></DisplayRateStars> -->
+                    <DisplayRateStars :stars="item?.rating"></DisplayRateStars>
                     <Button
                         icon="pi pi-arrow-right"
                         label="Xem thêm"
@@ -49,7 +56,9 @@
 <script setup lang="ts">
 import { formatNumberWithCommas } from '#build/imports';
 import { useRouter } from 'vue-router';
-import ImageCommon from './ImageCommon.vue';
+import BackgroundImageCommon from './BackgroundImageCommon.vue';
+import AvatarCommon from './AvatarCommon.vue';
+import DisplayRateStars from './DisplayRateStars.vue';
 
 const props = defineProps({
     classes: {
@@ -73,5 +82,10 @@ const gotoDetail = async (id: number) => {
     max-height: 200px;
     max-width: 300px;
     overflow: hidden;
+}
+
+.avatar-info {
+    width: 30px;
+    height: 30px;
 }
 </style>
