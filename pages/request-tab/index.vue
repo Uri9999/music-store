@@ -1,6 +1,6 @@
 <template>
+    <HeaderPage class="mt-5 mb-3" title="Danh sách yêu cầu của bạn"> </HeaderPage>
     <div class="request-tab">
-        <h2 class="title">Danh sách yêu cầu của bạn</h2>
         <Button
             label="Tạo yêu cầu tab"
             class="custom"
@@ -146,6 +146,7 @@ import { ref, onMounted } from 'vue';
 import Api from '~/network/Api';
 import { useToast } from 'primevue/usetoast';
 import { useConfirm } from 'primevue/useconfirm';
+import HeaderPage from '~/components/General/HeaderPage.vue';
 
 const confirm = useConfirm();
 const toast = useToast();

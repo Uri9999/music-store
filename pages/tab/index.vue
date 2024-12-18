@@ -1,6 +1,6 @@
 <template>
-    <div class="mt-5">
-        <h2>Danh sách bài tag</h2>
+    <HeaderPage class="mt-5" title="Danh sách bài tag"> </HeaderPage>
+    <div \>
         <AllTag :tabs="tabs">
             <template #filter>
                 <Dropdown
@@ -36,6 +36,7 @@ import AllTag from '~/components/Utils/AllTag.vue';
 import Paginate from '~/components/General/Paginate.vue';
 import Dropdown from 'primevue/dropdown';
 import Api from '~/network/Api';
+import HeaderPage from '~/components/General/HeaderPage.vue';
 
 const filter = ref({
     orderPrice: null,

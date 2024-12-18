@@ -1,6 +1,6 @@
 <template>
+    <HeaderPage  class="mt-5 mb-3" title="Thanh toán đơn hàng"> </HeaderPage>
     <div class="cart my-5 pb-5">
-        <h2>Thanh toán đơn hàng</h2>
         <DataTable :value="items" dataKey="id" tableStyle="min-width: 50rem">
             <Column field="name" header="Tên">
                 <template #body="slotProps">
@@ -94,6 +94,7 @@ import Api from '~/network/Api';
 import { useToast } from 'primevue/usetoast';
 import { formatNumberWithCommas } from '#build/imports';
 import ImageUploader from '~/components/General/ImageUploader.vue';
+import HeaderPage from '~/components/General/HeaderPage.vue';
 
 const btnDisable = ref(false);
 const toast = useToast();

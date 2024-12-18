@@ -1,6 +1,6 @@
 <template>
+    <HeaderPage title="Chi tiết Tab"> </HeaderPage>
     <div class="tab-creation">
-        <h2>Chi tiết Tab</h2>
 
         <div class="form flex gap-5 mt-3">
             <div class="attribute">
@@ -177,6 +177,7 @@ import type { Selection } from '~/types/selection';
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import TreeSelectCommon from '~/components/General/TreeSelectCommon.vue';
+import HeaderPage from '~/components/General/HeaderPage.vue';
 
 definePageMeta({ layout: 'admin' });
 

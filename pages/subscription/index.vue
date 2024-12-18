@@ -130,6 +130,7 @@ import { formatNumberWithCommas } from '#build/imports';
 import TableCommon from '~/components/General/TableCommon.vue';
 import moment from 'moment';
 
+const router = useRouter();
 onMounted(async () => {
     await Api.subscription
         .list()
@@ -144,6 +145,9 @@ onMounted(async () => {
         })
         .catch((err: any) => {
             console.log(err);
+            if (err?.status == 401) {
+                router.push('/login');
+            }
         });
 });
 const tableCommon = ref<any>();
@@ -240,6 +244,8 @@ const clearSubscriptionError = () => {
 
 <style lang="scss" scoped>
 .subscrption-create {
+    font-weight: bold;
+    color: #334155;
     max-width: 600px;
 }
 

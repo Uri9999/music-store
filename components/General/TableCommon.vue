@@ -34,7 +34,7 @@ interface Props {
     rows?: number;
     rowsPerPageOptions?: number[];
     tableProps?: Record<string, any>;
-    payload?: any
+    payload?: any;
 }
 
 const props = defineProps<Props>();

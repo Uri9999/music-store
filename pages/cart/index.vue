@@ -1,6 +1,6 @@
 <template>
+    <HeaderPage  class="mt-5" title="Danh sách sản phẩm trong giỏ hàng"> </HeaderPage>
     <div class="cart my-5 pb-5">
-        <h2>Danh sách sản phẩm trong giỏ hàng</h2>
         <DataTable
             v-model:selection="selectedItems"
             :value="items"
@@ -76,6 +76,7 @@ import { ref } from 'vue';
 import { useConfirm } from 'primevue/useconfirm';
 import Api from '~/network/Api';
 import { useToast } from 'primevue/usetoast';
+import HeaderPage from '~/components/General/HeaderPage.vue';
 
 const toast = useToast();
 const confirm = useConfirm();
