@@ -26,6 +26,9 @@ export default () => ({
     getArticle(payload: any) {
         return BaseApi.get('/articles', payload);
     },
+    getRandomArticle() {
+        return BaseApi.get('/articles/random');
+    },
     getDetailArticle(id: number) {
         return BaseApi.get('/articles/' + id);
     },

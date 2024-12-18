@@ -1,12 +1,14 @@
 <template>
-    <HeaderPage title="Chi tiết Blog" class="mt-3 mb-3"> </HeaderPage>
+    <HeaderPage title="Chi tiết bài viết" class="mt-3 mb-3"> </HeaderPage>
     <div>
         <h2 class="title flex justify-content-center">{{ article?.title }}</h2>
         <div class="flex align-items-center my-2 article-author">
-            <AvatarCommon
-                :name="article.user?.name"
-                :src="article.user?.avatar?.url"
-            />
+            <div class="avatar-info">
+                <AvatarCommon
+                    :name="article.user?.name"
+                    :src="article.user?.avatar?.url"
+                />
+            </div>
             <span class="ml-3">{{ article.user?.name }}</span>
         </div>
         <div class="content">
@@ -47,5 +49,10 @@ onMounted(async () => {
     margin: 0 auto;
     margin-bottom: 50px;
     min-height: 70vh;
+}
+
+.avatar-info {
+    width: 30px;
+    height: 30px;
 }
 </style>

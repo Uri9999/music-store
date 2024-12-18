@@ -1,6 +1,7 @@
 <template>
+    <HeaderPage :title="'Tên bài hát: ' + tab.name" class="mt-5 mb-5">
+    </HeaderPage>
     <div class="pb-5">
-        <h2 class="py-5">Tên bài hát: {{ tab.name }}</h2>
         <div class="card mx-2 grid">
             <div class="col-12 md:col-6">
                 <div class="grid">
@@ -165,6 +166,7 @@ import ImageCommon from '~/components/General/ImageCommon.vue';
 import AvatarCommon from '~/components/General/AvatarCommon.vue';
 import BackgroundImageCommon from '~/components/General/BackgroundImageCommon.vue';
 import { useCartStore } from '~/stores/cartStore';
+import HeaderPage from '~/components/General/HeaderPage.vue';
 
 const toast = useToast();
 const route = useRoute();
@@ -201,7 +203,6 @@ const addToCart = async () => {
             });
             await cartStore.getCount();
             console.log(cartStore.count);
-            
         })
         .catch((err: any) => {
             if (err?.status == 401) {
