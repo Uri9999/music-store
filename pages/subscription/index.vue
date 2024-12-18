@@ -1,6 +1,6 @@
 <template>
-    <HeaderPage title="Đăng ký Subscription"> </HeaderPage>
-    <div class="subscrption-create my-3 pb-5">
+    <HeaderPage title="Đăng ký Subscription" class="mt-5 mb-3"> </HeaderPage>
+    <div class="subscrption-create pb-5">
         <div class="mb-3">
             <label for="note" class="block"
                 >Gói đăng ký <span class="error">*</span></label
@@ -49,12 +49,20 @@
         </div>
 
         <div v-if="subscriptionSelected?.name">
-            <div>Gói đăng ký là: {{ subscriptionSelected?.name }}</div>
-            <div>
-                Tổng số tiền :
-                {{ formatNumberWithCommas(subscriptionSelected?.price) }}
+            <div class="mb-1">
+                Gói đăng ký:
+                <span class="price">{{ subscriptionSelected?.name }}</span>
             </div>
-            <div class="tutorial-link" @click="gotoTutorial()">
+            <div class="mb-1">
+                Tổng số tiền:
+                <span class="price"
+                    >{{
+                        formatNumberWithCommas(subscriptionSelected?.price)
+                    }}
+                    VND</span
+                >
+            </div>
+            <div class="tutorial-link mb-1" @click="gotoTutorial()">
                 Click để xem chi tiết hướng dẫn thanh toán
             </div>
         </div>
@@ -271,5 +279,9 @@ const clearSubscriptionError = () => {
     border-bottom: 1px solid #334155;
     cursor: pointer;
     display: inline-block;
+}
+.price {
+    color: var(--color-2);
+    font-size: 1.4rem;
 }
 </style>
