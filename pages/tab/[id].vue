@@ -8,7 +8,7 @@
                         <div
                             class="item-img col-3"
                             v-for="(image, index) in tab.images_url"
-                            :key="image?.id"
+                            :key="index"
                             @click="toggleFirstImg(image.url)"
                             :class="{
                                 'active-img': image.url == imgFirst,
@@ -23,6 +23,7 @@
                     </div>
                     <div class="image-main col-9">
                         <ImageCommon
+                            v-if="imgFirst"
                             :src="imgFirst"
                             :style="'width: auto; height: 100%;'"
                         ></ImageCommon>
@@ -163,10 +164,12 @@ import { formatNumberWithCommas } from '#build/imports';
 import ImageCommon from '~/components/General/ImageCommon.vue';
 import AvatarCommon from '~/components/General/AvatarCommon.vue';
 import BackgroundImageCommon from '~/components/General/BackgroundImageCommon.vue';
+import { useCartStore } from '~/stores/cartStore';
 
 const toast = useToast();
 const route = useRoute();
 const router = useRouter();
+const cartStore = useCartStore();
 const id = Number(route.params.id);
 const tab = ref({} as any);
 const imgFirst = ref();
@@ -189,13 +192,16 @@ const getDetailTab = async (id: number) => {
 const addToCart = async () => {
     await Api.cart
         .add({ tab_id: id })
-        .then((res: any) => {
+        .then(async (res: any) => {
             toast.add({
                 severity: 'success',
                 summary: 'Thông báo',
                 detail: res.message,
                 life: 3000,
             });
+            await cartStore.getCount();
+            console.log(cartStore.count);
+            
         })
         .catch((err: any) => {
             if (err?.status == 401) {
@@ -254,6 +260,8 @@ const downloadPdf = () => {
 
 .price-value {
     font-size: 1.5rem;
+    color: var(--color-2);
+    font-weight: 700;
 }
 .item-img {
     width: 100%;

@@ -63,8 +63,8 @@
                     </span>
                     <span class="menu-icon ml-2" @click="gotoCartView()">
                         <i class="pi pi-shopping-cart"></i>
-                        <span class="badge" v-if="countCartItem > 0">{{
-                            countCartItem
+                        <span class="badge" v-if="count">{{
+                            count > 9 ? '+9' : count
                         }}</span>
                     </span>
                     <div
@@ -108,6 +108,7 @@ import Search from '../General/Search.vue';
 import Menu from 'primevue/menu';
 import authService from '~/services/AuthService';
 import AvatarCommon from '../General/AvatarCommon.vue';
+import { useCartStore } from '~/stores/cartStore';
 
 const items = ref<[]>([]);
 const selectionStore = useSelectionStore();
@@ -121,6 +122,8 @@ const isMobile = computed(() => {
 const { confirmDelete } = authService();
 const authStore = useAuthStore();
 const { isAuthenticated, profile } = storeToRefs(authStore);
+const cartStore = useCartStore();
+const { count } = storeToRefs(cartStore);
 
 onMounted(async () => {
     const selection = await selectionStore.getData();
@@ -182,7 +185,7 @@ onMounted(async () => {
     ] as any;
 
     // count cart items
-    await getCountCartItem();
+    await cartStore.getCount();
 });
 
 const handleNavigation = (route: string) => {
@@ -191,20 +194,8 @@ const handleNavigation = (route: string) => {
     }
 };
 
-const countCartItem = ref(0);
 const gotoCartView = () => {
     router.push('/cart');
-};
-
-const getCountCartItem = async () => {
-    Api.cart
-        .getCountByMe()
-        .then((res: any) => {
-            countCartItem.value = res.data;
-        })
-        .catch((err: any) => {
-            console.log(err);
-        });
 };
 
 const gotoHome = () => {
@@ -299,7 +290,7 @@ const toggle = (event: Event) => {
         width: 16px;
         height: 16px;
         border-radius: 10px;
-        background-color: #10b981;
+        background-color: var(--color-2);
         display: flex;
         align-items: center;
         justify-content: center;
