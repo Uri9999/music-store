@@ -1,5 +1,6 @@
 <template>
-    <div class="form mt-3">
+    <HeaderPage class="mt-5 mb-3" title="Thay đổi thông tin"> </HeaderPage>
+    <div class="form mb-5">
         <div>
             <div class="mb-3">
                 <div class="avatar rounded-full mb-3">
@@ -126,6 +127,7 @@
 import moment from 'moment';
 import Avatar from 'primevue/avatar';
 import AvatarCommon from '~/components/General/AvatarCommon.vue';
+import HeaderPage from '~/components/General/HeaderPage.vue';
 import ImageUploader from '~/components/General/ImageUploader.vue';
 import Api from '~/network/Api';
 import type { Selection } from '~/types/selection';
@@ -213,5 +215,10 @@ const back = () => {
     width: 150px;
     height: 150px;
     margin: 0 auto;
+}
+
+label {
+    font-weight: bold;
+    color: #334155;
 }
 </style>

@@ -205,7 +205,7 @@ const gotoHome = () => {
 const menu = ref();
 const dropdownItems = ref([
     {
-        label: 'Cài đặt',
+        label: 'Thay đổi thông tin',
         icon: 'pi pi-cog',
         command: () => {
             router.push('/setting/profile');
