@@ -5,6 +5,7 @@
         :class="classes"
         :src="src"
         :alt="alt"
+        :style="style"
     />
     <div class="detail" v-if="visible">
         <div class="action-icon">
@@ -45,6 +46,10 @@ const props = defineProps({
     classes: {
         type: [String, Object],
         default: 'flex align-items-center',
+    },
+    style: {
+        type: String,
+        default: '',
     },
 });
 

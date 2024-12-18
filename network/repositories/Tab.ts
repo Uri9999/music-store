@@ -14,7 +14,7 @@ export default () => ({
     },
 
     show(id: number) {
-        return BaseApi.get('tabs/' + id);
+        return BaseApi.setAuth().get('tabs/' + id);
     },
 
     getTabByIds(payload: any) {

@@ -1,42 +1,51 @@
 <template>
     <div class="pb-5">
         <h2 class="py-5">Tên bài hát: {{ tab.name }}</h2>
-        <div class="card grid">
-            <!-- card left -->
+        <div class="card mx-2 grid">
             <div class="col-12 md:col-6">
                 <div class="grid">
-                    <div class="col-3">
+                    <div class="col-3 list-img grid">
                         <div
                             class="item-img col-3"
                             v-for="(image, index) in tab.images_url"
                             :key="image?.id"
                             @click="toggleFirstImg(image.url)"
+                            :class="{
+                                'active-img': image.url == imgFirst,
+                            }"
                         >
-                            <img
-                                :src="image.url"
-                                alt=""
-                                class="inline-block w-full"
-                            />
+                            <div class="">
+                                <BackgroundImageCommon
+                                    :src="image.url"
+                                ></BackgroundImageCommon>
+                            </div>
                         </div>
                     </div>
                     <div class="image-main col-9">
-                        <ImageCommon :src="imgFirst"></ImageCommon>
+                        <ImageCommon
+                            :src="imgFirst"
+                            :style="'width: auto; height: 100%;'"
+                        ></ImageCommon>
                     </div>
                 </div>
             </div>
-            <!-- card right -->
             <div class="product-content col-12 md:col-6">
                 <TabView>
                     <TabPanel header="Thông tin">
                         <div class="product-info">
-                            <div class="product-avatar">
-                                <div class="avatar">
-                                    <AvatarCommon
-                                        :name="tab?.user?.name"
-                                        :src="tab?.user?.avatar?.url"
-                                    />
+                            <div class="product-info__title">Người soạn:</div>
+                            <div>
+                                <div class="product-avatar">
+                                    <div class="avatar">
+                                        <AvatarCommon
+                                            :name="tab?.user?.name"
+                                            :src="tab?.user?.avatar?.url"
+                                        />
+                                    </div>
+                                    <span class="ml-3">{{
+                                        tab?.user?.name
+                                    }}</span>
                                 </div>
-                                <span class="ml-3">{{ tab?.user?.name }}</span>
                             </div>
                         </div>
                         <div class="product-info">
@@ -100,24 +109,46 @@
                         </p>
                     </TabPanel>
                     <TabPanel header="Đánh giá">
-                        <p class="m-0">
-                            At vero eos et accusamus et iusto odio dignissimos
-                            ducimus qui blanditiis praesentium voluptatum
-                            deleniti atque corrupti quos dolores et quas
-                            molestias excepturi sint occaecati cupiditate non
-                            provident, similique sunt in culpa qui officia
-                            deserunt mollitia animi, id est laborum et dolorum
-                            fuga. Et harum quidem rerum facilis est et expedita
-                            distinctio. Nam libero tempore, cum soluta nobis est
-                            eligendi optio cumque nihil impedit quo minus.
-                        </p>
+                        <div class="rate-review">
+                            <div
+                                v-if="tab?.reviewTabs?.length"
+                                v-for="(review, index) in tab.reviewTabs"
+                                :key="index"
+                                class="pb-2 mb-2 comment"
+                            >
+                                <div class="flex align-items-center mb-2">
+                                    <div
+                                        class="avatar-info flex align-items-center mr-3"
+                                    >
+                                        <AvatarCommon
+                                            :name="review.user.name"
+                                            :src="review.user?.avatar?.url"
+                                        />
+                                    </div>
+                                    <div>
+                                        <div>{{ review.user.name }}</div>
+                                        <div>
+                                            <Rating
+                                                v-model="review.rating"
+                                                :cancel="false"
+                                                class="mr-3"
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="comment-review">
+                                    {{ review.comment }}
+                                </p>
+                            </div>
+                            <div v-else>Không có đánh giá</div>
+                        </div>
                     </TabPanel>
                 </TabView>
             </div>
         </div>
     </div>
     <div class="mb-5">
-        <h2 class="mb-3">Gợi ý dành cho bạn</h2>
+        <h2 class="mb-3">Bài viết dành cho bạn</h2>
         <Carousel></Carousel>
     </div>
 </template>
@@ -131,6 +162,7 @@ import { useToast } from 'primevue/usetoast';
 import { formatNumberWithCommas } from '#build/imports';
 import ImageCommon from '~/components/General/ImageCommon.vue';
 import AvatarCommon from '~/components/General/AvatarCommon.vue';
+import BackgroundImageCommon from '~/components/General/BackgroundImageCommon.vue';
 
 const toast = useToast();
 const route = useRoute();
@@ -214,6 +246,7 @@ const downloadPdf = () => {
 .product-avatar {
     .avatar {
         width: 32px;
+        height: 32px;
     }
     display: flex;
     align-items: center;
@@ -224,8 +257,32 @@ const downloadPdf = () => {
 }
 .item-img {
     width: 100%;
-    height: 20%;
+    height: 22%;
     overflow: hidden;
     cursor: pointer;
+    border: 1px solid rgb(231, 231, 231);
+}
+.avatar-info {
+    width: 40px;
+    height: 40px;
+}
+.rate-review {
+    overflow-y: scroll;
+    max-height: 400px;
+}
+.comment {
+    border-bottom: 1px solid rgb(231, 231, 231);
+}
+.comment-review {
+    margin-left: 56px;
+}
+.product-content {
+    min-height: 450px;
+}
+.active-img {
+    border: 1px solid rgb(0, 182, 0);
+}
+.image-main {
+    height: 450px;
 }
 </style>
