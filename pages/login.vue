@@ -209,12 +209,14 @@ import { ref } from 'vue';
 import Api from '~/network/Api';
 import { useToast } from 'primevue/usetoast';
 import Dialog from '~/components/General/Dialog.vue';
+import { deviceTokenService } from '~/services/DeviceTokenService';
 
 definePageMeta({
     layout: 'auth',
     title: 'Đăng nhập',
 });
 
+const { saveFCMToken } = deviceTokenService();
 const router = useRouter();
 const dialogContent = ref('');
 const dialogVisible = ref(false);
@@ -240,11 +242,11 @@ const login = async () => {
 
     await Api.auth
         .login(authData.value)
-        .then((res: any) => {
+        .then(async (res: any) => {
             localStorage.setItem('access_token', res.data.access_token);
             localStorage.setItem('user', JSON.stringify(res.data.user));
-
-            router.push('/')
+            await saveFCMToken();
+            router.push('/');
         })
         .catch((err: any) => {
             console.log('err', err);

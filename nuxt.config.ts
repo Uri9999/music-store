@@ -8,6 +8,7 @@ export default defineNuxtConfig({
       title: "Zumi Shop",
       link: [
         { rel: "icon", type: "image/x-icon", href: "/images/favicon.png" },
+        { rel: "manifest", href: "/firebase-messaging-sw.js" },
       ],
     },
   },

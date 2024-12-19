@@ -4,6 +4,7 @@ import Banner from './repositories/Banner';
 import Cart from './repositories/Cart';
 import Category from './repositories/Category';
 import Dashboard from './repositories/Dashboard';
+import DeviceToken from './repositories/DeviceToken';
 import Media from './repositories/Media';
 import Order from './repositories/Order';
 import RequestTab from './repositories/RequestTab';
@@ -32,6 +33,7 @@ const Api = {
     dashboard: Dashboard(),
     subscription: Subscription(),
     reviewTab: ReviewTab(),
+    deviceToken: DeviceToken(),
 };
 
 export default Api;
