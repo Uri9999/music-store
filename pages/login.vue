@@ -245,8 +245,8 @@ const login = async () => {
         .then(async (res: any) => {
             localStorage.setItem('access_token', res.data.access_token);
             localStorage.setItem('user', JSON.stringify(res.data.user));
-            await saveFCMToken();
             router.push('/');
+            await saveFCMToken();
         })
         .catch((err: any) => {
             console.log('err', err);
