@@ -123,7 +123,7 @@ const originReiverId = ref();
 const allUserAffiliate = ref([]);
 onMounted(async () => {
     await Api.user
-        .getAllAffiliate({})
+        .getManager({})
         .then((res: any) => {
             console.log('res', res);
             allUserAffiliate.value = res.data;

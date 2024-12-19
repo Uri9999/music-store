@@ -121,7 +121,7 @@ const router = useRouter();
 const allUserAffiliate = ref([]);
 onMounted(async () => {
     await Api.user
-        .getAllAffiliate({})
+        .getManager({})
         .then((res: any) => {
             allUserAffiliate.value = res.data;
         })

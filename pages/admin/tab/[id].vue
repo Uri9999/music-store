@@ -218,7 +218,7 @@ const id = Number(route.params.id);
 onMounted(async () => {
     try {
         selection.value = await selectionStore.getData();
-        const response = (await Api.user.getAllAffiliate({})) as any;
+        const response = (await Api.user.getManager({})) as any;
         affiliateUsers.value = response.data;
 
         const resShow = (await Api.tab.adminShow(id)) as any;

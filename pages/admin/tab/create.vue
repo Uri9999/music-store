@@ -223,7 +223,7 @@ const tabErrors = ref({
 onMounted(async () => {
     try {
         selection.value = await selectionStore.getData();
-        const response = (await Api.user.getAllAffiliate({})) as any;
+        const response = (await Api.user.getManager({})) as any;
         affiliateUsers.value = response.data;
     } catch (error) {
         console.error('Error loading data:', error);
