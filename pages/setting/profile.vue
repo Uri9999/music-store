@@ -1,125 +1,128 @@
 <template>
     <HeaderPage class="mt-5 mb-3" title="Thay đổi thông tin"> </HeaderPage>
     <div class="form mb-5">
-        <div>
-            <div class="mb-3">
+        <div class="grid">
+            <div class="col-12 sm:col-6">
                 <div class="avatar rounded-full mb-3">
                     <AvatarCommon
                         :name="userData.name"
                         :src="avatarUrl ?? userData?.avatar?.url"
                     />
                 </div>
-                <ImageUploader
-                    label="Cập nhật ảnh đại diện cho user"
-                    collection="avatar"
-                    :aspectRatio="1 / 1"
-                    @upload="handleUpload"
-                ></ImageUploader>
+                <div class="btn-upload">
+                    <ImageUploader
+                        label="Cập nhật ảnh đại diện cho user"
+                        collection="avatar"
+                        :aspectRatio="1 / 1"
+                        @upload="handleUpload"
+                    ></ImageUploader>
+                </div>
             </div>
 
-            <div class="mb-3">
-                <label for="name" class="block mb-1"
-                    >Tên <span class="error">*</span></label
-                >
-                <InputText
-                    type="text"
-                    placeholder="Name"
-                    class="w-full"
-                    v-model="userData.name"
-                    id="name"
-                    fluid
-                />
-                <small class="error" v-if="userDataError?.name">{{
-                    userDataError?.name[0]
-                }}</small>
-            </div>
-
-            <div class="mb-3">
-                <label for="email" class="block mb-1">Email</label>
-                <InputText
-                    type="text"
-                    placeholder="Email"
-                    class="w-full"
-                    v-model="userData.email"
-                    id="email"
-                    fluid
-                    disabled
-                />
-                <small class="error" v-if="userDataError?.email">{{
-                    userDataError?.email[0]
-                }}</small>
-            </div>
-
-            <div class="mb-3">
-                <label for="referral-code" class="block mb-1"
-                    >Mã giới thiệu</label
-                >
-                <div class="flex">
+            <div class="col-12 sm:col-6">
+                <div class="mb-3">
+                    <label for="name" class="block mb-1"
+                        >Tên <span class="error">*</span></label
+                    >
                     <InputText
                         type="text"
-                        placeholder="referral-code"
+                        placeholder="Name"
                         class="w-full"
-                        v-model="userData.referral_code"
-                        id="referral-code"
+                        v-model="userData.name"
+                        id="name"
+                        fluid
+                    />
+                    <small class="error" v-if="userDataError?.name">{{
+                        userDataError?.name[0]
+                    }}</small>
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="block mb-1">Email</label>
+                    <InputText
+                        type="text"
+                        placeholder="Email"
+                        class="w-full"
+                        v-model="userData.email"
+                        id="email"
                         fluid
                         disabled
                     />
-
-                    <Button
-                        type="button"
-                        icon="pi pi-copy"
-                        class="ml-3 pointer"
-                        outlined
-                        rounded
-                        @click="copyReferralCode()"
-                    />
+                    <small class="error" v-if="userDataError?.email">{{
+                        userDataError?.email[0]
+                    }}</small>
                 </div>
-                <small class="error" v-if="userDataError?.email">{{
-                    userDataError?.email[0]
-                }}</small>
-            </div>
 
-            <div class="mb-3">
-                <label for="email" class="block mb-1"
-                    >Giới tính <span class="error">*</span></label
-                >
-                <Dropdown
-                    v-model="userData.gender"
-                    :options="selection?.user_gender"
-                    optionLabel="label"
-                    optionValue="value"
-                    placeholder="Select a role"
-                    class="w-full md:w-56"
-                />
-                <small class="error" v-if="userDataError?.gender">{{
-                    userDataError?.gender[0]
-                }}</small>
-            </div>
+                <div class="mb-3">
+                    <label for="referral-code" class="block mb-1"
+                        >Mã giới thiệu</label
+                    >
+                    <div class="flex">
+                        <InputText
+                            type="text"
+                            placeholder="referral-code"
+                            class="w-full"
+                            v-model="userData.referral_code"
+                            id="referral-code"
+                            fluid
+                            disabled
+                        />
 
-            <div class="mb-3">
-                <label for="email" class="block mb-1"
-                    >Ngày sinh <span class="error">*</span></label
-                >
-                <div>
-                    <Calendar
-                        v-model="userData.dob"
-                        dateFormat="yy-mm-dd"
-                        placeholder="YYYY-MM-DD"
-                    />
+                        <Button
+                            type="button"
+                            icon="pi pi-copy"
+                            class="ml-3 pointer"
+                            outlined
+                            rounded
+                            @click="copyReferralCode()"
+                        />
+                    </div>
+                    <small class="error" v-if="userDataError?.email">{{
+                        userDataError?.email[0]
+                    }}</small>
                 </div>
-                <small class="error" v-if="userDataError?.dob">{{
-                    userDataError?.dob[0]
-                }}</small>
-            </div>
 
-            <div class="mt-5 flex justify-content-between">
-                <Button
-                    label="Trở lại"
-                    severity="secondary"
-                    @click="back()"
-                ></Button>
-                <Button label="Lưu" @click="save()"></Button>
+                <div class="mb-3">
+                    <label for="email" class="block mb-1"
+                        >Giới tính <span class="error">*</span></label
+                    >
+                    <Dropdown
+                        v-model="userData.gender"
+                        :options="selection?.user_gender"
+                        optionLabel="label"
+                        optionValue="value"
+                        placeholder="Select a role"
+                        class="w-full md:w-56"
+                    />
+                    <small class="error" v-if="userDataError?.gender">{{
+                        userDataError?.gender[0]
+                    }}</small>
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="block mb-1"
+                        >Ngày sinh <span class="error">*</span></label
+                    >
+                    <div>
+                        <Calendar
+                            v-model="userData.dob"
+                            dateFormat="yy-mm-dd"
+                            placeholder="YYYY-MM-DD"
+                        />
+                    </div>
+                    <small class="error" v-if="userDataError?.dob">{{
+                        userDataError?.dob[0]
+                    }}</small>
+                </div>
             </div>
+        </div>
+        <div class="mt-5 flex justify-content-between">
+            <Button
+                label="Trở lại"
+                severity="secondary"
+                @click="back()"
+            ></Button>
+            <Button label="Lưu" @click="save()"></Button>
         </div>
     </div>
 </template>
@@ -215,6 +218,11 @@ const back = () => {
     width: 150px;
     height: 150px;
     margin: 0 auto;
+}
+
+.btn-upload {
+    display: flex;
+    justify-content: center;
 }
 
 label {
