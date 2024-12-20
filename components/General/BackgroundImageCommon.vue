@@ -1,12 +1,12 @@
 <template>
-    <div
+    <a
         class="bg"
         :style="{
             backgroundImage: `url(${src})`,
         }"
     >
         <img :src="src" />
-    </div>
+    </a>
 </template>
 
 <script lang="ts" setup>

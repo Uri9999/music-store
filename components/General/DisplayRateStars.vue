@@ -1,6 +1,6 @@
 <template>
     <div class="rate">
-        <div class="flex align-items-center gap-1">
+        <div class="flex align-items-center gap-1" v-if="stars != 0">
             <span>{{ stars }}</span>
             <span><i class="pi pi-star-fill text-yellow-500"></i></span>
         </div>
@@ -20,7 +20,6 @@ const props = defineProps({
 .rate {
     display: flex;
     align-items: center;
-    border: 1px solid rgb(187, 112, 15);
     border-radius: 5px;
     padding: 3px;
 }

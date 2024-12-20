@@ -52,7 +52,7 @@ const props = defineProps({
     },
 });
 
-const layout = ref('list'); // grid
+const layout = ref('grid'); // list | grid
 </script>
 
 <style scoped>

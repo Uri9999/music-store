@@ -17,17 +17,19 @@
                 <div class="pl-3 info">
                     <div>{{ item.name }}</div>
                     <div
-                        class="price text-700 font-semibold flex justify-content-between gap-2 align-items-center"
+                        class="flex justify-content-between gap-2 align-items-center"
                     >
-                        <div class="avatar-info">
-                            <AvatarCommon
-                                v-tooltip="item.user.name"
-                                :name="item.user.name"
-                                :src="item.user?.avatar?.url"
-                            />
+                        <div class="flex gap-2 align-items-center">
+                            <div class="avatar-info">
+                                <AvatarCommon
+                                    :name="item.user.name"
+                                    :src="item.user?.avatar?.url"
+                                />
+                            </div>
+                            <div>{{ item.user.name }}</div>
                         </div>
                         <div class="price">
-                            Giá: {{ formatNumberWithCommas(item.price) }} Vnd
+                            {{ formatNumberWithCommas(item.price) }} Vnd
                         </div>
                     </div>
                 </div>
@@ -98,6 +100,7 @@ onMounted(async () => {
     width: 100%;
 }
 .price {
-    // color: var(--color-2);
+    color: var(--color-2);
+    font-weight: bold;
 }
 </style>
