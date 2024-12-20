@@ -10,7 +10,7 @@
             tableStyle="min-width: 50rem"
         >
             <Column expander style="width: 5rem" />
-            <Column field="name" header="Ngày đặt hàng">
+            <Column field="name" header="Ngày đặt">
                 <template #body="slotProps">
                     {{ moment(slotProps.data.created_at).format('D-M-Y') }}
                 </template>
@@ -23,7 +23,7 @@
                     >
                 </template>
             </Column>
-            <Column header="Số lượng sản phẩm">
+            <Column header="Số lượng">
                 <template #body="slotProps">
                     {{ slotProps.data.order_items.length }}
                 </template>

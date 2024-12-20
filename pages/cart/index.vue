@@ -1,73 +1,58 @@
 <template>
-    <HeaderPage  class="mt-5" title="Danh sách sản phẩm trong giỏ hàng"> </HeaderPage>
+    <HeaderPage class="mt-5" title="Danh sách sản phẩm trong giỏ hàng">
+    </HeaderPage>
     <div class="cart my-5 pb-5">
-        <DataTable
-            v-model:selection="selectedItems"
-            :value="items"
-            dataKey="id"
-            tableStyle="min-width: 50rem"
-        >
-            <Column
-                selectionMode="multiple"
-                frozen
-                headerStyle="width: 3rem"
-            ></Column>
-            <Column field="name" header="Tên">
-                <template #body="slotProps">
-                    {{ slotProps.data.tab.name }}
-                </template>
-            </Column>
-            <Column header="Ảnh">
-                <template #body="slotProps">
-                    <img
-                        src="https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg"
-                        class="w-6rem border-round"
-                    />
-                </template>
-            </Column>
-            <Column field="price" header="Giá">
-                <template #body="slotProps">
-                    {{ slotProps.data.tab.price }} VND
-                </template>
-            </Column>
-            <Column field="category" header="Danh mục">
-                <template #body="slotProps">
-                    {{ slotProps.data.tab.category.name }}
-                </template>
-            </Column>
-            <Column field="action" header="Hành động">
-                <template #body="slotProps">
-                    <div class="flex gap-2">
+        <div class="cart-detail">
+            <div class="item-list">
+                <div class="item-show" v-for="(item, index) in items">
+                    <div class="mr-3 flex align-items-center">
                         <Button
                             label="Xóa"
                             severity="danger"
                             outlined
-                            @click="confirmDelete(slotProps.data.id)"
+                            @click="confirmDelete(item?.id)"
                         />
-                    </div> </template
-            ></Column>
-
-            <template #footer>
-                <div class="footer">
-                    <div class="quantity">
+                    </div>
+                    <div class="img mr-3">
+                        <BackgroundImageCommon
+                            :src="'https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg'"
+                        ></BackgroundImageCommon>
+                    </div>
+                    <div class="flex justify-content-between w-full">
+                        <div class="mr-3 content">{{ item?.tab?.name }}</div>
                         <div>
-                            Tổng số sản phẩm
-                            {{ items ? items.length : 0 }}
-                        </div>
-                        <div>
-                            Số lượng sản phẩm đã chọn:
-                            {{ selectedItems ? selectedItems.length : 0 }}
+                            <PriceCommon
+                                :value="item?.tab?.price"
+                            ></PriceCommon>
                         </div>
                     </div>
-                    <Button
-                        :disabled="selectedItems.length == 0"
-                        label="Tạo đơn hàng"
-                        class="custom"
-                        @click="checkout()"
-                    ></Button>
                 </div>
-            </template>
-        </DataTable>
+            </div>
+            <div class="info">
+                <div class="info-t">
+                    <p>Tạm tính:</p>
+                    <p>
+                        <PriceCommon
+                            type="default"
+                            :value="calcTotalPrice(items)"
+                        ></PriceCommon>
+                    </p>
+                </div>
+                <div class="info-t">
+                    <p>Thành tiền:</p>
+                    <p class="price">
+                        <PriceCommon
+                            :value="calcTotalPrice(items)"
+                        ></PriceCommon>
+                    </p>
+                </div>
+                <Button
+                    label="Tạo đơn hàng"
+                    class="custom w-full mt-3"
+                    @click="checkout()"
+                ></Button>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -77,10 +62,11 @@ import { useConfirm } from 'primevue/useconfirm';
 import Api from '~/network/Api';
 import { useToast } from 'primevue/usetoast';
 import HeaderPage from '~/components/General/HeaderPage.vue';
+import BackgroundImageCommon from '~/components/General/BackgroundImageCommon.vue';
+import PriceCommon from '~/components/General/PriceCommon.vue';
 
 const toast = useToast();
 const confirm = useConfirm();
-const selectedItems = ref([]);
 const router = useRouter();
 const items = ref([]);
 onMounted(async () => {
@@ -139,11 +125,19 @@ const confirmDelete = (id: number) => {
 };
 
 const checkout = () => {
-    const ids = selectedItems.value.map((item: any) => {
+    const ids = items.value.map((item: any) => {
         return item.tab_id;
     });
 
     router.push({ path: '/order/create', query: { ids: ids } });
+};
+
+const calcTotalPrice = (items: any) => {
+    const total = items.reduce((total: number, item: any) => {
+        return total + item.tab.price;
+    }, 0);
+
+    return total;
 };
 </script>
 
@@ -155,5 +149,42 @@ const checkout = () => {
 }
 .cart {
     min-height: 70vh;
+}
+
+.cart-detail {
+    display: flex;
+    .item-list {
+        width: calc(100% - 300px);
+        padding: 15px;
+        .item-show {
+            display: flex;
+            .img {
+                width: 150px;
+            }
+            border-bottom: 1px solid rgb(228, 228, 228);
+            padding: 10px;
+            .content {
+                font-size: 1.2rem;
+            }
+        }
+    }
+    .info {
+        font-size: 1.2rem;
+        width: 300px;
+        padding: 15px;
+        .info-t {
+            display: flex;
+            align-items: end;
+            padding-bottom: 5px;
+            padding-top: 15px;
+            border-bottom: 1px solid rgb(221, 221, 221);
+            justify-content: space-between;
+        }
+    }
+}
+
+.price {
+    font-size: 1.5rem;
+    color: var(--color-2);
 }
 </style>

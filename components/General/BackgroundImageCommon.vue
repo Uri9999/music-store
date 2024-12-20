@@ -1,10 +1,5 @@
 <template>
-    <a
-        class="bg"
-        :style="{
-            backgroundImage: `url(${src})`,
-        }"
-    >
+    <a class="bg">
         <img :src="src" />
     </a>
 </template>
