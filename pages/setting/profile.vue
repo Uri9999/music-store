@@ -92,7 +92,7 @@
                         optionLabel="label"
                         optionValue="value"
                         placeholder="Select a role"
-                        class="w-full md:w-56"
+                        class="w-60"
                     />
                     <small class="error" v-if="userDataError?.gender">{{
                         userDataError?.gender[0]
