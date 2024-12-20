@@ -1,7 +1,6 @@
 <template>
-    <HeaderPage class="mt-5" title="Danh sách sản phẩm trong giỏ hàng">
-    </HeaderPage>
-    <div class="cart my-5 pb-5">
+    <HeaderPage class="mt-5" title="Giỏ hàng"> </HeaderPage>
+    <div class="cart my-5 pb-5" v-if="items.length">
         <div class="cart-detail">
             <div class="item-list">
                 <div class="item-show" v-for="(item, index) in items">
@@ -54,6 +53,7 @@
             </div>
         </div>
     </div>
+    <div class="cart-null" v-else>Chưa có sản phẩm nào trong giỏ hàng</div>
 </template>
 
 <script setup lang="ts">
@@ -186,5 +186,18 @@ const calcTotalPrice = (items: any) => {
 .price {
     font-size: 1.5rem;
     color: var(--color-2);
+}
+
+.cart-null {
+    width: 100%;
+    height: 60px;
+    font-size: 1.2rem;
+    border: 1px dashed rgb(201, 201, 201);
+    color: var(--color-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 </style>
