@@ -1,90 +1,91 @@
 <template>
-    <HeaderPage  class="mt-5 mb-3" title="Thanh toán đơn hàng"> </HeaderPage>
+    <HeaderPage class="mt-5 mb-3" title="Thanh toán đơn hàng"> </HeaderPage>
     <div class="cart my-5 pb-5">
-        <DataTable :value="items" dataKey="id" tableStyle="min-width: 50rem">
-            <Column field="name" header="Tên">
-                <template #body="slotProps">
-                    {{ slotProps.data.name }}
-                </template>
-            </Column>
-            <Column header="Ảnh">
-                <template #body="slotProps">
-                    <img
-                        src="https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg"
-                        class="w-6rem border-round"
-                    />
-                </template>
-            </Column>
-            <Column field="price" header="Giá">
-                <template #body="slotProps">
-                    {{ slotProps.data.price }} VND
-                </template>
-            </Column>
-
-            <template #footer>
-                <div class="mb-3">
-                    <div>
-                        Tổng số tiền cần chuyển khoản là:
-                        {{ formatNumberWithCommas(totalPrice) }} Vnd
+        <div class="cart-detail">
+            <div class="item-list">
+                <div class="item-show" v-for="(item, index) in items">
+                    <div class="img mr-3">
+                        <BackgroundImageCommon
+                            :src="'https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg'"
+                        ></BackgroundImageCommon>
                     </div>
-                    <div class="tutorial-link" @click="gotoTutorial()">
-                        Click để xem chi tiết hướng dẫn thanh toán
-                    </div>
-                </div>
-
-                <div class="footer">
-                    <div class="quantity">
+                    <div class="flex justify-content-between w-full">
+                        <div class="mr-3 content">{{ item?.name }}</div>
                         <div>
-                            <div class="mb-3">
-                                <label class="block mb-2" for=""
-                                    >Ảnh chụp bill chuyển khoản
-                                </label>
-                                <div class="mb-3" v-if="imageUrl">
-                                    <img
-                                        :src="imageUrl"
-                                        alt="Uploaded Image"
-                                        style="max-width: 300px"
-                                    />
-                                </div>
-                                <small
-                                    class="error block"
-                                    v-if="orderDataError?.bill"
-                                    >{{ orderDataError?.bill[0] }}</small
-                                >
-                                <ImageUploader
-                                    label="Tải ảnh bill chuyển khoản"
-                                    collection="avatar"
-                                    @upload="handleUpload"
-                                ></ImageUploader>
-                            </div>
-                            <div>
-                                <label class="block mb-2" for=""
-                                    >Ghi chú <span class="error">*</span></label
-                                >
-                                <Textarea
-                                    v-model="orderData.note"
-                                    rows="5"
-                                    cols="30"
-                                />
-                                <small
-                                    class="error block"
-                                    v-if="orderDataError?.note"
-                                    >{{ orderDataError?.note[0] }}</small
-                                >
-                            </div>
+                            <PriceCommon :value="item?.price"></PriceCommon>
                         </div>
                     </div>
-                    <div>
-                        <Button
-                            label="Gửi yêu cầu thanh toán"
-                            class="custom"
-                            @click="createOrder"
-                            :disabled="btnDisable"
-                        ></Button>
+                </div>
+            </div>
+            <div class="info">
+                <div class="info-t">
+                    <p>Tạm tính:</p>
+                    <p>
+                        <PriceCommon
+                            type="default"
+                            :value="calcTotalPrice(items)"
+                        ></PriceCommon>
+                    </p>
+                </div>
+                <div class="info-t">
+                    <p>Thành tiền:</p>
+                    <p class="price">
+                        <PriceCommon
+                            :value="calcTotalPrice(items)"
+                        ></PriceCommon>
+                    </p>
+                </div>
+                <div class="info-t tutorial-link">
+                    <p @click="gotoTutorial()">
+                        Click để xem hướng dẫn thanh toán
+                    </p>
+                </div>
+                <div class="info-t">
+                    <div class="mb-3">
+                        <label class="block mb-2" for=""
+                            >Ảnh chụp bill chuyển khoản
+                        </label>
+                        <div class="mb-3" v-if="imageUrl">
+                            <img
+                                :src="imageUrl"
+                                alt="Uploaded Image"
+                                style="max-width: 70px"
+                            />
+                        </div>
+                        <small
+                            class="error block"
+                            v-if="orderDataError?.bill"
+                            >{{ orderDataError?.bill[0] }}</small
+                        >
+                        <ImageUploader
+                            label="Tải ảnh bill chuyển khoản"
+                            collection="avatar"
+                            @upload="handleUpload"
+                        ></ImageUploader>
                     </div>
                 </div>
-            </template>
-        </DataTable>
+                <div class="info-t note">
+                    <div>
+                        <label class="block mb-2" for=""
+                            >Ghi chú <span class="error">*</span></label
+                        >
+                        <Textarea v-model="orderData.note" rows="5" cols="40" />
+                        <small
+                            class="error block"
+                            v-if="orderDataError?.note"
+                            >{{ orderDataError?.note[0] }}</small
+                        >
+                    </div>
+                </div>
+
+                <Button
+                    label="Gửi yêu cầu thanh toán"
+                    class="custom w-full mt-3"
+                    @click="createOrder"
+                    :disabled="btnDisable"
+                ></Button>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -92,9 +93,10 @@
 import { ref } from 'vue';
 import Api from '~/network/Api';
 import { useToast } from 'primevue/usetoast';
-import { formatNumberWithCommas } from '#build/imports';
 import ImageUploader from '~/components/General/ImageUploader.vue';
 import HeaderPage from '~/components/General/HeaderPage.vue';
+import BackgroundImageCommon from '~/components/General/BackgroundImageCommon.vue';
+import PriceCommon from '~/components/General/PriceCommon.vue';
 
 const btnDisable = ref(false);
 const toast = useToast();
@@ -131,6 +133,8 @@ const getTabs = async () => {
         .getTabByIds({ ids: ids })
         .then((res: any) => {
             items.value = res.data;
+            console.log('items', items.value);
+
             totalPrice.value = items.value.reduce(
                 (total, i: any) => total + i.price,
                 0,
@@ -176,6 +180,14 @@ const createOrder = async () => {
 const gotoTutorial = () => {
     window.open('/tutorial', '_blank');
 };
+
+const calcTotalPrice = (items: any) => {
+    const total = items.reduce((total: number, item: any) => {
+        return total + item.price;
+    }, 0);
+
+    return total;
+};
 </script>
 
 <style scoped lang="scss">
@@ -188,8 +200,42 @@ const gotoTutorial = () => {
     min-height: 70vh;
 }
 .tutorial-link {
-    border-bottom: 1px solid #334155;
     cursor: pointer;
-    display: inline-block;
+}
+
+.cart-detail {
+    display: flex;
+    .item-list {
+        width: calc(100% - 300px);
+        padding: 15px;
+        .item-show {
+            display: flex;
+            .img {
+                width: 150px;
+            }
+            border-bottom: 1px solid rgb(228, 228, 228);
+            padding: 10px;
+            .content {
+                font-size: 1.2rem;
+            }
+        }
+    }
+    .info {
+        font-size: 1.2rem;
+        width: 400px;
+        padding: 15px;
+        .info-t {
+            display: flex;
+            align-items: end;
+            padding-bottom: 5px;
+            padding-top: 15px;
+            border-bottom: 1px solid rgb(221, 221, 221);
+            justify-content: space-between;
+        }
+
+        .note {
+            border-bottom: none;
+        }
+    }
 }
 </style>

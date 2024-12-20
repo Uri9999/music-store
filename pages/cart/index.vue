@@ -39,7 +39,7 @@
                 </div>
                 <div class="info-t">
                     <p>Thành tiền:</p>
-                    <p class="price">
+                    <p>
                         <PriceCommon
                             :value="calcTotalPrice(items)"
                         ></PriceCommon>
@@ -181,11 +181,6 @@ const calcTotalPrice = (items: any) => {
             justify-content: space-between;
         }
     }
-}
-
-.price {
-    font-size: 1.5rem;
-    color: var(--color-2);
 }
 
 .cart-null {
