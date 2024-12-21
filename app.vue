@@ -1,10 +1,15 @@
-<script setup>
+<script setup lang="ts">
 import { onMessage } from 'firebase/messaging';
+import Notification from './components/General/Notification.vue';
 
+const notify = ref<InstanceType<typeof Notification> | null>(null);
 const { $messaging } = useNuxtApp();
 onMessage($messaging, (payload) => {
-    console.log('Message received. Foreground:', payload);
-    alert(`${payload.notification?.title}: ${payload.notification?.body}`);
+    console.log('get');
+    
+    notify.value?.showNotification(
+        payload.notification?.body || 'New message!',
+    );
 });
 </script>
 
@@ -14,4 +19,5 @@ onMessage($messaging, (payload) => {
     </NuxtLayout>
     <Toast />
     <ConfirmDialog></ConfirmDialog>
+    <Notification ref="notify" />
 </template>
