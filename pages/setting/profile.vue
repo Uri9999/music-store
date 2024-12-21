@@ -114,6 +114,37 @@
                         userDataError?.dob[0]
                     }}</small>
                 </div>
+
+                <div class="mb-3">
+                    <label for="phone" class="block mb-1"
+                        >Số điện thoại <span class="error">*</span></label
+                    >
+                    <InputText
+                        type="text"
+                        placeholder="Phone"
+                        class="w-full"
+                        v-model="userData.phone"
+                        id="phone"
+                        fluid
+                    />
+                    <small class="error" v-if="userDataError?.phone">{{
+                        userDataError?.phone[0]
+                    }}</small>
+                </div>
+
+                <div class="mb-3">
+                    <label for="introduce" class="block mb-1">Giới thiệu</label>
+                    <Textarea
+                        v-model="userData.introduce"
+                        id="introduce"
+                        class="w-full"
+                        rows="5"
+                        fluid
+                    />
+                    <small class="error" v-if="userDataError?.introduce">{{
+                        userDataError?.introduce[0]
+                    }}</small>
+                </div>
             </div>
         </div>
         <div class="mt-5 flex justify-content-between">

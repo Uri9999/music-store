@@ -9,6 +9,8 @@ type Profile = {
     referral_code: string;
     role_id: number;
     avatar: Avatar;
+    phone: string;
+    introduce: string;
     media_avatar: File;
 };
 
@@ -26,6 +28,8 @@ type UserDataError = {
     role_id: [string];
     media_avatar: [string];
     commission_rate: [string];
+    phone: [string];
+    introduce: [string];
 };
 
 export type { Profile, UserDataError };
