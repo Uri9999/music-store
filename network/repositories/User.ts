@@ -19,4 +19,8 @@ export default () => ({
     update(id: number, payload: any) {
         return BaseApi.setAuth().post('admin/user/' + id, payload);
     },
+
+    getInfo(id: number) {
+        return BaseApi.get('user/info/' + id);
+    },
 });

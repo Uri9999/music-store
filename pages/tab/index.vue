@@ -1,6 +1,6 @@
 <template>
     <HeaderPage class="mt-5" title="Danh sách bài tag"> </HeaderPage>
-    <div \>
+    <div>
         <AllTag :tabs="tabs">
             <template #filter>
                 <Dropdown
@@ -70,7 +70,6 @@ const index = async (payload: any) => {
     await Api.tab.index(payload).then((res: any) => {
         tabs.value = res.data;
         paginator.value = res.meta;
-        console.log('paginator.value', paginator.value);
     });
 };
 

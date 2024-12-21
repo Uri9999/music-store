@@ -1,5 +1,5 @@
 <template>
-    <h2 class="my-5">Thông tin User</h2>
+    <HeaderPage title="Thông tin người soạn" class="mt-5 mb-3"> </HeaderPage>
     <div class="profile mb-5">
         <div class="avatar">
             <Avatar
@@ -11,20 +11,20 @@
         <div class="info">
             <div class="info-item">
                 <span class="info-column">Tên người soạn: </span>
-                <span> Nguyen Van Nhat</span>
+                <span> {{ user?.name }}</span>
             </div>
             <div class="info-item">
                 <span class="info-column">Ngày đăng ký:</span>
-                <span> 20/11/2022</span>
+                <span> {{ moment(user?.created_at).format('D-M-Y') }}</span>
             </div>
-            <div class="info-item">
+            <!-- <div class="info-item">
                 <span class="info-column">Số lượng tag:</span>
                 <span> 15</span>
             </div>
             <div class="info-item">
                 <span class="info-column">Giới tính:</span>
                 <span> Nam</span>
-            </div>
+            </div> -->
         </div>
     </div>
     <div class="file">
@@ -59,105 +59,56 @@
         <AllTag :tabs="tabs">
             <template #filter>
                 <h3 class="h-full flex align-items-end">
-                    Sản phẩm tạo bởi user
+                    Sản phẩm
                 </h3>
             </template>
         </AllTag>
-        <Paginate></Paginate>
+        <div class="card">
+            <Paginator
+                :rows="paginator?.perPage"
+                :totalRecords="paginator?.total"
+                :first="(paginator?.currentPage - 1) * paginator?.perPage"
+                @page="onPageChange"
+            ></Paginator>
+        </div>
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref } from 'vue';
 import AllTag from '~/components/Utils/AllTag.vue';
-import Paginate from '~/components/General/Paginate.vue';
+import Api from '~/network/Api';
+import HeaderPage from '~/components/General/HeaderPage.vue';
+import moment from 'moment';
 
-const tabs = ref([
-    {
-        image: 'https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg',
-        alt: 'Image 1',
-        name: 'Product Name',
-        inventoryStatus: 'INSTOCK',
-        price: 20,
-    },
-    {
-        image: 'https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg',
-        alt: 'Image 2',
-        name: 'Product Name',
-        inventoryStatus: 'INSTOCK',
-        price: 20,
-    },
-    {
-        image: 'https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg',
-        alt: 'Image 3',
-        name: 'Product Name',
-        inventoryStatus: 'INSTOCK',
-        price: 20,
-    },
-    {
-        image: 'https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg',
-        alt: 'Image 3',
-        name: 'Product Name',
-        inventoryStatus: 'OUTOFSTOCK',
-        price: 20,
-    },
-    {
-        image: 'https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg',
-        alt: 'Image 3',
-        name: 'Product Name',
-        inventoryStatus: 'INSTOCK',
-        price: 20,
-    },
-    {
-        image: 'https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg',
-        alt: 'Image 3',
-        name: 'Product Name',
-        inventoryStatus: 'OUTOFSTOCK',
-        price: 20,
-    },
-    {
-        image: 'https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg',
-        alt: 'Image 3',
-        name: 'Product Name',
-        inventoryStatus: 'LOWSTOCK',
-        price: 20,
-    },
-    {
-        image: 'https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg',
-        alt: 'Image 3',
-        name: 'Product Name',
-        inventoryStatus: 'LOWSTOCK',
-        price: 20,
-    },
-    {
-        image: 'https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg',
-        alt: 'Image 3',
-        name: 'Product Name',
-        inventoryStatus: 'INSTOCK',
-        price: 20,
-    },
-    {
-        image: 'https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg',
-        alt: 'Image 3',
-        name: 'Product Name',
-        inventoryStatus: 'OUTOFSTOCK',
-        price: 20,
-    },
-    {
-        image: 'https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg',
-        alt: 'Image 3',
-        name: 'Product Name',
-        inventoryStatus: 'INSTOCK',
-        price: 20,
-    },
-    {
-        image: 'https://primefaces.org/cdn/primevue/images/product/brown-purse.jpg',
-        alt: 'Image 3',
-        name: 'Product Name',
-        inventoryStatus: 'INSTOCK',
-        price: 20,
-    },
-]);
+const tabs = ref([]);
+const route = useRoute();
+const id = Number(route.params.id);
+const currentPage = ref(1);
+const paginator = ref();
+const user = ref();
+onMounted(async () => {
+    await index({}, id);
+});
+const index = async (payload: any, id: number) => {
+    await Api.tab.getTabByUserId(payload, id).then((res: any) => {
+        tabs.value = res.data;
+        paginator.value = res.meta;
+    });
+    await getInfo(id);
+};
+
+const getInfo = async (id: number) => {
+    await Api.user.getInfo(id).then((res: any) => {
+        user.value = res.data;
+        console.log('user.value', user.value);
+    });
+};
+
+const onPageChange = (event: any) => {
+    currentPage.value = event.page + 1;
+    index({ page: currentPage.value }, id);
+};
 </script>
 
 <style scoped lang="scss">

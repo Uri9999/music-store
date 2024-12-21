@@ -21,6 +21,10 @@ export default () => ({
         return BaseApi.setAuth().get('/tabs/get/by-ids', payload);
     },
 
+    getTabByUserId(payload: any, userId: number) {
+        return BaseApi.get('/tabs/by-user-id/' + userId, payload);
+    },
+
     // only manage
     adminIndex(payload: any) {
         return BaseApi.setAuth().get('admin/tabs', payload);
@@ -46,5 +50,5 @@ export default () => ({
 
     adminUpdateTab(id: number, payload: any) {
         return BaseApi.setAuth().post('admin/tabs/' + id, payload);
-    }
+    },
 });
