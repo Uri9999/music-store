@@ -9,7 +9,7 @@
             <hr />
             <div class="price">
                 <span class="amount"
-                    >{{ formatNumberWithCommas(sub.price) }} Vnd</span
+                    >{{ formatNumberWithCommas(sub.price) }} đ</span
                 >
                 <span class="per-month">{{ sub.duration_in_days }} Ngày</span>
             </div>

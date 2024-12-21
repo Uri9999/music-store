@@ -29,11 +29,7 @@
                 </div>
                 <div class="info-t">
                     <p>Thành tiền:</p>
-                    <p class="price">
-                        <PriceCommon
-                            :value="calcTotalPrice(items)"
-                        ></PriceCommon>
-                    </p>
+                    <PriceCommon :value="calcTotalPrice(items)"></PriceCommon>
                 </div>
                 <div class="info-t tutorial-link">
                     <p @click="gotoTutorial()">
@@ -65,11 +61,16 @@
                     </div>
                 </div>
                 <div class="info-t note">
-                    <div>
-                        <label class="block mb-2" for=""
+                    <div class="w-full">
+                        <label class="block mb-2" for="note"
                             >Ghi chú <span class="error">*</span></label
                         >
-                        <Textarea v-model="orderData.note" rows="5" cols="40" />
+                        <Textarea
+                            id="note"
+                            v-model="orderData.note"
+                            class="w-full"
+                            rows="5"
+                        />
                         <small
                             class="error block"
                             v-if="orderDataError?.note"
@@ -225,6 +226,7 @@ const calcTotalPrice = (items: any) => {
         width: 400px;
         padding: 15px;
         .info-t {
+            width: 100%;
             display: flex;
             align-items: end;
             padding-bottom: 5px;

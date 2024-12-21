@@ -29,7 +29,7 @@
                             <div>{{ item.user.name }}</div>
                         </div>
                         <div class="price">
-                            {{ formatNumberWithCommas(item.price) }} Vnd
+                            {{ formatNumberWithCommas(item.price) }} đ
                         </div>
                     </div>
                 </div>

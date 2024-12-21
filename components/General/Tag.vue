@@ -28,7 +28,7 @@
                         >
                     </div>
                     <span class="font-semibold text-700 price"
-                        >{{ formatNumberWithCommas(item.price) }} Vnd</span
+                        >{{ formatNumberWithCommas(item.price) }} đ</span
                     >
                 </div>
                 <InfoCommon
