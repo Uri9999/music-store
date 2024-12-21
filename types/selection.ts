@@ -8,6 +8,8 @@ type Selection = {
     article_status: Item[];
     article_types: Item[];
     user_subscription_status: Item[],
+    notification_status: Item[],
+    notification_type: Item[],
 };
 
 type Item = {

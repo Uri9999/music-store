@@ -18,13 +18,18 @@
                             v-for="(notice, index) in notifications"
                             :key="index"
                             class="item-notice cursor-pointer py-3 px-3 border-bottom relative"
+                            @click="gotoDetail(notice.id)"
                         >
                             <div class="title-notice">{{ notice.title }}</div>
                             <div class="body-notice">
                                 {{ getContentNotice(notice.body) }}
                             </div>
                             <div class="send-at" v-if="notice.send_at">
-                                {{ moment(notice.send_at).format('M:H D-M-Y') }}
+                                {{
+                                    moment(notice.send_at).format(
+                                        'HH:mm DD-MM-YYYY',
+                                    )
+                                }}
                             </div>
                         </div>
                         <div class="h-[58px] w-full" v-show="!isLastPage">
@@ -126,7 +131,11 @@ const gotoSetting = () => {
 
 const gotoListNotification = () => {
     popup.value?.hidePopup();
-    router.push({ name: 'VNotification' });
+    router.push('/notification');
+};
+
+const gotoDetail = (id: number) => {
+    router.push({ path: '/notification', query: { id: id } });
 };
 </script>
 

@@ -5,7 +5,7 @@ type NotificationType = {
     status: number;
     type: number;
     user_id: number;
-    send_at: string;
+    send_at: string | null;
     meta: any;
 };
 
