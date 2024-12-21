@@ -2,6 +2,7 @@
     <div class="bell-icon">
         <span class="menu-icon ml-2" @click="openPopup">
             <i class="pi pi-bell"></i>
+            <span class="badge">{{ countNotRead }}</span>
         </span>
         <PopupCommon ref="popup">
             <div class="bell-content text-base">
@@ -138,6 +139,20 @@ const gotoListNotification = () => {
     border-radius: 5px;
     cursor: pointer;
     position: relative;
+    .badge {
+        position: absolute;
+        top: 13px;
+        right: -5px;
+        width: 16px;
+        height: 16px;
+        border-radius: 10px;
+        background-color: var(--color-2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 0.6rem;
+    }
 }
 
 .bell-icon {
@@ -207,9 +222,7 @@ const gotoListNotification = () => {
 }
 
 .view-detail {
-    &:hover {
-        color: rgba(4, 139, 4, 0.555);
-    }
+    color: var(--color-2);
 }
 
 .send-at {
