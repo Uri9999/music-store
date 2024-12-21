@@ -13,22 +13,25 @@
                     <i class="setting-notify pi pi-cog"></i>
                 </div>
                 <div @scroll="onScroll" class="content-notice">
-                    <div
-                        v-for="(notice, index) in notifications"
-                        :key="index"
-                        class="item-notice cursor-pointer py-3 px-3 border-bottom relative"
-                    >
-                        <div class="title-notice">{{ notice.title }}</div>
-                        <div class="body-notice">
-                            {{ getContentNotice(notice.body) }}
+                    <div v-if="notifications.length">
+                        <div
+                            v-for="(notice, index) in notifications"
+                            :key="index"
+                            class="item-notice cursor-pointer py-3 px-3 border-bottom relative"
+                        >
+                            <div class="title-notice">{{ notice.title }}</div>
+                            <div class="body-notice">
+                                {{ getContentNotice(notice.body) }}
+                            </div>
+                            <div class="send-at">
+                                {{ moment(notice.send_at).format('M:H D-M-Y') }}
+                            </div>
                         </div>
-                        <div class="send-at">
-                            {{ moment(notice.send_at).format('M:H D-M-Y') }}
+                        <div class="h-[58px] w-full" v-show="!isLastPage">
+                            <LoadingCommon></LoadingCommon>
                         </div>
                     </div>
-                    <div class="h-[58px] w-full" v-show="!isLastPage">
-                        <LoadingCommon></LoadingCommon>
-                    </div>
+                    <div v-else class="notify-null py-5">Chưa có thông báo</div>
                 </div>
                 <div
                     class="text-center cursor-pointer p-2 border-top view-detail"
@@ -241,5 +244,12 @@ const gotoListNotification = () => {
 .notify-title {
     color: var(--color-2);
     font-weight: 700;
+}
+
+.notify-null {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-2);
 }
 </style>
