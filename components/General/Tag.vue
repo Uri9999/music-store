@@ -19,20 +19,22 @@
             </div>
             <div class="flex flex-column gap-2">
                 <div class="flex align-items-center justify-content-between">
-                    <DisplayRateStars :stars="item?.rating"></DisplayRateStars>
+                    <div>
+                        <DisplayRateStars
+                            :stars="item?.rating"
+                        ></DisplayRateStars>
+                        <span class="sold"
+                            >(Đã bán {{ item?.total_order_items }})</span
+                        >
+                    </div>
                     <span class="font-semibold text-700 price"
                         >{{ formatNumberWithCommas(item.price) }} Vnd</span
                     >
                 </div>
-                <div class="flex gap-2 align-items-center">
-                    <div class="avatar-info">
-                        <AvatarCommon
-                            :name="item.user.name"
-                            :src="item.user?.avatar?.url"
-                        />
-                    </div>
-                    <div>{{ item.user.name }}</div>
-                </div>
+                <InfoCommon
+                    :name="item.user.name"
+                    :src="item.user?.avatar?.url"
+                ></InfoCommon>
             </div>
         </div>
     </div>
@@ -41,9 +43,9 @@
 <script setup lang="ts">
 import { formatNumberWithCommas } from '#build/imports';
 import { useRouter } from 'vue-router';
-import AvatarCommon from './AvatarCommon.vue';
 import DisplayRateStars from './DisplayRateStars.vue';
 import BackgroundImageCommon from './BackgroundImageCommon.vue';
+import InfoCommon from './InfoCommon.vue';
 
 const props = defineProps({
     classes: {
@@ -64,7 +66,7 @@ const gotoDetail = async (id: number) => {
 
 <style lang="scss" scoped>
 .tab-content {
-    padding: 10px;
+    padding: 5px;
 }
 .detail {
     display: flex;
@@ -89,5 +91,8 @@ const gotoDetail = async (id: number) => {
 
 .price {
     color: var(--color-2) !important;
+}
+.sold {
+    font-size: 0.8rem;
 }
 </style>
