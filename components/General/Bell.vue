@@ -23,7 +23,7 @@
                             <div class="body-notice">
                                 {{ getContentNotice(notice.body) }}
                             </div>
-                            <div class="send-at">
+                            <div class="send-at" v-if="notice.send_at">
                                 {{ moment(notice.send_at).format('M:H D-M-Y') }}
                             </div>
                         </div>
