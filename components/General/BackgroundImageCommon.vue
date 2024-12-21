@@ -21,5 +21,8 @@ const props = defineProps({
     width: 100%;
     aspect-ratio: 2/ 1.3;
     overflow: hidden;
+    img {
+        width: 100%;
+    }
 }
 </style>
