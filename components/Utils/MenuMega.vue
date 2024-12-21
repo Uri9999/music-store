@@ -57,10 +57,7 @@
                         </div>
                     </div>
                     <Search></Search>
-                    <span class="menu-icon ml-2">
-                        <i class="pi pi-bell"></i>
-                        <span class="badge">+9</span>
-                    </span>
+                    <Bell></Bell>
                     <span class="menu-icon ml-2" @click="gotoCartView()">
                         <i class="pi pi-shopping-cart"></i>
                         <span class="badge" v-if="count">{{
@@ -102,9 +99,9 @@ import { useWindowSize } from 'vue-window-size';
 import CustomMenu from './Menu/CustomMenu.vue';
 import { useRouter } from 'vue-router';
 import { useSelectionStore } from '~/stores/selectionStore';
-import Api from '~/network/Api';
 import { useAuthStore } from '~/stores/authStore';
 import Search from '../General/Search.vue';
+import Bell from '../General/Bell.vue';
 import Menu from 'primevue/menu';
 import authService from '~/services/AuthService';
 import AvatarCommon from '../General/AvatarCommon.vue';

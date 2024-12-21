@@ -6,6 +6,7 @@ import Category from './repositories/Category';
 import Dashboard from './repositories/Dashboard';
 import DeviceToken from './repositories/DeviceToken';
 import Media from './repositories/Media';
+import Notification from './repositories/Notification';
 import Order from './repositories/Order';
 import RequestTab from './repositories/RequestTab';
 import Revenue from './repositories/Revenue';
@@ -34,6 +35,7 @@ const Api = {
     subscription: Subscription(),
     reviewTab: ReviewTab(),
     deviceToken: DeviceToken(),
+    notification: Notification(),
 };
 
 export default Api;
