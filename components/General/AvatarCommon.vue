@@ -57,7 +57,6 @@ const simpleColor = computed(() => {
     justify-content: center;
     align-items: center;
     color: white;
-    font-weight: bold;
     width: 100%;
     height: 100%;
     border-radius: 50%;
