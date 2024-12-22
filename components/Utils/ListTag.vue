@@ -15,7 +15,13 @@
                     ></BackgroundImageCommon>
                 </div>
                 <div class="pl-3 info">
-                    <div>{{ item.name }}</div>
+                    <div>
+                        {{ item.name }}
+                        <span class="sold"
+                            >(Đã bán {{ item?.total_order_items }})</span
+                        >
+                    </div>
+
                     <div
                         class="flex justify-content-between gap-2 align-items-center"
                     >
@@ -102,5 +108,8 @@ onMounted(async () => {
 .price {
     color: var(--color-2);
     font-weight: bold;
+}
+.sold {
+    font-size: 0.8rem;
 }
 </style>

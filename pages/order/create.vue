@@ -240,4 +240,16 @@ const calcTotalPrice = (items: any) => {
         }
     }
 }
+
+@media (max-width: 768px) {
+    .cart-detail {
+        flex-direction: column;
+        .item-list {
+            width: 100%;
+        }
+        .info {
+            width: 100%;
+        }
+    }
+}
 </style>

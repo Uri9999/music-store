@@ -217,9 +217,10 @@ const dataURLtoBlob = (dataurl: string) => {
     background-color: #ecf0f1;
 }
 
-.image-to-crop {
+.crop-img {
     max-width: 100%;
-    max-height: 400px;
+    max-height: 300px;
+    max-width: 300px;
     border-radius: 10px;
 }
 

@@ -9,6 +9,7 @@ type Tab = {
     youtobe_url: string;
     images_url: Image[];
     user: User;
+    total_order_items: number;
 };
 
 type User = {

@@ -195,4 +195,16 @@ const calcTotalPrice = (items: any) => {
     margin-top: 20px;
     margin-bottom: 20px;
 }
+
+@media (max-width: 768px) {
+    .cart-detail {
+        flex-direction: column;
+        .item-list {
+            width: 100%;
+        }
+        .info {
+            width: 100%;
+        }
+    }
+}
 </style>
