@@ -10,6 +10,9 @@ export default () => ({
     getMyNotify(payload: any) {
         return BaseApi.setAuth().get('notifications/my', payload);
     },
+    readAll() {
+        return BaseApi.setAuth().get('notifications/read-all');
+    },
     countNotReadYet() {
         return BaseApi.setAuth().get('notifications/count-not-read');
     },

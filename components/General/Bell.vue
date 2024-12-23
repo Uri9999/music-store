@@ -2,7 +2,9 @@
     <div class="bell-icon">
         <span class="menu-icon ml-2" @click="openPopup">
             <i class="pi pi-bell"></i>
-            <span class="badge">{{ countNotRead }}</span>
+            <span v-if="countNotRead != 0" class="badge">{{
+                countNotRead
+            }}</span>
         </span>
         <PopupCommon ref="popup">
             <div class="bell-content text-base">
@@ -10,7 +12,7 @@
                     class="head-notice flex justify-content-between align-items-center py-2 px-3 border-bottom"
                 >
                     <div class="notify-title">Thông báo</div>
-                    <i class="setting-notify pi pi-cog"></i>
+                    <div class="read-all" @click="readAll">Đọc toàn bộ</div>
                 </div>
                 <div @scroll="onScroll" class="content-notice">
                     <div v-if="notifications.length">
@@ -19,6 +21,7 @@
                             :key="index"
                             class="item-notice cursor-pointer py-3 px-3 border-bottom relative"
                             @click="gotoDetail(notice.id)"
+                            :class="{ 'un-read': notice.status != 2 }"
                         >
                             <div class="title-notice">{{ notice.title }}</div>
                             <div class="body-notice">
@@ -58,6 +61,7 @@ import { useRouter } from 'vue-router';
 import type { NotificationType } from '~/types/notification';
 import LoadingCommon from './LoadingCommon.vue';
 
+const toast = useToast();
 const notifications = ref([] as NotificationType[]);
 const isLoading = ref(false);
 const router = useRouter();
@@ -137,6 +141,29 @@ const gotoListNotification = () => {
 const gotoDetail = (id: number) => {
     router.push({ path: '/notification', query: { id: id } });
 };
+
+const readAll = async () => {
+    await Api.notification
+        .readAll()
+        .then(async (res: any) => {
+            toast.add({
+                severity: 'success',
+                summary: 'Thông báo',
+                detail: res.message,
+                life: 3000,
+            });
+            await getNotification();
+            countNotRead.value = 0;
+        })
+        .catch((err: any) => {
+            toast.add({
+                severity: 'error',
+                summary: 'Có lỗi xảy ra',
+                detail: err.message,
+                life: 3000,
+            });
+        });
+};
 </script>
 
 <style lang="scss" scoped>
@@ -191,7 +218,7 @@ const gotoDetail = (id: number) => {
         border-radius: 2px;
 
         .content-notice {
-            max-height: 500px;
+            max-height: 430px;
             overflow-y: auto;
 
             .item-notice {
@@ -254,11 +281,19 @@ const gotoDetail = (id: number) => {
     color: var(--color-2);
     font-weight: 700;
 }
+.read-all {
+    font-size: 0.9rem;
+    color: var(--color-2);
+    cursor: pointer;
+}
 
 .notify-null {
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--color-2);
+}
+.un-read {
+    // background-color: #D9ECFF;
 }
 </style>
