@@ -145,14 +145,14 @@ const gotoDetail = (id: number) => {
 const readAll = async () => {
     await Api.notification
         .readAll()
-        .then(async (res: any) => {
+        .then((res: any) => {
             toast.add({
                 severity: 'success',
                 summary: 'Thông báo',
                 detail: res.message,
                 life: 3000,
             });
-            await getNotification();
+            notifications.value = []
             countNotRead.value = 0;
         })
         .catch((err: any) => {
