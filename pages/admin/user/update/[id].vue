@@ -5,11 +5,12 @@
             <div class="grid">
                 <div class="col-12 md:col-6">
                     <div class="mb-3">
-                        <Avatar
-                            classes="avatar mb-3"
-                            :name="userData.name"
-                            :src="avatarUrl ?? userData?.avatar?.url"
-                        ></Avatar>
+                        <div class="avatar rounded-full mb-3">
+                            <AvatarCommon
+                                :name="userData.name"
+                                :src="avatarUrl ?? userData?.avatar?.url"
+                            />
+                        </div>
                         <ImageUploader
                             label="Cập nhật ảnh đại diện cho user"
                             collection="avatar"
@@ -68,21 +69,6 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="email" class="block mb-1">Giới tính</label>
-                        <Dropdown
-                            v-model="userData.gender"
-                            :options="selection?.user_gender"
-                            optionLabel="label"
-                            optionValue="value"
-                            placeholder="Select a role"
-                            class="w-full md:w-56"
-                        />
-                        <small class="error" v-if="userDataError?.gender">{{
-                            userDataError?.gender[0]
-                        }}</small>
-                    </div>
-
-                    <div class="mb-3">
                         <label for="email" class="block mb-1">Trạng thái</label>
                         <Dropdown
                             v-model="userData.status"
@@ -97,16 +83,38 @@
                         }}</small>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="email" class="block mb-1">Ngày sinh</label>
-                        <Calendar
-                            v-model="userData.dob"
-                            dateFormat="yy-mm-dd"
-                            placeholder="YYYY-MM-DD"
-                        />
-                        <small class="error" v-if="userDataError?.dob">{{
-                            userDataError?.dob[0]
-                        }}</small>
+                    <div class="grid">
+                        <div class="mb-3 col-6">
+                            <label for="email" class="block mb-1"
+                                >Ngày sinh <span class="error">*</span></label
+                            >
+                            <div>
+                                <Calendar
+                                    v-model="userData.dob"
+                                    dateFormat="yy-mm-dd"
+                                    placeholder="YYYY-MM-DD"
+                                />
+                            </div>
+                            <small class="error" v-if="userDataError?.dob">{{
+                                userDataError?.dob[0]
+                            }}</small>
+                        </div>
+                        <div class="mb-3 col-6">
+                            <label for="email" class="block mb-1"
+                                >Giới tính <span class="error">*</span></label
+                            >
+                            <Dropdown
+                                v-model="userData.gender"
+                                :options="selection?.user_gender"
+                                optionLabel="label"
+                                optionValue="value"
+                                placeholder="Select a role"
+                                class="w-60"
+                            />
+                            <small class="error" v-if="userDataError?.gender">{{
+                                userDataError?.gender[0]
+                            }}</small>
+                        </div>
                     </div>
 
                     <div class="mb-3">
@@ -142,8 +150,8 @@ import type { Selection, Item } from '~/types/selection';
 import type { Profile, UserDataError } from '~/types/user';
 import ImageUploader from '~/components/General/ImageUploader.vue';
 import moment from 'moment';
-import Avatar from '~/components/General/AvatarCommon.vue';
 import HeaderPage from '~/components/General/HeaderPage.vue';
+import AvatarCommon from '~/components/General/AvatarCommon.vue';
 
 definePageMeta({
     layout: 'admin',
@@ -217,12 +225,17 @@ const back = () => {
 
 <style lang="scss" scoped>
 .avatar {
-    width: 100px;
-    height: 100px;
-    border-radius: 50px;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
 }
 
 .update-user {
     // max-width: 600px;
+}
+
+label {
+    font-weight: bold;
+    color: #334155;
 }
 </style>
