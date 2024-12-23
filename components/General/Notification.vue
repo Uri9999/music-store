@@ -1,24 +1,29 @@
 <template>
     <div v-if="notifications.length" class="notification-container">
         <div
+            class="notification"
             v-for="(notification, index) in notifications"
             :key="index"
-            class="notification"
-            :style="{ bottom: `${index * 60}px` }"
         >
-            {{ notification?.message }}
+            <h4 class="title">
+                {{ truncateDescription(notification?.title, 50) }}
+            </h4>
+            <p class="body">
+                {{ truncateDescription(notification?.body, 190) }}
+            </p>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import { truncateDescription } from '#build/imports';
 
 const notifications = ref([] as any);
 
 // Hàm để thêm thông báo
-function showNotification(message: any) {
-    notifications.value.push({ message });
+function showNotification(notification: any) {
+    notifications.value.push(notification);
 
     // Tự động xóa thông báo sau 5 giây
     setTimeout(() => {
@@ -30,7 +35,7 @@ defineExpose({
 });
 </script>
 
-<style>
+<style scoped lang="scss">
 .notification-container {
     position: fixed;
     right: 20px;
@@ -39,14 +44,26 @@ defineExpose({
 }
 
 .notification {
-    background-color: #444;
-    color: white;
+    background-color: white;
     padding: 10px 20px;
     border-radius: 5px;
     margin-bottom: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: rgb(201, 201, 201) 0px 4px 6px;
     animation: slide-in 0.3s ease-out;
-    min-width: 250px;
+    width: 300px;
+    height: 180px;
+    padding: 10px;
+    border-radius: 3px;
+
+    .title {
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+        color: var(--color-2);
+    }
+
+    .body {
+        color: black;
+    }
 }
 
 /* Hiệu ứng slide-in */
