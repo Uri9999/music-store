@@ -53,12 +53,12 @@ defineExpose({
     width: 300px;
     height: 180px;
     padding: 10px;
-    border-radius: 3px;
+    border-radius: 10px;
 
     .title {
-        font-size: 1.1rem;
         margin-bottom: 10px;
         color: var(--color-2);
+        font-weight: 700;
     }
 
     .body {
