@@ -82,37 +82,38 @@
                     }}</small>
                 </div>
 
-                <div class="mb-3">
-                    <label for="email" class="block mb-1"
-                        >Giới tính <span class="error">*</span></label
-                    >
-                    <Dropdown
-                        v-model="userData.gender"
-                        :options="selection?.user_gender"
-                        optionLabel="label"
-                        optionValue="value"
-                        placeholder="Select a role"
-                        class="w-60"
-                    />
-                    <small class="error" v-if="userDataError?.gender">{{
-                        userDataError?.gender[0]
-                    }}</small>
-                </div>
-
-                <div class="mb-3">
-                    <label for="email" class="block mb-1"
-                        >Ngày sinh <span class="error">*</span></label
-                    >
-                    <div>
-                        <Calendar
-                            v-model="userData.dob"
-                            dateFormat="yy-mm-dd"
-                            placeholder="YYYY-MM-DD"
-                        />
+                <div class="grid">
+                    <div class="mb-3 col-6">
+                        <label for="email" class="block mb-1"
+                            >Ngày sinh <span class="error">*</span></label
+                        >
+                        <div>
+                            <Calendar
+                                v-model="userData.dob"
+                                dateFormat="yy-mm-dd"
+                                placeholder="YYYY-MM-DD"
+                            />
+                        </div>
+                        <small class="error" v-if="userDataError?.dob">{{
+                            userDataError?.dob[0]
+                        }}</small>
                     </div>
-                    <small class="error" v-if="userDataError?.dob">{{
-                        userDataError?.dob[0]
-                    }}</small>
+                    <div class="mb-3 col-6">
+                        <label for="email" class="block mb-1"
+                            >Giới tính <span class="error">*</span></label
+                        >
+                        <Dropdown
+                            v-model="userData.gender"
+                            :options="selection?.user_gender"
+                            optionLabel="label"
+                            optionValue="value"
+                            placeholder="Select a role"
+                            class="w-60"
+                        />
+                        <small class="error" v-if="userDataError?.gender">{{
+                            userDataError?.gender[0]
+                        }}</small>
+                    </div>
                 </div>
 
                 <div class="mb-3">
