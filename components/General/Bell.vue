@@ -11,7 +11,7 @@
                 <div
                     class="head-notice flex justify-content-between align-items-center py-2 px-3 border-bottom"
                 >
-                    <div class="notify-title">Thông báo</div>
+                    <div class="notify-title">Thông báo mới</div>
                     <div class="read-all" @click="readAll">Đọc toàn bộ</div>
                 </div>
                 <div @scroll="onScroll" class="content-notice">
