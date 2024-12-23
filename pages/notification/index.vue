@@ -51,21 +51,21 @@
                 }}</span>
             </template>
         </Column>
-        <Column field="type" header="Loại" style="width: 10rem">
+        <Column field="type" header="Loại" style="width: 13rem">
             <template #body="slotProps">
                 <span :class="convertType(slotProps.data?.type).class">{{
                     convertType(slotProps.data?.type).label
                 }}</span>
             </template>
         </Column>
-        <Column field="send_at" header="Gửi lúc" style="width: 10rem">
+        <Column field="send_at" header="Gửi lúc" style="width: 12rem">
             <template #body="slotProps">
                 <span v-if="slotProps.data.send_at">{{
                     moment(slotProps.data.send_at).format('HH:mm DD-MM-YYYY')
                 }}</span>
             </template>
         </Column>
-        <Column :exportable="false" header="Hành động" style="min-width: 12rem">
+        <Column :exportable="false" header="Hành động" style="min-width: 8rem">
             <template #body="slotProps">
                 <Button
                     icon="pi pi-info-circle"
@@ -156,10 +156,19 @@ const convertStatus = (status: number) => {
 };
 const convertType = (type: number) => {
     if (type == 1) {
-        return { label: 'Tạo đơn hàng', class: 'status-sent' };
+        return { label: 'Tạo đơn hàng', class: 'type-create-order' };
     } else if (type == 2) {
-        return { label: '??', class: 'status-read' };
+        return { label: 'Phê duyệt đơn hàng', class: 'type-approve-order' };
+    } else if (type == 3) {
+        return { label: 'Hủy đơn hàng', class: 'type-reject-order' };
+    } else if (type == 4) {
+        return { label: 'Đăng ký Subscription', class: 'type-register-sub' };
+    } else if (type == 5) {
+        return { label: 'Phê duyệt Subscription', class: 'type-approve-sub' };
+    } else if (type == 6) {
+        return { label: 'Hủy Subscription', class: 'type-reject-sub' };
     }
+
     return { label: 'error', class: 'status-fail' };
 };
 
