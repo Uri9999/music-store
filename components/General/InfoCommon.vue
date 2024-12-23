@@ -3,7 +3,7 @@
         <div class="avatar-info">
             <AvatarCommon :name="name" :src="src" />
         </div>
-        <div>{{ name }}</div>
+        <div class="name">{{ name }}</div>
     </div>
 </template>
 
@@ -25,5 +25,9 @@ const props = defineProps({
 .avatar-info {
     width: 26px;
     height: 26px;
+}
+.name {
+    font-size: .9rem;
+    color: var(--color-2);
 }
 </style>

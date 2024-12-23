@@ -294,4 +294,11 @@ const downloadPdf = () => {
 .image-main {
     height: 450px;
 }
+.list-img {
+    display: flex;
+    flex-direction: column;
+    .item-img {
+        margin-bottom: 10px;
+    }
+}
 </style>
