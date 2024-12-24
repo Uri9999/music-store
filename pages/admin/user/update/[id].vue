@@ -12,7 +12,7 @@
                             />
                         </div>
                         <ImageUploader
-                            label="Cập nhật ảnh đại diện cho user"
+                            label="Chỉnh sửa ảnh đại diện"
                             collection="avatar"
                             :aspectRatio="1 / 1"
                             @upload="handleUpload"

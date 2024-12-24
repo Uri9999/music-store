@@ -11,7 +11,7 @@
                 </div>
                 <div class="btn-upload">
                     <ImageUploader
-                        label="Cập nhật ảnh đại diện cho user"
+                        label="Chỉnh sửa ảnh đại diện"
                         collection="avatar"
                         :aspectRatio="1 / 1"
                         @upload="handleUpload"
@@ -60,7 +60,6 @@
                     <div class="flex">
                         <InputText
                             type="text"
-                            placeholder="referral-code"
                             class="w-full"
                             v-model="userData.referral_code"
                             id="referral-code"
