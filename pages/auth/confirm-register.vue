@@ -26,7 +26,7 @@ const message = ref();
 const status = ref();
 onMounted(async () => {
     Api.auth
-        .resetPassword({ email: email, token: token })
+        .verifyUser({ email: email, token: token })
         .then((res) => {
             message.value = res.message;
             status.value = true;
