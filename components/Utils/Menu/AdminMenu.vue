@@ -12,110 +12,82 @@
         />
         <Icon
             class="icon-bar"
-            @click="smallMenu = !smallMenu"
+            v-if="smallMenu"
+            @click="emit('updateIconValue', !smallMenu);"
             name="bar"
         ></Icon>
     </div>
 </template>
 
-<script>
+<script setup>
+import { ref } from 'vue';
 import AdminMenuItem from './AdminMenuItem.vue';
 import Icon from '~/components/General/Icon.vue';
 
-export default {
-    name: 'recursive-menu',
-    data: () => ({
-        smallMenu: false,
-        menuTree: [
-            {
-                label: 'Trang chủ',
-                icon: 'home',
-                toRoute: '/admin'
-                // children: [
-                //     {
-                //         label: 'level 1.1',
-                //         children: [
-                //             {
-                //                 label: 'level 1.1.1',
-                //                 children: [
-                //                     {
-                //                         label: 'level 1.1.1.1',
-                //                     },
-                //                 ],
-                //             },
-                //         ],
-                //     },
-                //     {
-                //         label: 'level 1.2',
-                //     },
-                // ],
-            },
-            {
-                label: 'User',
-                icon: 'manage-account',
-                toRoute: '/admin/user'
-                // children: [
-                //     {
-                //         label: 'Danh sách user',
-                //         toRoute: '/admin/user'
-                //     },
-                //     {
-                //         label: 'Tạo mới user',
-                //     }
-                // ],
-            },
-            {
-                label: 'Tab',
-                icon: 'library-music',
-                toRoute: '/admin/tab'
-            },
-            {
-                label: 'Đơn hàng',
-                icon: 'list-alt-check',
-                toRoute: '/admin/order'
-            },
-            {
-                label: 'Subscription',
-                icon: 'subscriptions',
-                toRoute: '/admin/user-subscription'
-            },
-            {
-                label: 'Danh mục',
-                icon: 'category',
-                toRoute: '/admin/category'
-            },
-            {
-                label: 'Yêu cầu Tab',
-                icon: 'clinical-notes',
-                toRoute: '/admin/request-tab'
-            },
-            {
-                label: 'Blog',
-                icon: 'menu-book',
-                toRoute: '/admin/article'
-            },
-            {
-                label: 'Doanh Thu',
-                icon: 'payments',
-                toRoute: '/admin/revenue'
-            },
-            {
-                label: 'Banner',
-                icon: 'image',
-                toRoute: '/admin/banner'
-            },
-            {
-                label: 'Đánh giá Tab',
-                icon: 'reviews',
-                toRoute: '/admin/review-tab'
-            },
-        ],
-    }),
-    components: {
-        AdminMenuItem,
-        Icon,
+const props = defineProps({
+    smallMenu: {
+        type: Boolean,
+        default: false,
     },
-};
+});
+const emit = defineEmits(['updateIconValue']);
+const menuTree = ref([
+    {
+        label: 'Trang chủ',
+        icon: 'home',
+        toRoute: '/admin',
+    },
+    {
+        label: 'User',
+        icon: 'manage-account',
+        toRoute: '/admin/user',
+    },
+    {
+        label: 'Tab',
+        icon: 'library-music',
+        toRoute: '/admin/tab',
+    },
+    {
+        label: 'Đơn hàng',
+        icon: 'list-alt-check',
+        toRoute: '/admin/order',
+    },
+    {
+        label: 'Subscription',
+        icon: 'subscriptions',
+        toRoute: '/admin/user-subscription',
+    },
+    {
+        label: 'Danh mục',
+        icon: 'category',
+        toRoute: '/admin/category',
+    },
+    {
+        label: 'Yêu cầu Tab',
+        icon: 'clinical-notes',
+        toRoute: '/admin/request-tab',
+    },
+    {
+        label: 'Blog',
+        icon: 'menu-book',
+        toRoute: '/admin/article',
+    },
+    {
+        label: 'Doanh Thu',
+        icon: 'payments',
+        toRoute: '/admin/revenue',
+    },
+    {
+        label: 'Banner',
+        icon: 'image',
+        toRoute: '/admin/banner',
+    },
+    {
+        label: 'Đánh giá Tab',
+        icon: 'reviews',
+        toRoute: '/admin/review-tab',
+    },
+]);
 </script>
 
 <style lang="scss" scoped>

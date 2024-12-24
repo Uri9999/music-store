@@ -1,21 +1,34 @@
 <template>
     <div class="main">
-        <AdminMenu></AdminMenu>
+        <AdminMenu
+            :smallMenu="smallMenu"
+            @updateIconValue="toggleMenu"
+        ></AdminMenu>
         <div class="body">
-            <div class="head">
-                <span class="mr-3 profile-name">{{ profile?.name }}</span>
-                <div class="avatar" @click="toggle">
-                    <AvatarCommon
-                        :name="profile?.name"
-                        :src="profile?.avatar?.url ?? null"
+            <div class="head px-3">
+                <div>
+                    <Icon
+                        class="icon-bar cursor-pointer"
+                        @click="smallMenu = !smallMenu"
+                        v-if="!smallMenu"
+                        name="bar"
+                    ></Icon>
+                </div>
+                <div class="flex align-items-center">
+                    <span class="mr-3 profile-name">{{ profile?.name }}</span>
+                    <div class="avatar" @click="toggle">
+                        <AvatarCommon
+                            :name="profile?.name"
+                            :src="profile?.avatar?.url ?? null"
+                        />
+                    </div>
+                    <Menu
+                        ref="menu"
+                        id="overlay_menu"
+                        :model="dropdownItems"
+                        :popup="true"
                     />
                 </div>
-                <Menu
-                    ref="menu"
-                    id="overlay_menu"
-                    :model="dropdownItems"
-                    :popup="true"
-                />
             </div>
             <div class="container">
                 <NuxtPage />
@@ -26,8 +39,10 @@
 <script lang="ts" setup>
 import AdminMenu from '~/components/Utils/Menu/AdminMenu.vue';
 import AvatarCommon from '~/components/General/AvatarCommon.vue';
+import Icon from '~/components/General/Icon.vue';
 import authService from '~/services/AuthService';
 
+const smallMenu = ref(false);
 const authStore = useAuthStore();
 const { profile } = storeToRefs(authStore);
 const { confirmDelete } = authService();
@@ -43,6 +58,10 @@ const dropdownItems = ref([
 const menu = ref();
 const toggle = (event: Event) => {
     menu.value.toggle(event);
+};
+
+const toggleMenu = (value: boolean) => {
+    smallMenu.value = value;
 };
 </script>
 
@@ -63,16 +82,12 @@ const toggle = (event: Event) => {
 }
 
 .head {
-    // position: sticky;
-    // top: 0;
-    // z-index: 10;
     background-color: white;
     height: 56px;
     border-bottom: 1px solid rgb(235, 235, 235);
     display: flex;
     align-items: center;
-    justify-content: end;
-    padding-right: 20px;
+    justify-content: space-between;
     .avatar {
         width: 30px;
         height: 30px;

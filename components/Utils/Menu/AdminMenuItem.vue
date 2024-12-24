@@ -6,7 +6,6 @@
             :style="{ paddingLeft: depth * 20 + 20 + 'px' }"
         >
             <div class="left">
-                <!-- <i v-if="icon" class="pi" :class="icon"></i> -->
                 <Icon v-if="icon" :name="icon"></Icon>
                 <span v-if="showLabel">{{ label }}</span>
             </div>

@@ -26,8 +26,8 @@
                         optionValue="value"
                         placeholder="Trạng thái"
                     />
-                    <small class="error" v-if="articleDataError?.title">{{
-                        articleDataError?.title[0]
+                    <small class="error" v-if="articleDataError?.status">{{
+                        articleDataError?.status[0]
                     }}</small>
                 </div>
 
