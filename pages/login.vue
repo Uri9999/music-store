@@ -199,6 +199,7 @@
     </div>
     <Dialog
         :content="dialogContent"
+        :header="'Thông báo'"
         :visible="dialogVisible"
         @close="dialogVisible = false"
     ></Dialog>

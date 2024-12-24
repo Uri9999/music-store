@@ -2,8 +2,8 @@
     <div class="dialog" v-if="visible">
         <div class="body">
             <div class="head">
-                <h2>Header</h2>
-                <i class="pi pi-times"></i>
+                <h2>{{ header }}</h2>
+                <i class="pi pi-times" @click="emit('close')"></i>
             </div>
 
             <div class="content">
@@ -14,7 +14,6 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
 
 const props = defineProps({
     visible: {
@@ -22,6 +21,10 @@ const props = defineProps({
         default: false,
     },
     content: {
+        type: String,
+        default: '',
+    },
+    header: {
         type: String,
         default: '',
     },
