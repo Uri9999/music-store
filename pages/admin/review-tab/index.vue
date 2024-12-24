@@ -29,12 +29,12 @@
             </div>
         </template>
 
-        <Column field="name" header="Người đánh giá">
+        <Column field="name" header="Người đánh giá" style="min-width:12rem">
             <template #body="slotProps">
                 <span>{{ slotProps.data.user.name }}</span>
             </template>
         </Column>
-        <Column field="tab" header="Tab">
+        <Column field="tab" header="Tab" style="min-width:12rem">
             <template #body="slotProps">
                 <span>{{ slotProps.data.tab.name }}</span>
             </template>
@@ -44,7 +44,7 @@
                 <span>{{ slotProps.data.comment }}</span>
             </template>
         </Column>
-        <Column field="rating" header="Đánh giá" style="">
+        <Column field="rating" header="Đánh giá" style="min-width: 8rem">
             <template #body="slotProps">
                 <DisplayRateStars
                     :stars="slotProps.data.rating"

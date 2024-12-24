@@ -62,6 +62,7 @@
                     <a
                         v-tooltip="slotProps.data?.youtube_url"
                         :href="slotProps.data?.youtube_url"
+                        v-if="slotProps.data?.youtube_url"
                         target="_blank"
                         >Link</a
                     >

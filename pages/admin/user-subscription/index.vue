@@ -107,7 +107,7 @@
             </template>
         </Column>
 
-        <Column :exportable="false" header="Hành động">
+        <Column :exportable="false" header="Hành động" style="min-width: 8rem">
             <template #body="slotProps">
                 <Button
                     outlined

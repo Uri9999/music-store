@@ -1,5 +1,6 @@
 <template>
-    <HeaderPage class="mt-5 mb-3" title="Danh sách yêu cầu của bạn"> </HeaderPage>
+    <HeaderPage class="mt-5 mb-3" title="Danh sách yêu cầu của bạn">
+    </HeaderPage>
     <div class="request-tab">
         <Button
             label="Tạo yêu cầu tab"

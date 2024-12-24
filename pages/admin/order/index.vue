@@ -90,7 +90,7 @@
                 </div>
             </template>
         </Column>
-        <Column :exportable="false" header="Hành động">
+        <Column :exportable="false" header="Hành động"  style="min-width: 11rem">
             <template #body="slotProps">
                 <Button
                     icon="pi pi-info-circle"

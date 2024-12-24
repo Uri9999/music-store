@@ -95,7 +95,7 @@
                     @click="editRequestTab(slotProps.data)"
                 />
                 <Button
-                    icon="pi pi-times"
+                    icon="pi pi-times-circle"
                     outlined
                     rounded
                     severity="danger"
