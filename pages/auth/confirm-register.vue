@@ -8,7 +8,8 @@
             <div class="icon" v-if="status === false">
                 <i class="pi pi-times-circle text-red-500 text-lg"></i>
             </div>
-            <div>{{ message }}</div>
+            <div>{{ message }} <span class="goto-login cursor-pointer" @click="router.push('/login')" v-if="status === true"> Đi đến màn đăng nhập</span></div>
+            
         </div>
     </div>
 </template>
@@ -20,6 +21,7 @@ definePageMeta({
 });
 
 const route = useRoute();
+const router = useRouter();
 const email = route.query.email || '';
 const token = route.query.token || '';
 const message = ref();
@@ -50,5 +52,10 @@ onMounted(async () => {
     i {
         font-size: 5rem !important;
     }
+}
+
+.goto-login {
+    color: var(--color-2);
+    border-bottom: 1px solid var(--color-2);
 }
 </style>

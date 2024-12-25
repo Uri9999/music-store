@@ -17,11 +17,11 @@
                         v-model="text"
                         placeholder="Tìm kiếm"
                         fluid
-                        @keyup.enter="submitSearch"
+                        @keyup="submitSearch"
                         @vue:mounted="textFocus"
                     />
                 </IconField>
-                <small v-show="isShowInstruct">Enter to search</small>
+                <!-- <small v-show="isShowInstruct">Enter to search</small> -->
                 <div class="list-result">
                     <div
                         v-for="(result, index) in results"

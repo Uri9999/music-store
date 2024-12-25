@@ -32,7 +32,7 @@
                                     :src="item.user?.avatar?.url"
                                 />
                             </div>
-                            <div>{{ item.user.name }}</div>
+                            <div class="name">{{ item.user.name }}</div>
                         </div>
                         <div class="price">
                             {{ formatNumberWithCommas(item.price) }} đ
@@ -101,6 +101,10 @@ onMounted(async () => {
 .avatar-info {
     width: 26px;
     height: 26px;
+}
+.name {
+    font-size: 0.9rem;
+    color: var(--color-2);
 }
 .info {
     width: 100%;
