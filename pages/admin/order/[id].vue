@@ -1,6 +1,6 @@
 <template>
     <HeaderPage title="Chi tiết đơn hàng"></HeaderPage>
-    <div class="flex gap-4">
+    <div class="flex mt-5 gap-4">
         <div>
             <h3 class="mb-3 order-title">Thông tin đơn hàng</h3>
             <div class="order">

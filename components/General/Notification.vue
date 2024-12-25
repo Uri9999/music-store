@@ -18,7 +18,7 @@
             <p class="body">
                 {{ truncateDescription(notification?.body, 100) }}
             </p>
-            <p class="domain">www.zumitap.vn</p>
+            <p class="domain">www.zumitab.vn</p>
             <Button
                 label="Đóng"
                 @click="removeNotification(index)"

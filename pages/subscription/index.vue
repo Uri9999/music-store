@@ -44,7 +44,7 @@
                 <InputText
                     v-model="subscription.referral_code"
                     id="note"
-                    class="flex-auto w-full"
+                    class="flex-auto w-full referral-code"
                 />
                 <small class="error" v-if="subscriptionError?.referral_code">{{
                     subscriptionError?.referral_code[0]
@@ -332,6 +332,9 @@ const clearSubscriptionError = () => {
 .sub-name {
     color: var(--color-2);
     font-size: 1.5rem;
+}
+.referral-code {
+    max-width: 300px;
 }
 
 @media (max-width: 768px) {
