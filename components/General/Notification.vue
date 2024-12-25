@@ -9,19 +9,20 @@
                 <img class="logo mr-1" src="~/public/images/logo.jpg" />
                 <i
                     @click="removeNotification(index)"
-                    class="pi pi-times cursor-pointer"
+                    class="pi pi-times close cursor-pointer"
                 ></i>
             </div>
             <h4 class="title mt-2">
-                {{ truncateDescription(notification?.title, 50) }}
+                {{ truncateDescription(notification?.title, 30) }}
             </h4>
             <p class="body">
-                {{ truncateDescription(notification?.body, 140) }}
+                {{ truncateDescription(notification?.body, 100) }}
             </p>
+            <p class="domain">www.zumitap.vn</p>
             <Button
                 label="Đóng"
                 @click="removeNotification(index)"
-                class="w-full btn-close"
+                class="w-full btn-close custom"
                 severity="secondary"
             />
         </div>
@@ -86,9 +87,10 @@ defineExpose({
 
     .body {
         color: black;
-        height: 77px;
+        height: 60px;
     }
     .btn-close {
+        color: white;
         height: 30px;
     }
 }
@@ -102,5 +104,12 @@ defineExpose({
         opacity: 1;
         transform: translateX(0);
     }
+}
+.close {
+    color: rgb(110, 110, 110);
+}
+.domain {
+    font-size: 0.9rem;
+    color: rgb(104, 104, 104);
 }
 </style>

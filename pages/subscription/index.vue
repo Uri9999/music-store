@@ -1,101 +1,102 @@
 <template>
     <HeaderPage title="Đăng ký Subscription" class="mt-5 mb-3"> </HeaderPage>
-    <div class="subscrption-create pb-5">
-        <div class="mb-3">
-            <label for="note" class="block"
-                >Gói đăng ký <span class="error">*</span></label
-            >
-            <div>
-                <Dropdown
-                    class="mr-3 mt-2"
-                    v-model="subscription.subscription_id"
-                    :options="subscriptions"
-                    optionLabel="name"
-                    optionValue="id"
-                    placeholder="Subscription"
-                    @change="onSubChange($event)"
-                />
-            </div>
-            <small class="error" v-if="subscriptionError?.subscription_id">{{
-                subscriptionError?.subscription_id[0]
-            }}</small>
-        </div>
-
-        <div class="mb-3">
-            <label for="note" class="block mb-2"
-                >Ghi chú <span class="error">*</span>
-            </label>
-            <Textarea
-                v-model="subscription.note"
-                id="note"
-                class="flex-auto w-full"
-                rows="5"
-            />
-            <small class="error" v-if="subscriptionError?.note">{{
-                subscriptionError?.note[0]
-            }}</small>
-        </div>
-
-        <div class="mb-3">
-            <label for="note" class="block mb-2">Mã giới thiệu</label>
-            <InputText
-                v-model="subscription.referral_code"
-                id="note"
-                class="flex-auto w-full"
-            />
-            <small class="error" v-if="subscriptionError?.referral_code">{{
-                subscriptionError?.referral_code[0]
-            }}</small>
-        </div>
-
-        <div v-if="subscriptionSelected?.name">
-            <div class="mb-1">
-                Gói đăng ký:
-                <span class="price">{{ subscriptionSelected?.name }}</span>
-            </div>
-            <div class="mb-1">
-                Tổng số tiền:
-                <span class="price"
-                    >{{
-                        formatNumberWithCommas(subscriptionSelected?.price)
-                    }}
-                    VND</span
+    <div class="cart-detail">
+        <div class="item-list">
+            <div class="mb-3">
+                <label for="note" class="block"
+                    >Gói đăng ký <span class="error">*</span></label
+                >
+                <div>
+                    <Dropdown
+                        class="mr-3 mt-2"
+                        v-model="subscription.subscription_id"
+                        :options="subscriptions"
+                        optionLabel="name"
+                        optionValue="id"
+                        placeholder="Subscription"
+                        @change="onSubChange($event)"
+                    />
+                </div>
+                <small
+                    class="error"
+                    v-if="subscriptionError?.subscription_id"
+                    >{{ subscriptionError?.subscription_id[0] }}</small
                 >
             </div>
-            <div class="tutorial-link mb-1" @click="gotoTutorial()">
-                Click để xem chi tiết hướng dẫn thanh toán
-            </div>
-        </div>
 
-        <div class="mb-3">
-            <label class="block mb-2" for="">Ảnh chụp bill chuyển khoản </label>
-            <div class="mb-3" v-if="imageUrl">
-                <img
-                    :src="imageUrl"
-                    alt="Uploaded Image"
-                    style="max-width: 300px"
+            <div class="mb-3">
+                <label for="note" class="block mb-2"
+                    >Ghi chú <span class="error">*</span>
+                </label>
+                <Textarea
+                    v-model="subscription.note"
+                    id="note"
+                    class="flex-auto w-full"
+                    rows="5"
                 />
+                <small class="error" v-if="subscriptionError?.note">{{
+                    subscriptionError?.note[0]
+                }}</small>
             </div>
-            <small class="error block" v-if="subscriptionError?.bill">{{
-                subscriptionError?.bill[0]
-            }}</small>
-            <ImageUploader
-                label="Tải ảnh bill chuyển khoản"
-                collection="avatar"
-                @upload="handleUpload"
-            ></ImageUploader>
-        </div>
 
-        <div class="flex justify-content-end">
+            <div class="mb-3">
+                <label for="note" class="block mb-2">Mã giới thiệu</label>
+                <InputText
+                    v-model="subscription.referral_code"
+                    id="note"
+                    class="flex-auto w-full"
+                />
+                <small class="error" v-if="subscriptionError?.referral_code">{{
+                    subscriptionError?.referral_code[0]
+                }}</small>
+            </div>
+        </div>
+        <div class="info">
+            <div class="info-t">
+                <p>Gói đăng ký:</p>
+                <p class="sub-name">
+                    {{ subscriptionSelected?.name }}
+                </p>
+            </div>
+            <div class="info-t">
+                <p>Thành tiền:</p>
+                <PriceCommon :value="subscriptionSelected?.price"></PriceCommon>
+            </div>
+            <div class="info-t tutorial-link">
+                <p @click="gotoTutorial()">Click để xem hướng dẫn thanh toán</p>
+            </div>
+            <div class="info-t">
+                <div class="mb-3">
+                    <label class="block mb-2" for=""
+                        >Ảnh chụp bill chuyển khoản
+                    </label>
+                    <div class="mb-3" v-if="imageUrl">
+                        <img
+                            :src="imageUrl"
+                            alt="Uploaded Image"
+                            style="max-width: 70px"
+                        />
+                    </div>
+                    <small class="error block" v-if="subscriptionError?.bill">{{
+                        subscriptionError?.bill[0]
+                    }}</small>
+                    <ImageUploader
+                        label="Tải ảnh bill chuyển khoản"
+                        collection="avatar"
+                        @upload="handleUpload"
+                    ></ImageUploader>
+                </div>
+            </div>
+
             <Button
                 label="Gửi yêu cầu thanh toán"
-                class="custom"
+                class="custom w-full mt-3"
                 @click="submit"
             ></Button>
         </div>
     </div>
     <div>
-        <h3>Danh sách subscription đăng ký</h3>
+        <h2>Danh sách subscription đăng ký</h2>
         <div>
             <TableCommon ref="tableCommon" :apiFunction="fetch">
                 <Column field="name" header="Tên Gói">
@@ -147,6 +148,7 @@ import Api from '~/network/Api';
 import { formatNumberWithCommas } from '#build/imports';
 import TableCommon from '~/components/General/TableCommon.vue';
 import moment from 'moment';
+import PriceCommon from '~/components/General/PriceCommon.vue';
 
 const router = useRouter();
 onMounted(async () => {
@@ -199,12 +201,9 @@ const handleUpload = (file: any) => {
 };
 
 const onSubChange = async (event: any) => {
-    console.log('change');
-
     subscriptionSelected.value = subscriptions.value.find(
         (element: any) => element?.id == event.value,
     );
-    console.log('subscriptionSelected.value', subscriptionSelected.value);
 };
 
 const gotoTutorial = () => {
@@ -261,10 +260,9 @@ const clearSubscriptionError = () => {
 </script>
 
 <style lang="scss" scoped>
-.subscrption-create {
+label {
     font-weight: bold;
     color: #334155;
-    max-width: 600px;
 }
 
 .status-process {
@@ -293,5 +291,58 @@ const clearSubscriptionError = () => {
 .price {
     color: var(--color-2);
     font-size: 1.4rem;
+}
+
+.cart-detail {
+    display: flex;
+    .item-list {
+        width: calc(100% - 300px);
+        padding: 15px;
+        .item-show {
+            display: flex;
+            .img {
+                width: 150px;
+            }
+            border-bottom: 1px solid rgb(228, 228, 228);
+            padding: 10px;
+            .content {
+                font-size: 1.2rem;
+            }
+        }
+    }
+    .info {
+        font-size: 1.2rem;
+        width: 400px;
+        padding: 15px;
+        .info-t {
+            width: 100%;
+            display: flex;
+            align-items: end;
+            padding-bottom: 5px;
+            padding-top: 15px;
+            border-bottom: 1px solid rgb(221, 221, 221);
+            justify-content: space-between;
+        }
+
+        .note {
+            border-bottom: none;
+        }
+    }
+}
+.sub-name {
+    color: var(--color-2);
+    font-size: 1.5rem;
+}
+
+@media (max-width: 768px) {
+    .cart-detail {
+        flex-direction: column;
+        .item-list {
+            width: 100%;
+        }
+        .info {
+            width: 100%;
+        }
+    }
 }
 </style>
