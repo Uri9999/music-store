@@ -235,8 +235,6 @@ const convertStatus = (status: number) => {
     if (status == 1) {
         return { label: 'Chờ phê duyệt', class: 'status-create' };
     } else if (status == 2) {
-        return { label: 'Thanh toán thành công', class: 'status-process' };
-    } else if (status == 3) {
         return { label: 'Hoàn thành', class: 'status-complete' };
     } else {
         return { label: 'Đã Hủy', class: 'status-fail' };

@@ -126,7 +126,7 @@
                         {{ moment(slotProps.data.end_date).format('D-M-Y') }}
                     </template>
                 </Column>
-                <Column field="Trạng thái" header="Trạng thái">
+                <Column field="Trạng thái" header="Trạng thái" style="min-width: 12rem;">
                     <template #body="slotProps">
                         <span
                             :class="convertStatus(slotProps.data?.status).class"
@@ -243,7 +243,7 @@ const convertStatus = (status: number) => {
     if (status == 1) {
         return { label: 'Chờ phê duyệt', class: 'status-process' };
     } else if (status == 2) {
-        return { label: 'Thanh toán thành công', class: 'status-complete' };
+        return { label: 'Hoàn thành', class: 'status-complete' };
     } else {
         return { label: 'Hoàn thành', class: 'status-fail' };
     }
