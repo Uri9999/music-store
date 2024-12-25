@@ -161,7 +161,6 @@ const getTab = async () => {
     await Api.requestTab
         .getCreatedByMy()
         .then((res: any) => {
-            console.log('res', res);
             tabs.value = res.data;
         })
         .catch((err) => {

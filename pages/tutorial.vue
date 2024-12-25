@@ -26,7 +26,6 @@ onMounted(async () => {
         .tutorial()
         .then((res: any) => {
             tutorial.value = res.data;
-            console.log('res', res.data);
         })
         .catch((err: any) => {});
 });

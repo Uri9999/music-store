@@ -12,7 +12,6 @@ export const useCartStore = defineStore('cart', {
                 .getCountByMe()
                 .then((res: any) => {
                     this.count = res.data;
-                    console.log('res', res.data);
                 })
                 .catch((err: any) => {
                     console.log(err);

@@ -5,12 +5,25 @@
             v-for="(notification, index) in notifications"
             :key="index"
         >
-            <h4 class="title">
+            <div class="flex align-items-center justify-content-between head">
+                <img class="logo mr-1" src="~/public/images/logo.jpg" />
+                <i
+                    @click="removeNotification(index)"
+                    class="pi pi-times cursor-pointer"
+                ></i>
+            </div>
+            <h4 class="title mt-2">
                 {{ truncateDescription(notification?.title, 50) }}
             </h4>
             <p class="body">
-                {{ truncateDescription(notification?.body, 190) }}
+                {{ truncateDescription(notification?.body, 140) }}
             </p>
+            <Button
+                label="Đóng"
+                @click="removeNotification(index)"
+                class="w-full btn-close"
+                severity="secondary"
+            />
         </div>
     </div>
 </template>
@@ -26,9 +39,13 @@ function showNotification(notification: any) {
     notifications.value.push(notification);
 
     // Tự động xóa thông báo sau 5 giây
-    setTimeout(() => {
-        notifications.value.shift();
-    }, 5000);
+    // setTimeout(() => {
+    //     notifications.value.shift();
+    // }, 5000);
+}
+// Hàm để xóa thông báo dựa trên chỉ mục
+function removeNotification(index: number) {
+    notifications.value.splice(index, 1);
 }
 defineExpose({
     showNotification,
@@ -36,6 +53,9 @@ defineExpose({
 </script>
 
 <style scoped lang="scss">
+.logo {
+    width: 50px;
+}
 .notification-container {
     position: fixed;
     right: 20px;
@@ -44,11 +64,14 @@ defineExpose({
 }
 
 .notification {
+    .head {
+        color: var(--color-2);
+    }
     background-color: white;
     padding: 10px 20px;
     border-radius: 5px;
     margin-bottom: 10px;
-    box-shadow: rgb(201, 201, 201) 0px 4px 6px;
+    box-shadow: rgb(150, 150, 150) 0px 3px 5px;
     animation: slide-in 0.3s ease-out;
     width: 300px;
     height: 180px;
@@ -63,9 +86,12 @@ defineExpose({
 
     .body {
         color: black;
+        height: 77px;
+    }
+    .btn-close {
+        height: 30px;
     }
 }
-
 /* Hiệu ứng slide-in */
 @keyframes slide-in {
     from {

@@ -23,7 +23,6 @@ onMounted(async () => {
         .policy()
         .then((res: any) => {
             policy.value = res.data;
-            console.log('res', res.data);
         })
         .catch((err: any) => {});
 });

@@ -125,7 +125,6 @@ onMounted(async () => {
     await Api.user
         .getManager({})
         .then((res: any) => {
-            console.log('res', res);
             allUserAffiliate.value = res.data;
         })
         .catch((err: any) => {
