@@ -260,11 +260,6 @@ const clearSubscriptionError = () => {
 </script>
 
 <style lang="scss" scoped>
-label {
-    font-weight: bold;
-    color: #334155;
-}
-
 .status-process {
     background-color: rgb(0, 101, 253);
     color: white;
@@ -308,6 +303,11 @@ label {
             .content {
                 font-size: 1.2rem;
             }
+        }
+
+        label {
+            font-weight: bold;
+            color: #334155;
         }
     }
     .info {
