@@ -85,9 +85,7 @@
                         </div>
                         <div class="product-info">
                             <div class="product-info__title">Giá:</div>
-                            <div class="price-value">
-                                {{ formatNumberWithCommas(tab.price) }} VND
-                            </div>
+                            <PriceCommon :value="tab.price"></PriceCommon>
                         </div>
                         <div class="mt-5">
                             <Button
@@ -167,6 +165,7 @@ import AvatarCommon from '~/components/General/AvatarCommon.vue';
 import BackgroundImageCommon from '~/components/General/BackgroundImageCommon.vue';
 import { useCartStore } from '~/stores/cartStore';
 import HeaderPage from '~/components/General/HeaderPage.vue';
+import PriceCommon from '~/components/General/PriceCommon.vue';
 
 const toast = useToast();
 const route = useRoute();
@@ -259,11 +258,6 @@ const downloadPdf = () => {
     align-items: center;
 }
 
-.price-value {
-    font-size: 1.5rem;
-    color: var(--color-2);
-    font-weight: 700;
-}
 .item-img {
     width: 100%;
     height: 22%;
