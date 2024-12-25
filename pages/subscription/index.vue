@@ -110,9 +110,19 @@
                         }}</span>
                     </template>
                 </Column>
-                <Column field="Ngày tạo" header="Ngày tạo">
+                <Column field="created_at" header="Ngày tạo">
                     <template #body="slotProps">
                         {{ moment(slotProps.data.created_at).format('D-M-Y') }}
+                    </template>
+                </Column>
+                <Column field="start_date" header="Ngày bắt đầu">
+                    <template #body="slotProps">
+                        {{ moment(slotProps.data.start_date).format('D-M-Y') }}
+                    </template>
+                </Column>
+                <Column field="end_date" header="Ngày kết thúc">
+                    <template #body="slotProps">
+                        {{ moment(slotProps.data.end_date).format('D-M-Y') }}
                     </template>
                 </Column>
                 <Column field="Trạng thái" header="Trạng thái">
