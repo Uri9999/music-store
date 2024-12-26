@@ -6,6 +6,8 @@ export const useAuthStore = defineStore('auth', {
         profile: null as Profile | null,
         isAuthenticated: false,
         isAdmin: false,
+        isStaff: false,
+        isAffiliate: false,
     }),
 
     actions: {
@@ -20,6 +22,8 @@ export const useAuthStore = defineStore('auth', {
         setProfile(user: Profile) {
             this.profile = user;
             this.isAdmin = user.role_id == 1;
+            this.isStaff = user.role_id == 2;
+            this.isAffiliate = user.role_id == 3;
         },
     },
 });

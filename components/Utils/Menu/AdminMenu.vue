@@ -13,7 +13,7 @@
         <Icon
             class="icon-bar"
             v-if="smallMenu"
-            @click="emit('updateIconValue', !smallMenu);"
+            @click="emit('updateIconValue', !smallMenu)"
             name="bar"
         ></Icon>
     </div>
@@ -23,6 +23,7 @@
 import { ref } from 'vue';
 import AdminMenuItem from './AdminMenuItem.vue';
 import Icon from '~/components/General/Icon.vue';
+import { useAuthStore } from '~/stores/authStore';
 
 const props = defineProps({
     smallMenu: {
@@ -31,6 +32,8 @@ const props = defineProps({
     },
 });
 const emit = defineEmits(['updateIconValue']);
+const authStore = useAuthStore();
+const { isAdmin, isAffiliate, isStaff } = storeToRefs(authStore);
 const menuTree = ref([
     {
         label: 'Trang chủ',
@@ -38,29 +41,9 @@ const menuTree = ref([
         toRoute: '/admin',
     },
     {
-        label: 'User',
-        icon: 'manage-account',
-        toRoute: '/admin/user',
-    },
-    {
-        label: 'Tab',
-        icon: 'library-music',
-        toRoute: '/admin/tab',
-    },
-    {
-        label: 'Đơn hàng',
-        icon: 'list-alt-check',
-        toRoute: '/admin/order',
-    },
-    {
         label: 'Subscription',
         icon: 'subscriptions',
         toRoute: '/admin/user-subscription',
-    },
-    {
-        label: 'Danh mục',
-        icon: 'category',
-        toRoute: '/admin/category',
     },
     {
         label: 'Yêu cầu Tab',
@@ -72,22 +55,53 @@ const menuTree = ref([
         icon: 'menu-book',
         toRoute: '/admin/article',
     },
-    {
-        label: 'Doanh Thu',
-        icon: 'payments',
-        toRoute: '/admin/revenue',
-    },
-    {
-        label: 'Banner',
-        icon: 'image',
-        toRoute: '/admin/banner',
-    },
-    {
-        label: 'Đánh giá Tab',
-        icon: 'reviews',
-        toRoute: '/admin/review-tab',
-    },
 ]);
+if (isAffiliate) {
+    menuTree.value.push({
+        label: 'Tab',
+        icon: 'library-music',
+        toRoute: '/admin/order-item',
+    });
+}
+if (isAdmin.value || isStaff.value) {
+    menuTree.value.push(
+        {
+            label: 'User',
+            icon: 'manage-account',
+            toRoute: '/admin/user',
+        },
+        {
+            label: 'Tab',
+            icon: 'library-music',
+            toRoute: '/admin/tab',
+        },
+        {
+            label: 'Đơn hàng',
+            icon: 'list-alt-check',
+            toRoute: '/admin/order',
+        },
+        {
+            label: 'Danh mục',
+            icon: 'category',
+            toRoute: '/admin/category',
+        },
+        {
+            label: 'Banner',
+            icon: 'image',
+            toRoute: '/admin/banner',
+        },
+        {
+            label: 'Doanh Thu',
+            icon: 'payments',
+            toRoute: '/admin/revenue',
+        },
+        {
+            label: 'Đánh giá Tab',
+            icon: 'reviews',
+            toRoute: '/admin/review-tab',
+        },
+    );
+}
 </script>
 
 <style lang="scss" scoped>

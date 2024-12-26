@@ -88,6 +88,7 @@
         <Column :exportable="false" header="Hành động" style="min-width: 12rem">
             <template #body="slotProps">
                 <Button
+                    v-if="!isAffiliate"
                     icon="pi pi-pencil"
                     outlined
                     rounded
@@ -95,6 +96,7 @@
                     @click="editRequestTab(slotProps.data)"
                 />
                 <Button
+                    v-if="!isAffiliate"
                     icon="pi pi-times-circle"
                     outlined
                     rounded
@@ -112,6 +114,7 @@ import Api from '~/network/Api';
 import { useSelectionStore } from '~/stores/selectionStore';
 import type { Selection } from '~/types/selection';
 import HeaderPage from '~/components/General/HeaderPage.vue';
+import { useAuthStore } from '#build/imports';
 
 definePageMeta({
     layout: 'admin',
@@ -121,6 +124,8 @@ const visibleSelect = ref(false);
 const selectedReiverId = ref();
 const originReiverId = ref();
 const allUserAffiliate = ref([]);
+const { isAffiliate } = useAuthStore();
+
 onMounted(async () => {
     await Api.user
         .getManager({})

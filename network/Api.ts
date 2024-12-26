@@ -8,6 +8,7 @@ import DeviceToken from './repositories/DeviceToken';
 import Media from './repositories/Media';
 import Notification from './repositories/Notification';
 import Order from './repositories/Order';
+import OrderItem from './repositories/OrderItem';
 import RequestTab from './repositories/RequestTab';
 import Revenue from './repositories/Revenue';
 import ReviewTab from './repositories/ReviewTab';
@@ -36,6 +37,7 @@ const Api = {
     reviewTab: ReviewTab(),
     deviceToken: DeviceToken(),
     notification: Notification(),
+    orderItem: OrderItem(),
 };
 
 export default Api;

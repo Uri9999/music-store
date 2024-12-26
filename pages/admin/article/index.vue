@@ -38,7 +38,11 @@
             </div>
         </template>
 
-        <Column field="title" header="Tiêu đề" style="max-width: 14rem"></Column>
+        <Column
+            field="title"
+            header="Tiêu đề"
+            style="max-width: 14rem"
+        ></Column>
         <Column field="status" header="Trạng thái" style="min-width: 12rem">
             <template #body="slotProps">
                 <span>{{
@@ -73,6 +77,7 @@
                     rounded
                     class="mr-2"
                     @click="gotoEdit(slotProps.data.id)"
+                    v-if="slotProps.data.user_id == profile?.id"
                 />
                 <Button
                     icon="pi pi-info-circle"
@@ -81,6 +86,7 @@
                     severity="info"
                     class="mr-2"
                     @click="gotoDetail(slotProps.data?.id)"
+                    v-if="slotProps.data.user_id == profile?.id"
                 />
                 <Button
                     icon="pi pi-trash"
@@ -89,7 +95,10 @@
                     class="mr-2"
                     severity="danger"
                     @click="confirmDelete(slotProps.data.id)"
-                    v-if="slotProps.data.type == 1"
+                    v-if="
+                        slotProps.data.type == 1 &&
+                        slotProps.data.user_id == profile?.id
+                    "
                 />
             </template>
         </Column>
@@ -103,11 +112,12 @@ import { useConfirm } from 'primevue/useconfirm';
 import { handleSelectedValue } from '~/utils/function';
 import type { Selection } from '~/types/selection';
 import HeaderPage from '~/components/General/HeaderPage.vue';
+import { useAuthStore } from '#build/imports';
 
 definePageMeta({
     layout: 'admin',
 });
-
+const { profile } = useAuthStore();
 const selection = ref<Selection | null>();
 const selectionStore = useSelectionStore();
 onBeforeMount(async () => {

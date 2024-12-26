@@ -3,7 +3,7 @@
         <span class="menu-icon ml-2" @click="openPopup">
             <i class="pi pi-bell"></i>
             <span v-if="countNotRead != 0" class="badge">{{
-                countNotRead
+                countNotRead > 9 ? '+9' : countNotRead
             }}</span>
         </span>
         <PopupCommon ref="popup">

@@ -1,5 +1,5 @@
 <template>
-    <HeaderPage title="Danh sách đăng ký Subscription"> </HeaderPage>
+    <HeaderPage :title="head"> </HeaderPage>
     <TableCommon ref="tableCommon" :apiFunction="fetch">
         <template #header>
             <div
@@ -107,7 +107,12 @@
             </template>
         </Column>
 
-        <Column :exportable="false" header="Hành động" style="min-width: 8rem">
+        <Column
+            :exportable="false"
+            header="Hành động"
+            v-if="!isAffiliate"
+            style="min-width: 8rem"
+        >
             <template #body="slotProps">
                 <Button
                     outlined
@@ -142,11 +147,16 @@ import ImageCommon from '~/components/General/ImageCommon.vue';
 import HeaderPage from '~/components/General/HeaderPage.vue';
 import { formatNumberWithCommas } from '~/utils/function';
 import { truncateDescription } from '~/utils/function';
+import { useAuthStore } from '#build/imports';
 
 definePageMeta({
     layout: 'admin',
 });
-
+const head = ref('Danh sách đăng ký Subscription');
+const { isAffiliate } = useAuthStore();
+if (isAffiliate) {
+    head.value = 'Danh sách Subscription đã giới thiệu';
+}
 const selection = ref<Selection | null>();
 const selectionStore = useSelectionStore();
 onMounted(async () => {
