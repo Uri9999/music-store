@@ -9,7 +9,7 @@
                         <div class="label">Khách hàng:</div>
                         <div class="order-avatar">
                             <Avatar
-                                :image="orderData.user?.avatar_url.url"
+                                :image="orderData.user?.avatar_url?.url"
                                 shape="circle"
                             />
                             <span class="ml-3">{{ orderData.user?.name }}</span>
