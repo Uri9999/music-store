@@ -46,9 +46,50 @@
         <Column field="author" header="Tác giả" style=""></Column>
         <Column field="status" header="Trạng thái" style="min-width: 12rem">
             <template #body="slotProps">
-                <span :class="convertStatus(slotProps.data?.status).class">{{
-                    convertStatus(slotProps.data?.status).label
-                }}</span>
+                <div
+                    v-if="
+                        visibleSelectStatus &&
+                        originReiverId == slotProps.data?.id
+                    "
+                    class="flex gap-2"
+                >
+                    <Dropdown
+                        v-model="selectedStatus"
+                        :options="selection.request_tab_status"
+                        filter
+                        optionLabel="label"
+                        optionValue="value"
+                        placeholder="Select a status"
+                        class="w-full md:w-14rem"
+                    >
+                    </Dropdown>
+                    <Button
+                        label="Lưu"
+                        @click="updateStatus(slotProps.data.id)"
+                    ></Button>
+                    <Button
+                        label="Đóng"
+                        severity="secondary"
+                        @click="visibleSelectStatus = false"
+                    ></Button>
+                </div>
+                <div
+                    v-else
+                    class="w-full flex align-items-center justify-content-left"
+                >
+                    <span
+                        :class="convertStatus(slotProps.data?.status).class"
+                        >{{ convertStatus(slotProps.data?.status).label }}</span
+                    >
+                    <Button
+                        v-if="isAffiliate"
+                        icon="pi pi-pencil"
+                        outlined
+                        rounded
+                        class="ml-2"
+                        @click="openUpdateStatus(slotProps.data)"
+                    />
+                </div>
             </template>
         </Column>
         <Column field="user" header="Khách hàng yêu cầu" style="">
@@ -85,10 +126,14 @@
                 <span v-else>{{ slotProps.data?.receiver?.name }}</span>
             </template>
         </Column>
-        <Column :exportable="false" header="Hành động" style="min-width: 12rem">
+        <Column
+            :exportable="false"
+            header="Hành động"
+            v-if="!isAffiliate"
+            style="min-width: 12rem"
+        >
             <template #body="slotProps">
                 <Button
-                    v-if="!isAffiliate"
                     icon="pi pi-pencil"
                     outlined
                     rounded
@@ -96,7 +141,6 @@
                     @click="editRequestTab(slotProps.data)"
                 />
                 <Button
-                    v-if="!isAffiliate"
                     icon="pi pi-times-circle"
                     outlined
                     rounded
@@ -121,7 +165,10 @@ definePageMeta({
 });
 const confirm = useConfirm();
 const visibleSelect = ref(false);
+const visibleSelectStatus = ref(false);
+
 const selectedReiverId = ref();
+const selectedStatus = ref();
 const originReiverId = ref();
 const allUserAffiliate = ref([]);
 const { isAffiliate } = useAuthStore();
@@ -171,7 +218,11 @@ const convertStatus = (status: number) => {
         return { label: 'Hoàn thành', class: 'status-complete' };
     }
 };
-
+const openUpdateStatus = (requestTab: any) => {
+    originReiverId.value = requestTab.id;
+    selectedStatus.value = requestTab.status;
+    visibleSelectStatus.value = true;
+};
 const editRequestTab = (requestTab: any) => {
     originReiverId.value = requestTab.id;
     selectedReiverId.value = requestTab?.receiver?.id;
@@ -186,6 +237,29 @@ const closeEdit = () => {
 const updateReceiver = async (id: number) => {
     await Api.requestTab
         .updateReceiver(id, { receiver_id: selectedReiverId.value })
+        .then(async (res: any) => {
+            await tableCommon.value.refresh(filter.value);
+            closeEdit();
+            toast.add({
+                severity: 'success',
+                summary: 'Thông báo',
+                detail: res.message,
+                life: 3000,
+            });
+        })
+        .catch((err: any) => {
+            toast.add({
+                severity: 'error',
+                summary: 'Thông báo',
+                detail: err.message,
+                life: 3000,
+            });
+        });
+};
+
+const updateStatus = async (id: number) => {
+    await Api.requestTab
+        .updateStatus(id, { status: selectedStatus.value })
         .then(async (res: any) => {
             await tableCommon.value.refresh(filter.value);
             closeEdit();
