@@ -79,7 +79,6 @@
             </template>
         </Column>
     </TableCommon>
-    <Button label="Show" @click="visible = true" />
     <Dialog
         v-model:visible="visible"
         maximizable
@@ -116,6 +115,9 @@ const selection = ref<Selection | null>();
 const selectionStore = useSelectionStore();
 onMounted(async () => {
     selection.value = await selectionStore.getData();
+    if (route.query.id) {
+        await getDetail(Number(route.query.id));
+    }
 });
 watch(
     () => route.query.id,
