@@ -76,6 +76,19 @@
             </template>
         </Column>
 
+        <Column v-if="isAffiliate"
+            field="commission_rate"
+            :header="'Hoa hồng nhận (' + commissionRate + '%)'"
+        >
+            <template #body="slotProps">
+                {{
+                    formatNumberWithCommas(
+                        (slotProps.data.meta.price * commissionRate) / 100,
+                    )
+                }}
+            </template>
+        </Column>
+
         <Column field="bill" header="Bill">
             <template #body="slotProps">
                 <div class="order-bill">
@@ -153,7 +166,8 @@ definePageMeta({
     layout: 'admin',
 });
 const head = ref('Danh sách đăng ký Subscription');
-const { isAffiliate } = useAuthStore();
+const { isAffiliate, profile } = useAuthStore();
+const commissionRate = profile?.commission_rate ?? 0;
 if (isAffiliate) {
     head.value = 'Danh sách Subscription đã giới thiệu';
 }

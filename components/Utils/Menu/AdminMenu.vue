@@ -41,6 +41,11 @@ const menuTree = ref([
         toRoute: '/admin',
     },
     {
+        label: 'Tab',
+        icon: 'library-music',
+        toRoute: '/admin/tab',
+    },
+    {
         label: 'Subscription',
         icon: 'subscriptions',
         toRoute: '/admin/user-subscription',
@@ -58,8 +63,8 @@ const menuTree = ref([
 ]);
 if (isAffiliate) {
     menuTree.value.push({
-        label: 'Tab',
-        icon: 'library-music',
+        label: 'Tab đã bán',
+        icon: 'price-check',
         toRoute: '/admin/order-item',
     });
 }
@@ -69,11 +74,6 @@ if (isAdmin.value || isStaff.value) {
             label: 'User',
             icon: 'manage-account',
             toRoute: '/admin/user',
-        },
-        {
-            label: 'Tab',
-            icon: 'library-music',
-            toRoute: '/admin/tab',
         },
         {
             label: 'Đơn hàng',

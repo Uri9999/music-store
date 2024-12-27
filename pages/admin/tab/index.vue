@@ -97,6 +97,7 @@
                         @click="gotoDetailTab(slotProps.data?.id)"
                     />
                     <Button
+                        v-if="!isAffiliate"
                         icon="pi pi-times"
                         outlined
                         rounded
@@ -113,11 +114,13 @@
 import TableCommon from '~/components/General/TableCommon.vue';
 import Api from '~/network/Api';
 import HeaderPage from '~/components/General/HeaderPage.vue';
+import { useAuthStore } from '#build/imports';
 import { truncateDescription } from '~/utils/function';
 
 definePageMeta({
     layout: 'admin',
 });
+const { isAffiliate } = useAuthStore();
 const router = useRouter();
 const allUserAffiliate = ref([]);
 onMounted(async () => {

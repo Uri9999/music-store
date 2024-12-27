@@ -50,12 +50,21 @@
             :header="'Hoa hồng nhận (' + commissionRate + '%)'"
         >
             <template #body="slotProps">
-                <!-- {{ formatNumberWithCommas(slotProps.data.price) }} -->
                 {{
                     formatNumberWithCommas(
                         (slotProps.data.price * commissionRate) / 100,
                     )
                 }}
+            </template>
+        </Column>
+        <Column field="status" header="Trạng thái">
+            <template #body="slotProps">
+                <span
+                    :class="convertStatus(slotProps.data.order.status).class"
+                    >{{
+                        convertStatus(slotProps.data.order.status).label
+                    }}</span
+                >
             </template>
         </Column>
     </TableCommon>
@@ -98,5 +107,34 @@ const search = async () => {
 const fetch = (payload: any) => {
     return Api.orderItem.index(payload);
 };
+
+const convertStatus = (status: number) => {
+    if (status == 1) {
+        return { label: 'Chờ phê duyệt', class: 'status-process' };
+    } else if (status == 2) {
+        return { label: 'Hoàn thành', class: 'status-complete' };
+    } else {
+        return { label: 'Đã hủy', class: 'status-fail' };
+    }
+};
 </script>
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.status-process {
+    background-color: rgb(0, 101, 253);
+    color: white;
+    padding: 6px;
+    border-radius: 5px;
+}
+.status-complete {
+    background-color: rgb(5, 187, 5);
+    color: white;
+    padding: 6px;
+    border-radius: 5px;
+}
+.status-fail {
+    background-color: rgb(187, 5, 5);
+    color: white;
+    padding: 6px;
+    border-radius: 5px;
+}
+</style>

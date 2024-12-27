@@ -27,6 +27,7 @@
             </div>
             <div class="flex mt-3">
                 <div
+                    v-if="!isAffiliate"
                     class="head-item type-2 m-2"
                     @click="router.push('/admin/user')"
                 >
@@ -47,6 +48,7 @@
                 </div>
 
                 <div
+                    v-if="!isAffiliate"
                     class="head-item type-1 m-2"
                     @click="router.push('/admin/order')"
                 >
@@ -137,7 +139,7 @@
                 </div>
             </div>
         </div>
-        <div class="chart mt-3">
+        <div class="chart mt-3" v-if="!isAffiliate">
             <h2>Biểu đồ</h2>
             <div
                 class="flex flex-wrap gap-2 align-items-end justify-content-between mt-1"
@@ -158,12 +160,14 @@
                 <div class="flex gap-2"></div>
             </div>
 
-            <Chart
-                :type="'line'"
-                :data="chartData"
-                :options="chartOptions"
-                class="h-30rem"
-            />
+            <div class="chart">
+                <Chart
+                    :type="'line'"
+                    :data="chartData"
+                    :options="chartOptions"
+                    class="h-30rem"
+                />
+            </div>
         </div>
     </div>
 </template>
@@ -175,10 +179,13 @@ import { formatNumberWithCommas } from '#build/imports';
 import Chart from 'primevue/chart';
 import moment from 'moment';
 import CalendarCommon from '~/components/General/CalendarCommon.vue';
+import { useAuthStore } from '#build/imports';
+
 definePageMeta({
     layout: 'admin',
 });
 
+const { isAffiliate } = useAuthStore();
 const filter = ref({
     start_date: null,
     end_date: null,
@@ -312,5 +319,9 @@ const clearFilter = async () => {
 }
 .type-5 {
     background-color: #5017b9;
+}
+
+.chart {
+    max-width: 1200px;
 }
 </style>
