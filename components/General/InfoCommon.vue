@@ -1,5 +1,8 @@
 <template>
-    <div class="flex gap-2 align-items-center">
+    <div
+        class="flex gap-2 align-items-center cursor-pointer"
+        @click="gotoUserDetail()"
+    >
         <div class="avatar-info">
             <AvatarCommon :name="name" :src="src" />
         </div>
@@ -18,7 +21,17 @@ const props = defineProps({
         type: [String],
         required: false,
     },
+    id: {
+        type: [Number],
+        required: true,
+    },
 });
+
+const router = useRouter();
+
+const gotoUserDetail = () => {
+    router.push('/user/' + props.id);
+};
 </script>
 
 <style lang="scss" scoped>
@@ -27,7 +40,7 @@ const props = defineProps({
     height: 26px;
 }
 .name {
-    font-size: .9rem;
+    font-size: 0.9rem;
     color: var(--color-2);
 }
 </style>

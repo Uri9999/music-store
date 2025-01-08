@@ -247,7 +247,7 @@ const convertStatus = (status: number) => {
     if (status == 1) {
         return { label: 'Khởi tạo', class: 'status-create' };
     } else if (status == 2) {
-        return { label: 'Thanh toán thành công', class: 'status-process' };
+        return { label: 'Hoàn thành', class: 'status-complete' };
     } else {
         return { label: 'Đã Hủy', class: 'status-fail' };
     }
@@ -261,12 +261,6 @@ const convertStatus = (status: number) => {
 
 .status-create {
     background-color: rgb(197, 197, 197);
-    color: white;
-    padding: 6px;
-    border-radius: 5px;
-}
-.status-process {
-    background-color: rgb(0, 101, 253);
     color: white;
     padding: 6px;
     border-radius: 5px;

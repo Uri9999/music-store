@@ -1,7 +1,7 @@
 import axios from "axios";
 
 class BaseApi {
-    public baseURL: string = 'https://api.zumitab.vn/api'
+    public baseURL: string = import.meta.env.VITE_HOST + '/api'
     public method: any = null;
     public timeout: number = 10000; // 10s
     public headers: any = {

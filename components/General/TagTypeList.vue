@@ -27,6 +27,7 @@
                         <InfoCommon
                             :name="item.user.name"
                             :src="item.user?.avatar?.url"
+                            :id="item.user.id"
                         ></InfoCommon>
                     </div>
                 </div>
