@@ -26,10 +26,10 @@ import AvatarCommon from '~/components/General/AvatarCommon.vue';
 
 const article = ref({} as ArticleType);
 const route = useRoute();
-const id = Number(route.params.id);
+const slug = String(route.params.slug);
 onMounted(async () => {
     await Api.article
-        .getDetailArticle(id)
+        .getDetailArticle(slug)
         .then((res: any) => {
             article.value = res.data;
         })

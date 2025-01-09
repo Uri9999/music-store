@@ -149,11 +149,19 @@ onMounted(async () => {
             icon: 'pi pi-box',
             items: itemsCategory,
         },
+        // {
+        //     label: 'Bài tab',
+        //     icon: 'pi pi-list',
+        //     toRoute: '/tab',
+        //     command: (event: any) => handleNavigation(event.item.toRoute),
+        // },
         {
-            label: 'Bài tab',
+            label: 'Giới thiệu',
             icon: 'pi pi-list',
             toRoute: '/tab',
-            command: (event: any) => handleNavigation(event.item.toRoute),
+            command: (event: any) => {
+                router.push('/article/tutorial')
+            },
         },
         {
             label: 'Yêu cầu',

@@ -29,7 +29,7 @@ export default () => ({
     getRandomArticle() {
         return BaseApi.get('/articles/random');
     },
-    getDetailArticle(id: number) {
-        return BaseApi.get('/articles/' + id);
+    getDetailArticle(slug: string) {
+        return BaseApi.get('/articles/' + slug);
     },
 });
