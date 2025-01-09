@@ -26,10 +26,10 @@
                         <a href="#">Blog</a>
                     </li>
                     <li><a href="#">Shopee</a></li>
-                    <li @click.prevent="router.push('privacy-policy')">
+                    <li @click.prevent="router.push('article/policy')">
                         <a href="#">Điều khoản</a>
                     </li>
-                    <li @click.prevent="router.push('tutorial')">
+                    <li @click.prevent="router.push('article/tutorial')">
                         <a href="#">Hướng dẫn thanh toán</a>
                     </li>
                 </ul>

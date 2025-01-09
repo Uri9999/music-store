@@ -26,7 +26,7 @@
                     <div
                         v-for="(result, index) in results"
                         :key="index"
-                        @click="gotoDetail(result.id)"
+                        @click="gotoDetail(result.slug)"
                         class="cursor-pointer item-result"
                     >
                         {{ result.name }}
@@ -69,10 +69,10 @@ const resetData = () => {
     results.value = [];
 };
 
-const gotoDetail = async (id: number) => {
+const gotoDetail = async (slug: string) => {
     popup.value?.hidePopup();
 
-    await router.push('/tab/' + id);
+    await router.push('/tab/' + slug);
 };
 
 const submitSearch = async () => {

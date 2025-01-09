@@ -14,7 +14,7 @@
                 <div class="border-1 surface-border m-2 article-item">
                     <div
                         class="article-img"
-                        @click="gotoDetail(slotProps.data.id)"
+                        @click="gotoDetail(slotProps.data.slug)"
                         :style="{
                             backgroundImage:
                                 'url(' +
@@ -75,8 +75,8 @@ const responsiveOptions = ref([
 ]);
 
 const router = useRouter();
-const gotoDetail = (id: number) => {
-    router.push('/article/' + id);
+const gotoDetail = (slug: string) => {
+    router.push('/article/' + slug);
 };
 </script>
 

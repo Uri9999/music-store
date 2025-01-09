@@ -45,7 +45,7 @@
                         icon="pi pi-arrow-right"
                         label="Xem thêm"
                         class="custom flex-auto md:flex-initial white-space-nowrap"
-                        @click="gotoDetail(item.id)"
+                        @click="gotoDetail(item.slug)"
                     ></Button>
                 </div>
             </div>
@@ -74,8 +74,8 @@ const props = defineProps({
 });
 
 const router = useRouter();
-const gotoDetail = async (id: number) => {
-    router.push('/tab/' + id);
+const gotoDetail = async (slug: string) => {
+    router.push('/tab/' + slug);
 };
 </script>
 

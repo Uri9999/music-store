@@ -13,8 +13,8 @@ export default () => ({
         return BaseApi.get('random-tab');
     },
 
-    show(id: number) {
-        return BaseApi.setAuth().get('tabs/' + id);
+    show(slug: string) {
+        return BaseApi.setAuth().get('tabs/' + slug);
     },
 
     getTabByIds(payload: any) {

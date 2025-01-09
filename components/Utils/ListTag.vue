@@ -3,7 +3,7 @@
         <div
             class="item"
             v-for="(item, index) in tabs"
-            @click="gotoDetail(item.id)"
+            @click="gotoDetail(item.slug)"
         >
             <div class="image">
                 <div class="tab-img">
@@ -54,8 +54,8 @@ import AvatarCommon from '../General/AvatarCommon.vue';
 import BackgroundImageCommon from '../General/BackgroundImageCommon.vue';
 
 const router = useRouter();
-const gotoDetail = async (id: number) => {
-    router.push('/tab/' + id);
+const gotoDetail = async (slug: string) => {
+    router.push('/tab/' + slug);
 };
 const tabs = ref([] as Tab[]);
 onMounted(async () => {

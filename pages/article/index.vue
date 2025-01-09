@@ -8,7 +8,7 @@
         >
             <div
                 class="article-img"
-                @click="gotoDetail(article.id)"
+                @click="gotoDetail(article.slug)"
                 :style="{
                     backgroundImage:
                         'url(' + extractFirstImageUrl(article.content) + ')',
@@ -24,7 +24,7 @@
                     </div>
                         <div class="ml-2">{{ article.user.name }}</div>
                 </div>
-                <div class="title" @click="gotoDetail(article.id)">
+                <div class="title" @click="gotoDetail(article.slug)">
                     {{ article.title }}
                 </div>
             </div>
@@ -67,8 +67,8 @@ const onPageChange = (event: any) => {
     currentPage.value = event.page + 1;
     getArticle();
 };
-const gotoDetail = (id: number) => {
-    router.push('/article/' + id);
+const gotoDetail = (slug: string) => {
+    router.push('/article/' + slug);
 };
 </script>
 

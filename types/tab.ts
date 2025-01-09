@@ -1,5 +1,6 @@
 type Tab = {
     id: number;
+    slug: string;
     name: string;
     description: string;
     user_id: number;
@@ -8,6 +9,7 @@ type Tab = {
     category_id: number;
     youtobe_url: string;
     images_url: Image[];
+    pdf: any;
     user: User;
     total_order_items: number;
 };

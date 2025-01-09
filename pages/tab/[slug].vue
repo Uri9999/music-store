@@ -159,30 +159,29 @@ import Carousel from '~/components/General/Carousel.vue';
 import { useRoute, useRouter } from 'vue-router';
 import Api from '~/network/Api';
 import { useToast } from 'primevue/usetoast';
-import { formatNumberWithCommas } from '#build/imports';
 import ImageCommon from '~/components/General/ImageCommon.vue';
 import AvatarCommon from '~/components/General/AvatarCommon.vue';
 import BackgroundImageCommon from '~/components/General/BackgroundImageCommon.vue';
 import { useCartStore } from '~/stores/cartStore';
 import HeaderPage from '~/components/General/HeaderPage.vue';
 import PriceCommon from '~/components/General/PriceCommon.vue';
+import type { Tab } from '~/types/tab';
 
 const toast = useToast();
 const route = useRoute();
 const router = useRouter();
 const cartStore = useCartStore();
-const id = Number(route.params.id);
-const tab = ref({} as any);
+const slug = String(route.params.slug);
+const tab = ref({} as Tab);
 const imgFirst = ref();
 onMounted(async () => {
-    await getDetailTab(id);
+    await getDetailTab(slug);
 });
 
-const getDetailTab = async (id: number) => {
+const getDetailTab = async (slug: string) => {
     await Api.tab
-        .show(id)
+        .show(slug)
         .then((res: any) => {
-            console.log(res);
             tab.value = res.data;
             imgFirst.value = tab.value?.images_url[0].url;
         })
@@ -192,7 +191,7 @@ const getDetailTab = async (id: number) => {
 };
 const addToCart = async () => {
     await Api.cart
-        .add({ tab_id: id })
+        .add({ tab_id: tab.value.id })
         .then(async (res: any) => {
             toast.add({
                 severity: 'success',

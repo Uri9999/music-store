@@ -2,7 +2,7 @@
     <div class="tab border-1 surface-border surface-card flex flex-column">
         <div
             class="surface-50 flex justify-content-center tab-image"
-            @click="gotoDetail(item.id)"
+            @click="gotoDetail(item.slug)"
         >
             <BackgroundImageCommon
                 :src="
@@ -60,8 +60,8 @@ const props = defineProps({
 });
 
 const router = useRouter();
-const gotoDetail = async (id: number) => {
-    router.push('/tab/' + id);
+const gotoDetail = async (slug: string) => {
+    router.push('/tab/' + slug);
 };
 </script>
 
