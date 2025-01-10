@@ -145,6 +145,14 @@ onMounted(async () => {
 
     items.value = [
         {
+            label: 'Giới thiệu',
+            icon: 'pi pi-list',
+            toRoute: '/tab',
+            command: (event: any) => {
+                router.push('/article/tutorial')
+            },
+        },
+        {
             label: 'Chuyên mục',
             icon: 'pi pi-box',
             items: itemsCategory,
@@ -155,14 +163,6 @@ onMounted(async () => {
         //     toRoute: '/tab',
         //     command: (event: any) => handleNavigation(event.item.toRoute),
         // },
-        {
-            label: 'Giới thiệu',
-            icon: 'pi pi-list',
-            toRoute: '/tab',
-            command: (event: any) => {
-                router.push('/article/tutorial')
-            },
-        },
         {
             label: 'Yêu cầu',
             icon: 'pi pi-th-large',
