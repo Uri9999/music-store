@@ -4,9 +4,9 @@
             <!-- Phần thông tin liên hệ -->
             <div class="footer-section contact-info">
                 <h3>Contact Us</h3>
-                <p>📍 123 Kien Truc, Hanoi, Vietnam</p>
-                <p>📧 Email: tritran@gmail.com</p>
-                <p>📞 Phone: +84 123 456 789</p>
+                <p>📍 Nam Sách - huyện Nam Sách - Hải Dương</p>
+                <p>📧 zumitabvn@gmail.com</p>
+                <p>📞 0326833330</p>
             </div>
 
             <!-- Phần liên kết -->
@@ -39,17 +39,14 @@
             <div class="footer-section social-media">
                 <h3>Follow Us:</h3>
                 <div>
-                    <a href="#" class="social-icon"
+                    <a href="https://www.facebook.com/shopzumivn" class="social-icon"
                         ><i class="pi pi-facebook"></i
                     ></a>
-                    <a href="#" class="social-icon"
-                        ><i class="pi pi-twitter"></i
+                    <a href="https://www.tiktok.com/@zumishopvn" class="social-icon"
+                        ><i class="pi pi-tiktok"></i
                     ></a>
-                    <a href="#" class="social-icon"
-                        ><i class="pi pi-instagram"></i
-                    ></a>
-                    <a href="#" class="social-icon"
-                        ><i class="pi pi-linkedin"></i
+                    <a href="https://shopee.vn/kalimbatran" class="social-icon"
+                        ><i class="pi pi-shopping-bag"></i
                     ></a>
                 </div>
             </div>
