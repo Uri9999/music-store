@@ -14,26 +14,14 @@
                 <span class="per-month">{{ sub.duration_in_days }} Ngày</span>
             </div>
             <hr />
-            <!-- <ul class="features">
-                <li>
+            <ul class="features">
+                <li v-for="(ft, index) in sub.feature" :key="index">
                     <span
                         ><i class="pi pi-check-circle text-green-500 text-lg"
                     /></span>
-                    Arcu vitae elementum
+                    {{ ft }}
                 </li>
-                <li>
-                    <span
-                        ><i class="pi pi-check-circle text-green-500 text-lg"
-                    /></span>
-                    Dui faucibus in ornare
-                </li>
-                <li>
-                    <span
-                        ><i class="pi pi-check-circle text-green-500 text-lg"
-                    /></span>
-                    Morbi tincidunt augue
-                </li>
-            </ul> -->
+            </ul>
             <Button
                 label="Đăng Ký"
                 @click="router.push({ path: '/subscription', query: { subscription_id: sub?.id } });"
