@@ -183,6 +183,7 @@ import { useAuthStore } from '#build/imports';
 
 definePageMeta({
     layout: 'admin',
+    middleware: ['manager'],
 });
 
 const { isAffiliate } = useAuthStore();

@@ -8,6 +8,7 @@ export const useAuthStore = defineStore('auth', {
         isAdmin: false,
         isStaff: false,
         isAffiliate: false,
+        isUser: false,
     }),
 
     actions: {
@@ -24,6 +25,7 @@ export const useAuthStore = defineStore('auth', {
             this.isAdmin = user.role_id == 1;
             this.isStaff = user.role_id == 2;
             this.isAffiliate = user.role_id == 3;
+            this.isUser = user.role_id == 4;
         },
     },
 });
