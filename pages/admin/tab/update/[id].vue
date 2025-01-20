@@ -121,12 +121,12 @@
                     <label for="pdf" class="block mb-1">
                         Tải PDF <span class="error">*</span>
                     </label>
-                    <div class="mb-3" v-if="tabData.pdf">
+                    <div class="mb-3" v-if="tabData.pdf_url">
                         <Button
                             label="Download PDF"
-                            v-if="tabData?.pdf"
+                            v-if="tabData?.pdf_url"
                             icon="pi pi-download"
-                            @click="downloadPdf(tabData?.pdf.url)"
+                            @click="downloadPdf(tabData?.pdf_url.url)"
                         />
                     </div>
                     <FileUpload
@@ -203,6 +203,7 @@ const tabData = ref({
     youtube_url: '',
     images: [] as File[],
     images_url: [] as any,
+    pdf_url: [] as any,
     pdf: null as File | null,
 } as any);
 
@@ -234,6 +235,10 @@ const getDetailTab = async () => {
     try {
         const resShow = (await Api.tab.adminShow(id)) as any;
         tabData.value = resShow.data;
+        if (tabData.value.pdf) {
+            tabData.value.pdf_url = tabData.value.pdf
+            tabData.value.pdf = null
+        }
         // Kiểm tra và khởi tạo lại images nếu cần
         if (!Array.isArray(tabData.value.images)) {
             tabData.value.images = [];

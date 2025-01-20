@@ -1,59 +1,63 @@
 <template>
     <HeaderPage class="mt-5" title="Giỏ hàng"> </HeaderPage>
-    <div class="cart my-5 pb-5" v-if="items.length">
-        <div class="cart-detail">
-            <div class="item-list">
-                <div class="item-show" v-for="(item, index) in items">
-                    <div class="mr-3 flex align-items-center">
-                        <Button
-                            label="Xóa"
-                            severity="danger"
-                            outlined
-                            @click="confirmDelete(item?.id)"
-                        />
-                    </div>
-                    <div class="img mr-3">
-                        <BackgroundImageCommon
-                            :src="'https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg'"
-                        ></BackgroundImageCommon>
-                    </div>
-                    <div class="flex justify-content-between w-full">
-                        <div class="mr-3 content">{{ item?.tab?.name }}</div>
-                        <div>
-                            <PriceCommon
-                                :value="item?.tab?.price"
-                            ></PriceCommon>
+    <div class="page">
+        <div class="cart my-5 pb-5" v-if="items.length">
+            <div class="cart-detail">
+                <div class="item-list">
+                    <div class="item-show" v-for="(item, index) in items">
+                        <div class="mr-3 flex align-items-center">
+                            <Button
+                                label="Xóa"
+                                severity="danger"
+                                outlined
+                                @click="confirmDelete(item?.id)"
+                            />
+                        </div>
+                        <div class="img mr-3">
+                            <BackgroundImageCommon
+                                :src="'https://primefaces.org/cdn/primevue/images/product/bamboo-watch.jpg'"
+                            ></BackgroundImageCommon>
+                        </div>
+                        <div class="flex justify-content-between w-full">
+                            <div class="mr-3 content">
+                                {{ item?.tab?.name }}
+                            </div>
+                            <div>
+                                <PriceCommon
+                                    :value="item?.tab?.price"
+                                ></PriceCommon>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="info">
-                <div class="info-t">
-                    <p>Tạm tính:</p>
-                    <p>
-                        <PriceCommon
-                            type="default"
-                            :value="calcTotalPrice(items)"
-                        ></PriceCommon>
-                    </p>
+                <div class="info">
+                    <div class="info-t">
+                        <p>Tạm tính:</p>
+                        <p>
+                            <PriceCommon
+                                type="default"
+                                :value="calcTotalPrice(items)"
+                            ></PriceCommon>
+                        </p>
+                    </div>
+                    <div class="info-t">
+                        <p>Thành tiền:</p>
+                        <p>
+                            <PriceCommon
+                                :value="calcTotalPrice(items)"
+                            ></PriceCommon>
+                        </p>
+                    </div>
+                    <Button
+                        label="Tạo đơn hàng"
+                        class="custom w-full mt-3"
+                        @click="checkout()"
+                    ></Button>
                 </div>
-                <div class="info-t">
-                    <p>Thành tiền:</p>
-                    <p>
-                        <PriceCommon
-                            :value="calcTotalPrice(items)"
-                        ></PriceCommon>
-                    </p>
-                </div>
-                <Button
-                    label="Tạo đơn hàng"
-                    class="custom w-full mt-3"
-                    @click="checkout()"
-                ></Button>
             </div>
         </div>
+        <div class="cart-null" v-else>Chưa có sản phẩm nào trong giỏ hàng</div>
     </div>
-    <div class="cart-null" v-else>Chưa có sản phẩm nào trong giỏ hàng</div>
 </template>
 
 <script setup lang="ts">
@@ -142,13 +146,13 @@ const calcTotalPrice = (items: any) => {
 </script>
 
 <style scoped lang="scss">
+.page {
+    min-height: 70vh;
+}
 .footer {
     margin-top: 20px;
     display: flex;
     justify-content: space-between;
-}
-.cart {
-    min-height: 70vh;
 }
 
 .cart-detail {
