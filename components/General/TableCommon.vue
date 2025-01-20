@@ -1,6 +1,8 @@
 <template>
     <div>
-        <p v-if="isLoading">Loading...</p>
+        <div class="loading-status" v-if="isLoading">
+            <img class="w-[40px] h-[40px]" src="/images/loading.svg" />
+        </div>
         <p v-if="error">{{ error }}</p>
         <DataTable
             v-if="!isLoading && !error"
@@ -76,3 +78,11 @@ defineExpose({
     refresh: (payload: any) => fetchData(payload),
 });
 </script>
+
+<style lang="scss" scoped>
+.loading-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+</style>

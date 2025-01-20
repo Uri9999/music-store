@@ -89,6 +89,7 @@ const toggleMenu = (value: boolean) => {
     align-items: center;
     justify-content: space-between;
     .avatar {
+        cursor: pointer;
         width: 30px;
         height: 30px;
     }
