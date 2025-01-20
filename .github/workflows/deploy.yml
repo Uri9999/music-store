@@ -48,4 +48,13 @@ jobs:
             cd /var/www/music-store &&
             git pull origin main &&
             pm2 restart nuxt-app
+            export NVM_DIR=\"/root/.nvm\" &&
+            [ -s \"\$NVM_DIR/nvm.sh\" ] && \. \"\$NVM_DIR/nvm.sh\" &&
+            nvm use 18 &&
+            cd /var/www/music-store &&
+            if ! pm2 describe nuxt-app > /dev/null; then
+              pm2 start npm --name "nuxt-app" -- run preview;
+            else
+              pm2 restart nuxt-app;
+            fi
           "
