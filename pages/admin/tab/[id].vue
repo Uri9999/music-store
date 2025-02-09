@@ -15,9 +15,6 @@
                         fluid
                         disabled
                     />
-                    <small class="error" v-if="tabErrors?.name">{{
-                        tabErrors?.name[0]
-                    }}</small>
                 </div>
 
                 <!-- Tác Giả -->
@@ -31,9 +28,6 @@
                         fluid
                         disabled
                     />
-                    <small class="error" v-if="tabErrors?.author">{{
-                        tabErrors?.author[0]
-                    }}</small>
                 </div>
 
                 <!-- Youtube URL -->
@@ -47,9 +41,6 @@
                         fluid
                         disabled
                     />
-                    <small class="error" v-if="tabErrors?.youtube_url">{{
-                        tabErrors?.youtube_url[0]
-                    }}</small>
                 </div>
 
                 <!-- Danh mục -->
@@ -58,7 +49,6 @@
                         v-model="tabData.category_id"
                         :options="selection?.categories"
                         :disabled="true"
-                        :error="tabErrors?.category_id"
                         label="Danh Mục"
                         name="category"
                         :required="false"
@@ -82,9 +72,6 @@
                             class="w-full md:w-14rem"
                         />
                     </div>
-                    <small class="error" v-if="tabErrors?.user_id">{{
-                        tabErrors?.user_id[0]
-                    }}</small>
                 </div>
 
                 <!-- Giá -->
@@ -98,9 +85,16 @@
                             fluid
                         />
                     </div>
-                    <small class="error" v-if="tabErrors?.price">{{
-                        tabErrors?.price[0]
-                    }}</small>
+                </div>
+
+                <!-- discount money -->
+                <div class="mb-3">
+                    <label for="discount_money" class="block mb-1">
+                        Discount money
+                    </label>
+                    <div>
+                        <InputNumber disabled v-model="tabData.discount_money" id="discount_money" fluid />
+                    </div>
                 </div>
             </div>
 
@@ -120,9 +114,6 @@
                         </div>
                     </div>
                     <div v-else>Không có ảnh</div>
-                    <small class="error" v-if="tabErrors?.images">{{
-                        tabErrors?.images[0]
-                    }}</small>
                 </div>
 
                 <!-- Tải PDF -->
@@ -135,9 +126,6 @@
                         @click="downloadPdf"
                     />
                     <div v-else>File không tồn tại</div>
-                    <small class="error" v-if="tabErrors?.pdf">{{
-                        tabErrors?.pdf[0]
-                    }}</small>
                 </div>
 
                 <!-- Mô tả -->
@@ -151,9 +139,6 @@
                         class="w-full"
                         fluid
                     />
-                    <small class="error" v-if="tabErrors?.description">{{
-                        tabErrors?.description[0]
-                    }}</small>
                 </div>
 
                 <!-- Button group -->
@@ -193,6 +178,7 @@ const tabData = ref({
     description: '',
     user_id: null,
     price: null,
+    discount_money: null,
     category_id: null,
     category_value: null,
     youtube_url: '',
@@ -201,17 +187,6 @@ const tabData = ref({
     pdf: null as File | null,
 } as any);
 
-const tabErrors = ref({
-    name: [],
-    author: [],
-    description: [],
-    user_id: [],
-    price: [],
-    category_id: [],
-    youtube_url: [],
-    images: [],
-    pdf: [],
-});
 const route = useRoute();
 
 const id = Number(route.params.id);

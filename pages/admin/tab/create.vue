@@ -99,6 +99,23 @@
                         tabErrors?.price[0]
                     }}</small>
                 </div>
+
+                <!-- discount money -->
+                <div class="mb-3">
+                    <label for="discount_money" class="block mb-1">
+                        Discount money
+                    </label>
+                    <div>
+                        <InputNumber
+                            v-model="tabData.discount_money"
+                            id="discount_money"
+                            fluid
+                        />
+                    </div>
+                    <small class="error" v-if="tabErrors?.price">{{
+                        tabErrors?.discount_money[0]
+                    }}</small>
+                </div>
             </div>
 
             <div class="attribute">
@@ -160,17 +177,11 @@
                         tabErrors?.description[0]
                     }}</small>
                 </div>
-
-                <!-- Button group -->
-                <div class="mb-3 flex justify-content-between">
-                    <Button
-                        label="Trở lại"
-                        severity="secondary"
-                        @click="goBack"
-                    />
-                    <Button label="Lưu" @click="saveTab" />
-                </div>
             </div>
+        </div>
+        <div class="mb-3 flex justify-content-between">
+            <Button label="Trở lại" severity="secondary" @click="goBack" />
+            <Button label="Lưu" @click="saveTab" />
         </div>
     </div>
 </template>
@@ -202,6 +213,7 @@ const tabData = ref({
     description: '',
     user_id: null,
     price: null,
+    discount_money: null,
     category_id: null,
     youtube_url: '',
     images: [] as File[],
@@ -214,6 +226,7 @@ const tabErrors = ref({
     description: [],
     user_id: [],
     price: [],
+    discount_money: [],
     category_id: [],
     youtube_url: [],
     images: [],
