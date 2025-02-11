@@ -37,12 +37,12 @@
             <template #expansion="slotProps">
                 <div class="p-4">
                     <DataTable :value="slotProps.data.order_items">
-                        <Column field="name" header="Tên tab" sortable>
+                        <Column field="name" header="Tên tab">
                             <template #body="slotProps">
                                 {{ slotProps.data.meta.name }}
                             </template>
                         </Column>
-                        <Column field="price" header="Giá" sortable>
+                        <Column field="price" header="Giá">
                             <template #body="slotProps">
                                 {{
                                     formatNumberWithCommas(
@@ -51,7 +51,19 @@
                                 }}
                             </template>
                         </Column>
-                        <Column field="rating" header="Đánh giá" sortable>
+                        <Column
+                            field="price_discount"
+                            header="Giá sau khi giảm giá"
+                        >
+                            <template #body="slotProps">
+                                {{
+                                    formatNumberWithCommas(
+                                        slotProps.data.meta.price_discount,
+                                    )
+                                }}
+                            </template>
+                        </Column>
+                        <Column field="rating" header="Đánh giá">
                             <template #body="slotProps">
                                 <DisplayRateStars
                                     v-if="
@@ -68,7 +80,6 @@
                         <Column
                             field="rating-content"
                             header="Nội dung đánh giá"
-                            sortable
                         >
                             <template #body="slotProps">
                                 {{ slotProps.data?.tab.reviewTabs[0]?.comment }}

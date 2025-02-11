@@ -33,7 +33,20 @@
                 </div>
             </div>
             <div class="flex flex-column md:align-items-end gap-3">
-                <PriceCommon :value="item.price"></PriceCommon>
+                <div>
+                    <PriceCommon
+                        v-if="item.discount_money != 0"
+                        :value="item.price"
+                        :textDecoration="'line-through'"
+                        class="mr-2"
+                        :font-size="'.8rem'"
+                        :color="'#929292'"
+                    ></PriceCommon>
+                    <PriceCommon
+                        :value="item.price_discount"
+                        :font-size="'1.3rem'"
+                    ></PriceCommon>
+                </div>
                 <div>
                     <DisplayRateStars :stars="item?.rating"></DisplayRateStars>
                     <span class="sold"
@@ -54,10 +67,8 @@
 </template>
 
 <script setup lang="ts">
-import { formatNumberWithCommas } from '#build/imports';
 import { useRouter } from 'vue-router';
 import BackgroundImageCommon from './BackgroundImageCommon.vue';
-import AvatarCommon from './AvatarCommon.vue';
 import DisplayRateStars from './DisplayRateStars.vue';
 import PriceCommon from './PriceCommon.vue';
 import InfoCommon from './InfoCommon.vue';
