@@ -1,11 +1,6 @@
 <template>
-    <p
-        :class="{
-            price: type == 'price',
-            default: type == 'default',
-        }"
-    >
-        {{ formatNumberWithCommas(value) }} đ
+    <p class="price" :style="{ 'font-size': fontSize, 'text-decoration': textDecoration, 'color': color }">
+        <span class="unit">đ</span>{{ formatNumberWithCommas(value) }}
     </p>
 </template>
 
@@ -16,16 +11,33 @@ const props = defineProps({
         type: Number,
         default: 0,
     },
-    type: {
+    fontSize: {
         type: String,
-        default: 'price',
+        default: '1.5rem',
+    },
+    textDecoration: {
+        type: String,
+        default: '',
+    },
+    color: {
+        type: String,
+        default: '#d0011b',
     },
 });
 </script>
 <style lang="scss" scoped>
 .price {
     display: inline-block;
-    font-size: 1.5rem;
-    color: var(--color-2);
+    // color: var(--color-2);
+}
+
+.unit {
+    text-decoration: underline;
+    font-size: 0.6em;
+    vertical-align: super;
+}
+
+.gach-giua {
+    text-decoration: line-through;
 }
 </style>

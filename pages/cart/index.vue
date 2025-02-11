@@ -24,7 +24,16 @@
                             </div>
                             <div>
                                 <PriceCommon
+                                    v-if="item?.tab?.discount_money != 0"
                                     :value="item?.tab?.price"
+                                    :textDecoration="'line-through'"
+                                    class="mr-2"
+                                    :font-size="'1rem'"
+                                    :color="'#929292'"
+                                ></PriceCommon>
+                                <PriceCommon
+                                    :value="item?.tab?.price_discount"
+                                    :font-size="'1.3rem'"
                                 ></PriceCommon>
                             </div>
                         </div>
@@ -138,7 +147,7 @@ const checkout = () => {
 
 const calcTotalPrice = (items: any) => {
     const total = items.reduce((total: number, item: any) => {
-        return total + item.tab.price;
+        return total + item.tab.price_discount;
     }, 0);
 
     return total;

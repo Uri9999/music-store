@@ -51,7 +51,16 @@
                 </template>
             </Column>
             <Column field="author" header="Tác giả" style=""></Column>
-            <Column field="price" header="Giá" style=""></Column>
+            <Column field="price" header="Giá" style="">
+                <template #body="slotProps">
+                    <span>{{ formatNumberWithCommas(slotProps.data.price) }}</span>
+                </template>
+            </Column>
+            <Column field="discount_money" header="Discount money">
+                <template #body="slotProps">
+                    <span>{{ formatNumberWithCommas(slotProps.data.discount_money) }}</span>
+                </template>
+            </Column>
             <Column field="category" header="Danh mục" style="">
                 <template #body="slotProps">
                     <span>{{ slotProps.data?.category?.name }}</span>
@@ -116,6 +125,7 @@ import Api from '~/network/Api';
 import HeaderPage from '~/components/General/HeaderPage.vue';
 import { useAuthStore } from '#build/imports';
 import { truncateDescription } from '~/utils/function';
+import { formatNumberWithCommas } from '~/utils/function';
 
 definePageMeta({
     layout: 'admin',

@@ -12,7 +12,19 @@
                     <div class="flex justify-content-between w-full">
                         <div class="mr-3 content">{{ item?.name }}</div>
                         <div>
-                            <PriceCommon :value="item?.price"></PriceCommon>
+                            <!-- <PriceCommon :value="item?.price"></PriceCommon> -->
+                            <PriceCommon
+                                    v-if="item?.discount_money != 0"
+                                    :value="item?.price"
+                                    :textDecoration="'line-through'"
+                                    class="mr-2"
+                                    :font-size="'1rem'"
+                                    :color="'#929292'"
+                                ></PriceCommon>
+                                <PriceCommon
+                                    :value="item?.price_discount"
+                                    :font-size="'1.3rem'"
+                                ></PriceCommon>
                         </div>
                     </div>
                 </div>
@@ -54,7 +66,7 @@
                             >{{ orderDataError?.bill[0] }}</small
                         >
                         <ImageUploader
-                            label="Tải ảnh bill chuyển khoản"
+                            label="Tải ảnh"
                             collection="avatar"
                             @upload="handleUpload"
                         ></ImageUploader>
@@ -134,10 +146,8 @@ const getTabs = async () => {
         .getTabByIds({ ids: ids })
         .then((res: any) => {
             items.value = res.data;
-            console.log('items', items.value);
-
             totalPrice.value = items.value.reduce(
-                (total, i: any) => total + i.price,
+                (total, i: any) => total + i.price_discount,
                 0,
             );
         })
@@ -184,7 +194,7 @@ const gotoTutorial = () => {
 
 const calcTotalPrice = (items: any) => {
     const total = items.reduce((total: number, item: any) => {
-        return total + item.price;
+        return total + item.price_discount;
     }, 0);
 
     return total;

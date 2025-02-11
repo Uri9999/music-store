@@ -85,7 +85,17 @@
                         </div>
                         <div class="product-info">
                             <div class="product-info__title">Giá:</div>
-                            <PriceCommon :value="tab.price"></PriceCommon>
+                            <PriceCommon
+                                :value="tab.price_discount"
+                                class="mr-3"
+                            ></PriceCommon>
+                            <PriceCommon
+                                v-if="tab.discount_money != 0"
+                                :value="tab.price"
+                                :textDecoration="'line-through'"
+                                :font-size="'1rem'"
+                                :color="'#929292'"
+                            ></PriceCommon>
                         </div>
                         <div class="mt-5">
                             <Button
@@ -96,7 +106,7 @@
                                 v-if="!tab.pdf"
                             ></Button>
                             <Button
-                                label="Download PDF"
+                                label="Tải về"
                                 v-if="tab.pdf"
                                 icon="pi pi-download"
                                 @click="downloadPdf"
@@ -183,7 +193,7 @@ const getDetailTab = async (slug: string) => {
         .show(slug)
         .then((res: any) => {
             tab.value = res.data;
-            imgFirst.value = tab.value?.images_url[0].url;
+            imgFirst.value = tab.value?.images_url[0]?.url;
         })
         .catch((err: any) => {
             console.log(err);

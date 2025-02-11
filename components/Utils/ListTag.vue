@@ -35,7 +35,18 @@
                             <div class="name">{{ item.user.name }}</div>
                         </div>
                         <div class="price">
-                            {{ formatNumberWithCommas(item.price) }} đ
+                            <PriceCommon
+                                v-if="item.discount_money"
+                                :value="item.price"
+                                :textDecoration="'line-through'"
+                                class="mr-2"
+                                :font-size="'.8rem'"
+                                :color="'#929292'"
+                            ></PriceCommon>
+                            <PriceCommon
+                                :value="item.price_discount"
+                                :font-size="'1rem'"
+                            ></PriceCommon>
                         </div>
                     </div>
                 </div>
@@ -49,9 +60,9 @@ import { ref } from 'vue';
 import Api from '~/network/Api';
 import type { Tab } from '~/types/tab';
 import { useRouter } from 'vue-router';
-import { formatNumberWithCommas } from '#build/imports';
 import AvatarCommon from '../General/AvatarCommon.vue';
 import BackgroundImageCommon from '../General/BackgroundImageCommon.vue';
+import PriceCommon from '~/components/General/PriceCommon.vue';
 
 const router = useRouter();
 const gotoDetail = async (slug: string) => {
@@ -108,10 +119,6 @@ onMounted(async () => {
 }
 .info {
     width: 100%;
-}
-.price {
-    color: var(--color-2);
-    font-weight: bold;
 }
 .sold {
     font-size: 0.8rem;

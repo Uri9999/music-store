@@ -27,9 +27,20 @@
                             >(Đã bán {{ item?.total_order_items }})</span
                         >
                     </div>
-                    <span class="font-semibold text-700 price"
-                        >{{ formatNumberWithCommas(item.price) }} đ</span
-                    >
+                    <div>
+                        <PriceCommon
+                            v-if="item.discount_money != 0"
+                            :value="item.price"
+                            :textDecoration="'line-through'"
+                            class="mr-2"
+                            :font-size="'.8rem'"
+                            :color="'#929292'"
+                        ></PriceCommon>
+                        <PriceCommon
+                            :value="item.price_discount"
+                            :font-size="'1rem'"
+                        ></PriceCommon>
+                    </div>
                 </div>
                 <InfoCommon
                     :name="item.user.name"
@@ -47,6 +58,7 @@ import { useRouter } from 'vue-router';
 import DisplayRateStars from './DisplayRateStars.vue';
 import BackgroundImageCommon from './BackgroundImageCommon.vue';
 import InfoCommon from './InfoCommon.vue';
+import PriceCommon from '~/components/General/PriceCommon.vue';
 
 const props = defineProps({
     classes: {
@@ -59,10 +71,21 @@ const props = defineProps({
     },
 });
 
+console.log('item', props.item);
+
 const router = useRouter();
 const gotoDetail = async (slug: string) => {
     router.push('/tab/' + slug);
 };
+
+function calcRealPrice(price: number, discountMoney: number) {
+    console.log(price, discountMoney);
+
+    if (discountMoney >= price) {
+        return 0;
+    }
+    return formatNumberWithCommas(price - discountMoney);
+}
 </script>
 
 <style lang="scss" scoped>
@@ -90,10 +113,10 @@ const gotoDetail = async (slug: string) => {
     height: 30px;
 }
 
-.price {
-    color: var(--color-2) !important;
-}
 .sold {
     font-size: 0.8rem;
 }
+// .price {
+//     color: var(--color-2) !important;
+// }
 </style>

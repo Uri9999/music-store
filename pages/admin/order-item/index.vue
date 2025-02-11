@@ -40,9 +40,14 @@
                 {{ slotProps.data.user.name }}
             </template>
         </Column>
-        <Column field="price" header="Giá bán">
+        <Column field="price" header="Giá">
             <template #body="slotProps">
                 {{ formatNumberWithCommas(slotProps.data.price) }}
+            </template>
+        </Column>
+        <Column field="price" header="Giá sau giảm giá">
+            <template #body="slotProps">
+                {{ formatNumberWithCommas(slotProps.data.meta.price_discount) }}
             </template>
         </Column>
         <Column
@@ -52,7 +57,7 @@
             <template #body="slotProps">
                 {{
                     formatNumberWithCommas(
-                        (slotProps.data.price * commissionRate) / 100,
+                        (slotProps.data.meta.price_discount * commissionRate) / 100,
                     )
                 }}
             </template>
