@@ -8,6 +8,8 @@ type Order = {
     media_bill: MediaBill;
     user: User;
     order_items: OrderItem[];
+    created_at: number,
+    approval_date: string|null,
 };
 
 type MediaBill = {

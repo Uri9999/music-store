@@ -90,7 +90,7 @@
                 <!-- discount money -->
                 <div class="mb-3">
                     <label for="discount_money" class="block mb-1">
-                        Discount money
+                        Giá KM
                     </label>
                     <div>
                         <InputNumber disabled v-model="tabData.discount_money" id="discount_money" fluid />

@@ -52,13 +52,13 @@
                             </template>
                         </Column>
                         <Column
-                            field="price_discount"
-                            header="Giá sau khi giảm giá"
+                            field="discount_money"
+                            header="Giá KM"
                         >
                             <template #body="slotProps">
                                 {{
                                     formatNumberWithCommas(
-                                        slotProps.data.meta.price_discount,
+                                        slotProps.data.meta.discount_money,
                                     )
                                 }}
                             </template>

@@ -56,7 +56,7 @@
                     <span>{{ formatNumberWithCommas(slotProps.data.price) }}</span>
                 </template>
             </Column>
-            <Column field="discount_money" header="Discount money">
+            <Column field="discount_money" header="Giá KM">
                 <template #body="slotProps">
                     <span>{{ formatNumberWithCommas(slotProps.data.discount_money) }}</span>
                 </template>

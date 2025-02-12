@@ -43,7 +43,7 @@
                         :color="'#929292'"
                     ></PriceCommon>
                     <PriceCommon
-                        :value="item.price_discount"
+                        :value="item.discount_money != 0 ? item.discount_money : item.price"
                         :font-size="'1.3rem'"
                     ></PriceCommon>
                 </div>

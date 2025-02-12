@@ -7,7 +7,6 @@ type Tab = {
     author: string;
     price: number;
     discount_money: number;
-    price_discount: number;
     category_id: number;
     youtobe_url: string;
     images_url: Image[];

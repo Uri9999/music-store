@@ -99,7 +99,7 @@
                 <!-- discount money -->
                 <div class="mb-3">
                     <label for="discount_money" class="block mb-1">
-                        Discount money
+                        Giá KM
                     </label>
                     <div>
                         <InputNumber
@@ -108,7 +108,7 @@
                             fluid
                         />
                     </div>
-                    <small class="error" v-if="tabErrors?.price">{{
+                    <small class="error" v-if="tabErrors?.discount_money">{{
                         tabErrors?.discount_money[0]
                     }}</small>
                 </div>
@@ -328,6 +328,9 @@ const update = async () => {
             life: 3000,
         });
     } catch (error: any) {
+        if (error?.status == 422) {
+            tabErrors.value = error.errors;
+        }
         toast.add({
             severity: 'error',
             summary: 'Thông báo',

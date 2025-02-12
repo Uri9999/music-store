@@ -32,7 +32,7 @@
                                     :color="'#929292'"
                                 ></PriceCommon>
                                 <PriceCommon
-                                    :value="item?.tab?.price_discount"
+                                    :value="item?.tab?.discount_money != 0 ? item?.tab?.discount_money : item?.tab?.price"
                                     :font-size="'1.3rem'"
                                 ></PriceCommon>
                             </div>
@@ -147,7 +147,8 @@ const checkout = () => {
 
 const calcTotalPrice = (items: any) => {
     const total = items.reduce((total: number, item: any) => {
-        return total + item.tab.price_discount;
+        const price = item.tab.discount_money != 0 ? item.tab.discount_money : item.tab.price;
+        return total + price;
     }, 0);
 
     return total;

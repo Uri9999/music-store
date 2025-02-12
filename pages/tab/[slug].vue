@@ -86,7 +86,11 @@
                         <div class="product-info">
                             <div class="product-info__title">Giá:</div>
                             <PriceCommon
-                                :value="tab.price_discount"
+                                :value="
+                                    tab.discount_money != 0
+                                        ? tab.discount_money
+                                        : tab.price
+                                "
                                 class="mr-3"
                             ></PriceCommon>
                             <PriceCommon

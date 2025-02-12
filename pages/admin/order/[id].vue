@@ -30,7 +30,7 @@
                     <div class="mb-3 order-info">
                         <div class="label">Ngày tạo order:</div>
                         <div class="">
-                            {{ orderData.total_price }}
+                            {{ moment(orderData.created_at).format('DD-MM-YYYY') }}
                         </div>
                     </div>
                     <div class="mb-3 order-info">
@@ -38,7 +38,7 @@
                             Ngày quản lý xác nhận thanh toán:
                         </div>
                         <div class="">
-                            {{ orderData.total_price }}
+                            {{ moment(orderData.approval_date).format('DD-MM-YYYY') }}
                         </div>
                     </div>
                     <div class="mb-3 order-info">
@@ -71,6 +71,7 @@
                         <div class="bill-img">
                             <ImageCommon
                                 :src="orderData.media_bill?.url"
+                                v-if="orderData.media_bill?.url"
                             ></ImageCommon>
                         </div>
                     </div>
@@ -87,14 +88,21 @@
                             <span>{{ slotProps.data?.meta?.name }}</span>
                         </template>
                     </Column>
-                    <Column field="price" header="Giá (Vnd)" style="">
+                    <Column field="price" header="Giá" style="">
                         <template #body="slotProps">
                             <span>{{
-                                formatNumberWithCommas(slotProps.data?.price)
+                                formatNumberWithCommas(slotProps.data?.meta?.price)
                             }}</span>
                         </template>
                     </Column>
-                    <Column field="detail" header="Chi tiết" style="">
+                    <Column field="discount_money" header="Giá KM" style="">
+                        <template #body="slotProps">
+                            <span>{{
+                                formatNumberWithCommas(slotProps.data?.meta?.discount_money)
+                            }}</span>
+                        </template>
+                    </Column>
+                    <!-- <Column field="detail" header="Chi tiết" style="">
                         <template #body="slotProps">
                             <Button
                                 icon="pi pi-info-circle"
@@ -102,10 +110,10 @@
                                 rounded
                                 severity="info"
                                 class="mr-2"
-                                @click="gotoDetail(slotProps.data?.id)"
+                                @click="gotoDetail(slotProps.data?.slug)"
                             />
                         </template>
-                    </Column>
+                    </Column> -->
                 </DataTable>
             </div>
         </div>
@@ -120,6 +128,7 @@ import type { Order } from '~/types/order';
 import { handleSelectedValue } from '~/utils/function';
 import ImageCommon from '~/components/General/ImageCommon.vue';
 import { formatNumberWithCommas } from '~/utils/function';
+import moment from 'moment';
 
 definePageMeta({
     layout: 'admin',
@@ -193,7 +202,7 @@ const gotoDetail = (id: number) => {
 }
 .status-payment-success {
     padding: 5px;
-    background-color: rgb(42, 253, 0);
+    background-color: rgb(27, 151, 2);
     border-radius: 5px;
     color: white;
 }

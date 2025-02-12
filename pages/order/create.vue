@@ -14,17 +14,21 @@
                         <div>
                             <!-- <PriceCommon :value="item?.price"></PriceCommon> -->
                             <PriceCommon
-                                    v-if="item?.discount_money != 0"
-                                    :value="item?.price"
-                                    :textDecoration="'line-through'"
-                                    class="mr-2"
-                                    :font-size="'1rem'"
-                                    :color="'#929292'"
-                                ></PriceCommon>
-                                <PriceCommon
-                                    :value="item?.price_discount"
-                                    :font-size="'1.3rem'"
-                                ></PriceCommon>
+                                v-if="item?.discount_money != 0"
+                                :value="item?.price"
+                                :textDecoration="'line-through'"
+                                class="mr-2"
+                                :font-size="'1rem'"
+                                :color="'#929292'"
+                            ></PriceCommon>
+                            <PriceCommon
+                                :value="
+                                    item.discount_money != 0
+                                        ? item.discount_money
+                                        : item.price
+                                "
+                                :font-size="'1.3rem'"
+                            ></PriceCommon>
                         </div>
                     </div>
                 </div>
@@ -113,7 +117,6 @@ import PriceCommon from '~/components/General/PriceCommon.vue';
 
 const btnDisable = ref(false);
 const toast = useToast();
-const totalPrice = ref(0);
 const route = useRoute();
 var ids = route.query.ids;
 if (typeof ids == 'string') {
@@ -146,10 +149,6 @@ const getTabs = async () => {
         .getTabByIds({ ids: ids })
         .then((res: any) => {
             items.value = res.data;
-            totalPrice.value = items.value.reduce(
-                (total, i: any) => total + i.price_discount,
-                0,
-            );
         })
         .catch((err: any) => {
             console.log(err);
@@ -194,7 +193,8 @@ const gotoTutorial = () => {
 
 const calcTotalPrice = (items: any) => {
     const total = items.reduce((total: number, item: any) => {
-        return total + item.price_discount;
+        const price = item.discount_money != 0 ? item.discount_money : item.price;
+        return total + price;
     }, 0);
 
     return total;
