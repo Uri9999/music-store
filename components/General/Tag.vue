@@ -71,16 +71,12 @@ const props = defineProps({
     },
 });
 
-console.log('item', props.item);
-
 const router = useRouter();
 const gotoDetail = async (slug: string) => {
     router.push('/tab/' + slug);
 };
 
 function calcRealPrice(price: number, discountMoney: number) {
-    console.log(price, discountMoney);
-
     if (discountMoney >= price) {
         return 0;
     }
